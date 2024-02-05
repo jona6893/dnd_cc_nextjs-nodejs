@@ -1,6 +1,6 @@
+
 import CreateCharacter from "./CreateCharacter";
 import CurrentCharacters from "./CurrentCharacters";
-
 
 function Startscreen() {
 
@@ -21,4 +21,4 @@ function Startscreen() {
   );
 }
 
-export default Startscreen
+export default Startscreen;

@@ -15,6 +15,7 @@ import Skills from "./components/skills/Skills";
 import SpellsMenu from "./components/spells_actions/SpellsMenu";
 import HitPoints from "./components/hit_points/HitPoints";
 import ProficiencyAndLanguages from "./components/Basic Stats/ProficiencyAndLanguages";
+import { checkSession } from "./actions/checkSession";
 
 let ipcRenderer = null;
 if (typeof window !== "undefined" && window.require) {
@@ -22,6 +23,10 @@ if (typeof window !== "undefined" && window.require) {
 }
 
 export default function Home() {
+  useEffect(() => {
+    checkSession();
+  }, []);
+
   const { character } = useContext(CharacterContext);
   const [tglMenus, setTglMenus] = useState({
     actionSpells: true,
@@ -29,8 +34,6 @@ export default function Home() {
     stats: true,
     skills: true,
   });
-
- 
 
   function OnScreenMenu() {
     function tgl(item) {

@@ -1,8 +1,5 @@
 import CharacterContext from "@/app/context/CharacterContext";
 import {
-  listCharacters,
-  loadCharacterData,
-  deleteCharacterData,
   compareByCharacterName,
   exportCharacterData,
 } from "@/app/modules/ElectronSaves";
@@ -10,18 +7,59 @@ import { nanoid } from "nanoid";
 import { useEffect, useState } from "react";
 import { useContext } from "react";
 
-function CurrentCharacters() {
+function CurrentCharacters({ userInfo }) {
   const [allCharacter, setAllCharacter] = useState([]);
   const [selCharacter, setSelCharacter] = useState([]);
   const { character, updateCharacter } = useContext(CharacterContext);
   const [ExportCharacter, setExportCharacter] = useState("");
 
+  async function getUserCharacters() {
+    const apiUrl = "http://62.198.182.210:8081/api/get-characters";
+    const apiKey = "myapikey";
 
-  
-    function handleExport(id){
-      exportCharacterData(id)
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "api-key": apiKey,
+        },
+        body: JSON.stringify({ userId: userInfo.id }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Data received:", data);
+      setAllCharacter(data);
+      return data;
+    } catch (error) {
+      console.error("Error fetching data:", error.message);
+      return false;
     }
+  }
+  useEffect(() => {
+    if (userInfo?.id) {
+      console.log(userInfo);
+      getUserCharacters()
+    }
+  }, [userInfo]);
 
+  function handleSubmit(characterId){
+    let selected;
+    allCharacter.forEach(e=>{
+      if(e._id === characterId){
+        selected = e
+      }
+    })
+    
+    console.log(selected)
+    console.log(characterId)
+    console.log(allCharacter)
+    updateCharacter(selected)
+  }
 
   return (
     <div className="flex flex-col w-full gap-2">
@@ -44,18 +82,17 @@ function CurrentCharacters() {
             </div>
             <div className="hidden group-hover:flex gap-2 absolute w-full h-full items-center justify-center bg-overlay/40">
               <button
-                onClick={() => handleSubmit(cha.id)}
+                onClick={() => handleSubmit(cha._id)}
                 className="bg-neongreen hover:bg-green-400 px-6 py-1 rounded"
               >
                 Play
               </button>
               <button
-                onClick={() => handleDelete(cha.id)}
+                onClick={() => handleDelete(cha._id)}
                 className="bg-neonred hover:bg-red-400 px-6 py-1 rounded"
               >
                 Delete
               </button>
-              <button onClick={() => handleExport(cha.id)}>Export</button>
             </div>
           </div>
         );

@@ -1,4 +1,4 @@
-// to save a character in main.js as a .json file
+/* // to save a character in main.js as a .json file
 export const saveCharacterData = (characterData, characterId) => {
   window.electronAPI.saveCharacterData(characterData, characterId);
 };
@@ -22,7 +22,7 @@ export const listCharacters = () => {
   window.electronAPI.listCharacters();
   // ... handle response ...
 };
-
+ */
 // Sort By Functions
 
 export function compareBySpelllevel(spell1, spell2) {

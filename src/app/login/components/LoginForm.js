@@ -86,7 +86,7 @@ function LoginForm() {
         <button type="submit" className="font-almendra text-md border p-2">
           Login
         </button>
-        <a href="/login">
+        <a href="/signup">
           Not signed up?{" "}
           <span className="text-neonpurple-500">Click here to Sign up!</span>
         </a>

@@ -1,15 +1,38 @@
-import { loadCharacterData, saveCharacterData } from "@/app/modules/ElectronSaves";
 import { nanoid } from "nanoid";
 import { useState } from "react";
 
 
 
-function CreateCharacter() {
-  const [inputFocus, setInputFocus] = useState('')
+function CreateCharacter({ userInfo }) {
+  const [inputFocus, setInputFocus] = useState("");
   const [showAutocomplete, setShowAutocomplete] = useState(false);
-  const races = ['Dwarv', 'Elv', 'Halfling', 'Human', 'Dragonborn', 'Gnome', 'Half-elv', 'Half-orc', 'Tiefling']
-  const classes = ['Artificer','Barbarian','Bard','Cleric','Druid','Fighter','Monk','Paladin','Ranger','Rogue','Sorcerer','Warlock','Wizard']
-  const alignment = ['Lawful Good','Good','Neutral','Evil','Chaotic Evil']
+  const races = [
+    "Dwarv",
+    "Elv",
+    "Halfling",
+    "Human",
+    "Dragonborn",
+    "Gnome",
+    "Half-elv",
+    "Half-orc",
+    "Tiefling",
+  ];
+  const classes = [
+    "Artificer",
+    "Barbarian",
+    "Bard",
+    "Cleric",
+    "Druid",
+    "Fighter",
+    "Monk",
+    "Paladin",
+    "Ranger",
+    "Rogue",
+    "Sorcerer",
+    "Warlock",
+    "Wizard",
+  ];
+  const alignment = ["Lawful Good", "Good", "Neutral", "Evil", "Chaotic Evil"];
   const subclasses = [
     "Path of the Berserker (Barbarian)",
     "Path of the Totem Warrior (Barbarian)",
@@ -130,77 +153,97 @@ function CreateCharacter() {
     "Order of Scribes (Wizard)",
     "Lunar Sorcery (Sorcerer)",
   ];
-  const subclassesSort = subclasses.sort()
-    function saveCharacter(){
-        event.preventDefault()
-        let name = event.target.name.value
-        let race = event.target.race.value
-        let klass = event.target.class.value
-        let subClass = event.target.subClass.value
-        let level = event.target.level.value
-        let alignment = event.target.alignment.value
+  const subclassesSort = subclasses.sort();
+  async function saveCharacter() {
+    event.preventDefault();
+    let name = event.target.name.value;
+    let race = event.target.race.value;
+    let klass = event.target.class.value;
+    let subClass = event.target.subClass.value;
+    let level = event.target.level.value;
+    let alignment = event.target.alignment.value;
 
-        const id = nanoid()
-        let data = {
-            id,
-            name,
-            race,
-            class:klass,
-            subClass,
-            level,
-            alignment
-        }
-        saveCharacterData(data,id)
-        setTimeout(()=>{
-          loadCharacterData(id);
-        },300)
+    const _id = nanoid();
+    let characterData = {
+      userId:userInfo.id,
+      _id,
+      name,
+      race,
+      class: klass,
+      subClass,
+      level,
+      alignment,
+    };
+
+    console.log(characterData);
+
+    const apiUrl = "http://62.198.182.210:8081/api/create-character";
+    const apiKey = "myapikey";
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "api-key": apiKey,
+        },
+        body: JSON.stringify(characterData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Data received:", data);
+      return data;
+    } catch (error) {
+      console.error("Error fetching data:", error.message);
+      return false;
     }
+  }
 
- function updateFocus(e) {
- 
-  setTimeout(() => {
-    setInputFocus(e);
-    setShowAutocomplete(true);
-  },51)
- }
+  function updateFocus(e) {
+    setTimeout(() => {
+      setInputFocus(e);
+      setShowAutocomplete(true);
+    }, 51);
+  }
 
- function handleAutocompleteClick(value) {
- 
-   if (inputFocus.target) {
-     inputFocus.target.value = value;
+  function handleAutocompleteClick(value) {
+    if (inputFocus.target) {
+      inputFocus.target.value = value;
     }
     setShowAutocomplete(false);
   }
 
- function handleBlur() {
-   // Delay hiding the autocomplete to allow time for onClick to fire inside the component
-  
-   setTimeout(() => {
-     if (showAutocomplete) {
-      console.log('blur song2')
-       setShowAutocomplete(false);
-       setInputFocus('')
-     }
-   }, 299);
- }
+  function handleBlur() {
+    // Delay hiding the autocomplete to allow time for onClick to fire inside the component
 
- const Autocomplete = ({ list }) => {
-   return (
-     <div className="w-full z-[1] min-h-[15rem] max-h-96 overflow-auto bg-slate-50 absolute top-full left-0 rounded-md">
-       {list.map((e) => (
-         <p
-           key={nanoid()}
-           onClick={() => handleAutocompleteClick(e)}
-           className="text-black w-full border-none bg-transparent hover:bg-gray-200 p-2"
-         >
-           {e}
-         </p>
-       ))}
-     </div>
-   );
- };
+    setTimeout(() => {
+      if (showAutocomplete) {
+        console.log("blur song2");
+        setShowAutocomplete(false);
+        setInputFocus("");
+      }
+    }, 299);
+  }
 
- 
+  const Autocomplete = ({ list }) => {
+    return (
+      <div className="w-full z-[1] min-h-[15rem] max-h-96 overflow-auto bg-slate-50 absolute top-full left-0 rounded-md">
+        {list.map((e) => (
+          <p
+            key={nanoid()}
+            onClick={() => handleAutocompleteClick(e)}
+            className="text-black w-full border-none bg-transparent hover:bg-gray-200 p-2"
+          >
+            {e}
+          </p>
+        ))}
+      </div>
+    );
+  };
 
   return (
     <div className="text-white flex flex-col items-center mt-4 h-full">

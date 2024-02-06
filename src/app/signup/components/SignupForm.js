@@ -1,4 +1,5 @@
 "use client";
+import { loginAccount } from "@/app/actions/loginAccount";
 import React from "react";
 
 function SignupForm() {
@@ -9,7 +10,7 @@ function SignupForm() {
     return /^(?=.*[A-Z]).*$/.test(str);
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     const username = event.target.username.value;
     const password = event.target.password.value;
@@ -32,37 +33,34 @@ function SignupForm() {
       return;
     }
     const newUser = { username, password };
-    if (SubmitNewUserToDB(newUser) === false) {
-      console.log("Redirect user to frontpage");
-    }
-  }
-
-  async function SubmitNewUserToDB(newUser) {
     const apiUrl = "http://62.198.182.210:8081/api/signup";
     const apiKey = "myapikey";
 
-    try {
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "api-key": apiKey,
-        },
-        body: JSON.stringify(newUser),
-      });
+   try {
+     const response = await fetch(apiUrl, {
+       method: "POST",
+       headers: {
+         "Content-Type": "application/json",
+         "api-key": apiKey,
+       },
+       body: JSON.stringify(newUser),
+     });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
+     if (!response.ok) {
+       throw new Error(`HTTP error! Status: ${response.status}`);
+     }
 
-      const data = await response.json();
-      console.log("Data received:", data);
-      return data;
-    } catch (error) {
-      console.error("Error fetching data:", error.message);
-      return false;
-    }
+     const data = await response.json();
+     console.log("Data received:", data);
+     loginAccount(data);
+     return data;
+   } catch (error) {
+     console.error("Error fetching data:", error.message);
+     return false;
+   }
   }
+
+
   return (
     <form
       onSubmit={handleSubmit}

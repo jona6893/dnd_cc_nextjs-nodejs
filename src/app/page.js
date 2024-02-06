@@ -16,6 +16,7 @@ import SpellsMenu from "./components/spells_actions/SpellsMenu";
 import HitPoints from "./components/hit_points/HitPoints";
 import ProficiencyAndLanguages from "./components/Basic Stats/ProficiencyAndLanguages";
 import { checkSession } from "./actions/checkSession";
+import OnScreenMenu from "./components/Startmenu/OnScreenMenu";
 
 let ipcRenderer = null;
 if (typeof window !== "undefined" && window.require) {
@@ -23,10 +24,6 @@ if (typeof window !== "undefined" && window.require) {
 }
 
 export default function Home() {
-  useEffect(() => {
-    checkSession();
-  }, []);
-
   const { character } = useContext(CharacterContext);
   const [tglMenus, setTglMenus] = useState({
     actionSpells: true,
@@ -34,38 +31,21 @@ export default function Home() {
     stats: true,
     skills: true,
   });
+  // get the logged in users id and username
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await checkSession();
+        console.log(JSON.parse(result.value));
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-  function OnScreenMenu() {
-    function tgl(item) {
-      let newState = { ...tglMenus };
-      newState[item] = !newState[item];
-      setTglMenus(newState);
-    }
+    fetchData();
+  }, []);
 
-    return (
-      <div className="fixed bottom-0 left-0 right-0 mx-auto px-2 h-[50px] w-fit bg-black/25 sm:flex max-sm:grid max-sm:grid-cols-2 gap-4 justify-center items-center justify-items-center">
-        <button
-          onClick={() => tgl("skills")}
-          className=" flex justify-center items-center bg-purple-500 rounded w-fit h-6 px-2"
-        >
-          Skills
-        </button>
-
-        <button
-          onClick={() => tgl("stats")}
-          className=" flex justify-center items-center bg-purple-500 rounded w-fit h-6 px-2"
-        >
-          Stats
-        </button>
-        <button
-          onClick={() => tgl("actionSpells")}
-          className=" flex justify-center items-center bg-purple-500 rounded w-fit h-6 px-2"
-        >
-          Actions/Equipment
-        </button>
-      </div>
-    );
-  }
+ 
 
   return (
     <main className="flex gap-2 min-h-screen items-start lg:justify-center sm:px-4 max-sm:px-2 py-4 bg-background overflow-auto relative">
@@ -110,7 +90,7 @@ export default function Home() {
           <Equipment character={character} />
         </div>
       )}
-      <OnScreenMenu />
+      <OnScreenMenu setTglMenus={setTglMenus} tglMenus={tglMenus} />
     </main>
   );
 }

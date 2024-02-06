@@ -1,12 +1,10 @@
 "use server";
-
-import { randomBytes } from "crypto";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
-export const checkSession = () => {
-  const token = cookies().get("dnd-token");
-  const user = cookies().get("user");
+export const deleteSession = () => {
+  const token = cookies().delete("dnd-token");
+  const user = cookies().delete("user");
 
   if (token && user) {
     // Cookie 'token' exists, user is likely authenticated

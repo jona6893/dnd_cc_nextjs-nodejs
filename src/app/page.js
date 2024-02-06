@@ -46,30 +46,25 @@ export default function Home() {
   }, []);
 
  
-
+console.log(character)
   return (
     <main className="flex gap-2 min-h-screen items-start lg:justify-center sm:px-4 max-sm:px-2 py-4 bg-background overflow-auto relative">
       {Object.keys(character).length == 0 && <Startscreen />}
       {tglMenus.skills && (
         <div className="grid gap-2">
-          <Skills character={character} />
+           <Skills character={character} />
           <ProficiencyAndLanguages character={character} />
         </div>
       )}
       {tglMenus.stats && (
         <div className=" flex flex-col gap-2 max-sm:p-2">
           <div className="sm:flex gap-2 max-sm:grid">
-            {/* <div className="sm:w-44 bg-neonpurple-300 h-48 rounded-md max-sm:order-1">
-              IMAGE
-            </div> */}
             <CharacterDetails character={character} />
           </div>
           <div className="sm:flex max-sm:grid max-sm:order-1 gap-2">
-            {/* <Stats character={character} /> */}
-
-            <div className="flex flex-col gap-2 items-center sm:w-fit max-sm:w-full">
+             <div className="flex flex-col gap-2 items-center sm:w-fit max-sm:w-full">
               <div className="sm:flex max-sm:grid max-sm:grid-cols-3 gap-2 w-full justify-between max-sm:justify-items-center">
-                <ArmorClass character={character} />
+                {/* <ArmorClass character={character} /> */}
                 <WalkingSpeed character={character} />
                 <Initiative character={character} />
               </div>
@@ -80,14 +75,14 @@ export default function Home() {
               <HitPoints character={character} />
               <Stats character={character} />
               <SavingThrows character={character} />
-            </div>
+            </div> 
           </div>
         </div>
       )}
       {tglMenus.actionSpells && (
         <div className={`grid gap-4`}>
-          <SpellsMenu character={character} />
-          <Equipment character={character} />
+           <SpellsMenu character={character} />
+          <Equipment character={character} /> 
         </div>
       )}
       <OnScreenMenu setTglMenus={setTglMenus} tglMenus={tglMenus} />

@@ -1,11 +1,14 @@
+import CharacterContext from "@/app/context/CharacterContext";
+import { createCharacters } from "@/app/modules/apiCalls";
 import { nanoid } from "nanoid";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 
 
 function CreateCharacter({ userInfo }) {
   const [inputFocus, setInputFocus] = useState("");
   const [showAutocomplete, setShowAutocomplete] = useState(false);
+   const { updateCharacter } = useContext(CharacterContext);
   const races = [
     "Dwarv",
     "Elv",
@@ -165,7 +168,7 @@ function CreateCharacter({ userInfo }) {
 
     const _id = nanoid();
     let characterData = {
-      userId:userInfo.id,
+      userId: userInfo.id,
       _id,
       name,
       race,
@@ -176,31 +179,10 @@ function CreateCharacter({ userInfo }) {
     };
 
     console.log(characterData);
+    // save to DB
+   const character = await createCharacters(characterData);
+   updateCharacter(character[0]);
 
-    const apiUrl = "http://62.198.182.210:8081/api/create-character";
-    const apiKey = "myapikey";
-
-    try {
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "api-key": apiKey,
-        },
-        body: JSON.stringify(characterData),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log("Data received:", data);
-      return data;
-    } catch (error) {
-      console.error("Error fetching data:", error.message);
-      return false;
-    }
   }
 
   function updateFocus(e) {

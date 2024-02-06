@@ -3,6 +3,7 @@ import {
   compareByCharacterName,
   exportCharacterData,
 } from "@/app/modules/ElectronSaves";
+import { deleteCharacter, getUserCharacters } from "@/app/modules/apiCalls";
 import { nanoid } from "nanoid";
 import { useEffect, useState } from "react";
 import { useContext } from "react";
@@ -13,38 +14,20 @@ function CurrentCharacters({ userInfo }) {
   const { character, updateCharacter } = useContext(CharacterContext);
   const [ExportCharacter, setExportCharacter] = useState("");
 
-  async function getUserCharacters() {
-    const apiUrl = "http://62.198.182.210:8081/api/get-characters";
-    const apiKey = "myapikey";
-
-    try {
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "api-key": apiKey,
-        },
-        body: JSON.stringify({ userId: userInfo.id }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log("Data received:", data);
-      setAllCharacter(data);
-      return data;
-    } catch (error) {
-      console.error("Error fetching data:", error.message);
-      return false;
-    }
-  }
+ 
   useEffect(() => {
-    if (userInfo?.id) {
-      console.log(userInfo);
-      getUserCharacters()
-    }
+      const fetchData = async () => {
+        try {
+          if (userInfo?.id) {
+            console.log(userInfo);
+            const characters = await getUserCharacters(userInfo); // Wait for the Promise to resolve
+            setAllCharacter(characters);
+          }
+        } catch (error) {
+          console.error("Error fetching data:", error.message);
+        }
+      };
+      fetchData();
   }, [userInfo]);
 
   function handleSubmit(characterId){
@@ -54,11 +37,17 @@ function CurrentCharacters({ userInfo }) {
         selected = e
       }
     })
-    
-    console.log(selected)
-    console.log(characterId)
-    console.log(allCharacter)
+    // update character context provider
     updateCharacter(selected)
+  }
+
+ async function handleDeleteCharacter(_id){
+  console.log(_id)
+  const deleted = await deleteCharacter(_id);
+  if(deleted?.message){
+    const characters = await getUserCharacters(userInfo);
+    setAllCharacter(characters);
+  }
   }
 
   return (
@@ -88,7 +77,7 @@ function CurrentCharacters({ userInfo }) {
                 Play
               </button>
               <button
-                onClick={() => handleDelete(cha._id)}
+                onClick={() => handleDeleteCharacter(cha._id)}
                 className="bg-neonred hover:bg-red-400 px-6 py-1 rounded"
               >
                 Delete

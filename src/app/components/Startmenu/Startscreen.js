@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import { checkSession } from "@/app/actions/checkSession";
 
 function Startscreen() {
-  const [userInfo, setUserInfo] = useState({})
+  const [userInfo, setUserInfo] = useState({})  
+
   function handleLogout() {
     deleteSession();
   }
@@ -29,7 +30,10 @@ function Startscreen() {
         <div className="border-r border-white">
           <h2 className="text-lg font-almendra">New Character</h2>
           <h4>{userInfo?.username}</h4>
-          <CreateCharacter userInfo={userInfo} />
+          <CreateCharacter
+            userInfo={userInfo}
+        
+          />
         </div>
         <div className="col-start-2 flex flex-col gap-2 items-center overflow-auto border-l pl-4 border-white">
           <div className="flex justify-between w-full">

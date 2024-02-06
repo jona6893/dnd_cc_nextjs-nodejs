@@ -24,7 +24,7 @@ if (typeof window !== "undefined" && window.require) {
 }
 
 export default function Home() {
-  const { character } = useContext(CharacterContext);
+  const { character, updateCharacter } = useContext(CharacterContext);
   const [tglMenus, setTglMenus] = useState({
     actionSpells: true,
     equipment: true,
@@ -36,7 +36,7 @@ export default function Home() {
     const fetchData = async () => {
       try {
         const result = await checkSession();
-        console.log(JSON.parse(result.value));
+        //console.log(JSON.parse(result.value));
       } catch (error) {
         console.error(error);
       }
@@ -45,44 +45,47 @@ export default function Home() {
     fetchData();
   }, []);
 
- 
-console.log(character)
+  let props={
+    character:character,
+    updateCharacter:updateCharacter
+  }
+
   return (
     <main className="flex gap-2 min-h-screen items-start lg:justify-center sm:px-4 max-sm:px-2 py-4 bg-background overflow-auto relative">
       {Object.keys(character).length == 0 && <Startscreen />}
       {tglMenus.skills && (
         <div className="grid gap-2">
-           <Skills character={character} />
-          <ProficiencyAndLanguages character={character} />
+          <Skills {...props} />
+          <ProficiencyAndLanguages {...props} />
         </div>
       )}
       {tglMenus.stats && (
         <div className=" flex flex-col gap-2 max-sm:p-2">
           <div className="sm:flex gap-2 max-sm:grid">
-            <CharacterDetails character={character} />
+            <CharacterDetails {...props} />
           </div>
           <div className="sm:flex max-sm:grid max-sm:order-1 gap-2">
-             <div className="flex flex-col gap-2 items-center sm:w-fit max-sm:w-full">
+            <div className="flex flex-col gap-2 items-center sm:w-fit max-sm:w-full">
               <div className="sm:flex max-sm:grid max-sm:grid-cols-3 gap-2 w-full justify-between max-sm:justify-items-center">
-                {/* <ArmorClass character={character} /> */}
-                <WalkingSpeed character={character} />
-                <Initiative character={character} />
+                <ArmorClass {...props} />
+                <WalkingSpeed {...props} />
+                <Initiative {...props} />
               </div>
               <div className="flex gap-2 justify-between">
-                <Proficiency character={character} />
-                <Inspiration character={character} />
+                <Proficiency {...props} />
+                <Inspiration {...props} />
               </div>
-              <HitPoints character={character} />
-              <Stats character={character} />
-              <SavingThrows character={character} />
-            </div> 
+              <HitPoints  {...props} />
+              <Stats  {...props} />
+              <SavingThrows  {...props} />
+            </div>
           </div>
         </div>
       )}
       {tglMenus.actionSpells && (
         <div className={`grid gap-4`}>
-           <SpellsMenu character={character} />
-          <Equipment character={character} /> 
+          <SpellsMenu  {...props} />
+          <Equipment  {...props} />
         </div>
       )}
       <OnScreenMenu setTglMenus={setTglMenus} tglMenus={tglMenus} />

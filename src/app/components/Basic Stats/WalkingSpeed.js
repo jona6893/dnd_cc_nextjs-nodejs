@@ -1,24 +1,36 @@
 import { saveCharacterData } from "@/app/modules/ElectronSaves";
 import SVG from "../SVG";
 import { useEffect, useState } from "react";
+import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
+import { updateCharacterDB } from "@/app/modules/apiCalls";
 
 
-function WalkingSpeed({character}) {
+function WalkingSpeed({ character, updateCharacter }) {
+  const [walkingSpeed, setWalkingSpeed] = useState(
+    character?.walkingSpeed ?? 0
+  );
 
-const [walkingSpeed, setWalkingSpeed] = useState(character?.walkingSpeed ?? 0);
-
-useEffect(() => {
-  if (character) {
-    setWalkingSpeed(character.walkingSpeed ?? 0);
-  }
-}, [character]);
+  useEffect(() => {
+    if (character) {
+      setWalkingSpeed(character.walkingSpeed ?? 0);
+    }
+  }, [character]);
 
   function updateWalkingSpeed() {
     setWalkingSpeed(event.target.value);
     character.walkingSpeed = event.target.value;
 
-
-    saveCharacterData(character, character.id);
+    let update = {
+      _id: character._id,
+      update: {
+        walkingSpeed: event.target.value,
+        updated_by: epochToUtcDateTime(),
+      },
+    };
+    // update context i.e local
+    updateCharacter(character);
+    // update database
+    updateCharacterDB(update);
   }
 
   return (

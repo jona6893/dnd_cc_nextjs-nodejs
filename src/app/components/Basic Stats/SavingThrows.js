@@ -2,9 +2,11 @@ import { nanoid } from "nanoid";
 import SVG from "../SVG";
 import { useEffect, useState } from "react";
 import { saveCharacterData } from "@/app/modules/ElectronSaves";
+import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
+import { updateCharacterDB } from "@/app/modules/apiCalls";
 
 
-function SavingThrows({character}) {
+function SavingThrows({ character, updateCharacter }) {
   const defaultSavingThrows = {
     str: 0,
     dex: 0,
@@ -13,35 +15,40 @@ function SavingThrows({character}) {
     wis: 0,
     cha: 0,
   };
-  const [savingThrow, setSavingThrow] = useState(character?.savingThrow ?? defaultSavingThrows);
-  
+  const [savingThrow, setSavingThrow] = useState(
+    character?.savingThrow ?? defaultSavingThrows
+  );
+
   useEffect(() => {
     setSavingThrow(character?.savingThrow ?? defaultSavingThrows);
     //console.log(character.savingThrow)
   }, [character]);
 
-  const stats = [
-    "str",
-    "dex",
-    "con",
-    "int",
-    "wis",
-    "cha",
-  ];
+  const stats = ["str", "dex", "con", "int", "wis", "cha"];
 
-function updatSavingThrow(stat,value){
-  if(!character.savingThrow){
-    //console.log("does not exist")
-    character.savingThrow = defaultSavingThrows
-  }
-        setSavingThrow(prev => ({
-      ...prev,
-      [stat]: value
-    }));
-    
+  function updatSavingThrow(stat, value) {
+    if (!character.savingThrow) {
+      //console.log("does not exist")
+      character.savingThrow = defaultSavingThrows;
+    }
+    let newState = { ...savingThrow };
+    newState[stat] = value;
+    setSavingThrow(newState);
+
     // character.savingThrows = [...character.savingThrows, { [stat]: value }];
     character.savingThrow[stat] = value
-    saveCharacterData(character, character.id);
+
+    let update = {
+      _id: character._id,
+      update: {
+        savingThrow: newState,
+        updated_by: epochToUtcDateTime(),
+      },
+    };
+    // update context i.e local
+    updateCharacter(character);
+    // update database
+    updateCharacterDB(update);
   }
 
   return (

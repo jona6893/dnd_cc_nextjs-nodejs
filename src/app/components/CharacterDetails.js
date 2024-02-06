@@ -1,8 +1,9 @@
-import { saveCharacterData } from "../modules/ElectronSaves";
+import { updateCharacterDB } from "../modules/apiCalls";
+import { epochToUtcDateTime } from "../modules/getCurrentDate";
 import SVG from "./SVG";
 import { useEffect, useState } from "react";
 
-function CharacterDetails({ character }) {
+function CharacterDetails({ character, updateCharacter }) {
   const [characterInfo, setCharacterInfo] = useState({
     name: "",
     race: "",
@@ -27,17 +28,21 @@ function CharacterDetails({ character }) {
     }
   }, [character]);
 
-   
-    function updateDetails(key,value) {
-      let newState = {...characterInfo}
-      newState[key] = value
+  function updateDetails(key, value) {
+    let newState = { ...characterInfo };
+    newState[key] = value;
     setCharacterInfo(newState);
-    character[key] = value
+    character[key] = value;
 
-    saveCharacterData(character, character.id);
-    console.log(character)
+    let update = {
+      _id: character._id,
+      update: Object.assign(newState, { updated_by: epochToUtcDateTime() }),
+    };
+    // update context i.e local
+    updateCharacter(character);
+    // update database
+    updateCharacterDB(update);
   }
-  
 
   return (
     <div className="sm:w-80 grid grid-cols-2 bg-overlay text-white p-4 rounded-md border-neonyellow border-2 h-full">

@@ -1,5 +1,6 @@
 "use client";
 import { loginAccount } from "@/app/actions/loginAccount";
+import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import React from "react";
 
 function SignupForm() {
@@ -32,7 +33,7 @@ function SignupForm() {
       console.log("username has capital letters");
       return;
     }
-    const newUser = { username, password };
+    const newUser = { username, password, created_by: epochToUtcDateTime() };
     const apiUrl = "http://62.198.182.210:8081/api/signup";
     const apiKey = "myapikey";
 

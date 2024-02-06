@@ -78,7 +78,7 @@ export async function deleteCharacter(_id) {
 }
 
 // Update Character in the DB
-export async function updateCharacter(update) {
+export async function updateCharacterDB(update) {
   try {
     const response = await fetch(apiUrl + "update-character", {
       method: "POST",

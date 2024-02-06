@@ -1,5 +1,6 @@
 import CharacterContext from "@/app/context/CharacterContext";
 import { createCharacters } from "@/app/modules/apiCalls";
+import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { nanoid } from "nanoid";
 import { useContext, useState } from "react";
 
@@ -176,6 +177,7 @@ function CreateCharacter({ userInfo }) {
       subClass,
       level,
       alignment,
+      created_by: epochToUtcDateTime(),
     };
 
     console.log(characterData);

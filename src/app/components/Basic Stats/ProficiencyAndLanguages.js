@@ -1,31 +1,49 @@
 import { saveCharacterData } from '@/app/modules/ElectronSaves';
 import React, { useEffect, useState } from 'react'
 import SVG from '../SVG';
+import { epochToUtcDateTime } from '@/app/modules/getCurrentDate';
+import { updateCharacterDB } from '@/app/modules/apiCalls';
 
-function ProficiencyAndLanguages({character}) {
-      const [proNLang, setProNLang] = useState(character?.ProficiencyAndLanguages ?? {armor:"",weapons:"",tools:"",languages:""});
+function ProficiencyAndLanguages({ character, updateCharacter }) {
+  const [proNLang, setProNLang] = useState(
+    character?.ProficiencyAndLanguages ?? {
+      armor: "",
+      weapons: "",
+      tools: "",
+      languages: "",
+    }
+  );
 
+  useEffect(() => {
+    if (character) {
+      setProNLang(
+        character.ProficiencyAndLanguages ?? {
+          armor: "",
+          weapons: "",
+          tools: "",
+          languages: "",
+        }
+      );
+    }
+  }, [character]);
 
-        useEffect(() => {
-          if (character) {
-            setProNLang(
-              character.ProficiencyAndLanguages ?? {
-                armor: "",
-                weapons: "",
-                tools: "",
-                languages: "",
-              }
-            );
-          }
-        }, [character]);
-
-          function updateProficiencyLanguages(key, value) {
-            let newState = {...proNLang}
-            newState[key] = value
-            setProNLang(newState);
-            character.ProficiencyAndLanguages = newState
-            saveCharacterData(character, character.id);
-          }
+  function updateProficiencyLanguages(key, value) {
+    let newState = { ...proNLang };
+    newState[key] = value;
+    setProNLang(newState);
+    character.ProficiencyAndLanguages = newState;
+    let update = {
+      _id: character._id,
+      update: {
+        ProficiencyAndLanguages:newState,
+        updated_by: epochToUtcDateTime(),
+      },
+    };
+    // update context i.e local
+    updateCharacter(character);
+    // update database
+    updateCharacterDB(update);
+  }
 
   return (
     <section className="h-full w-full card grid gap-2">

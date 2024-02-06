@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import SVG from "../SVG";
 import { saveCharacterData } from "@/app/modules/ElectronSaves";
+import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
+import { updateCharacterDB } from "@/app/modules/apiCalls";
 
 
-function Proficiency({character}) {
+function Proficiency({ character, updateCharacter }) {
   const [profic, setProfic] = useState(character?.proficiency ?? 0);
 
   useEffect(() => {
@@ -16,7 +18,17 @@ function Proficiency({character}) {
     setProfic(event.target.value);
     character.proficiency = event.target.value;
 
-    saveCharacterData(character, character.id);
+    let update = {
+      _id: character._id,
+      update: {
+        proficiency: event.target.value,
+        updated_by: epochToUtcDateTime(),
+      },
+    };
+    // update context i.e local
+    updateCharacter(character);
+    // update database
+    updateCharacterDB(update);
     console.log(character);
   }
   return (

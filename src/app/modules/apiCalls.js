@@ -51,6 +51,8 @@ export async function createCharacters(characterData) {
     return false;
   }
 }
+
+// Delete A Character From the DB
 export async function deleteCharacter(_id) {
   try {
     const response = await fetch(apiUrl + "delete-character", {
@@ -60,6 +62,31 @@ export async function deleteCharacter(_id) {
         "api-key": apiKey,
       },
       body: JSON.stringify({_id:_id}),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("Data received:", data);
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", error.message);
+    return false;
+  }
+}
+
+// Update Character in the DB
+export async function updateCharacter(update) {
+  try {
+    const response = await fetch(apiUrl + "update-character", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "api-key": apiKey,
+      },
+      body: JSON.stringify(update),
     });
 
     if (!response.ok) {

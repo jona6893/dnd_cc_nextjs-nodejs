@@ -1,7 +1,6 @@
 import { loginAccount } from "../actions/loginAccount";
 
-/* const apiUrl = "http://62.198.182.210:8081/api/";
-const apiKey = "myapikey"; */
+
 const apiUrl = process.env.DB_HOST;
 const apiKey = process.env.DB_API_KEY;
 

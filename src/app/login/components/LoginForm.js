@@ -1,8 +1,9 @@
 "use client";
-import React from "react";
+import { useState } from "react";
 import { loginAccount } from "@/app/actions/loginAccount";
 
 function LoginForm() {
+  const [feedback, setFeedback] = useState("");
   function checkWhitespace(str) {
     return /\s/.test(str);
   }
@@ -51,7 +52,8 @@ function LoginForm() {
       loginAccount(data);
       return data;
     } catch (error) {
-      console.error("Error fetching data:", error.message);
+      console.error("Error fetching data:", error);
+      setFeedback("Invaild Username or Password");
       return false;
     }
   }
@@ -62,6 +64,7 @@ function LoginForm() {
       className="w-3/4 h-fit bg-overlay rounded-md flex gap-4 flex-col items-center justify-center text-white p-2 py-12"
     >
       <h1 className="text-xl ">Login</h1>
+      <p className="text-red-500">{feedback}</p>
       <label htmlFor="" className="w-full max-w-md flex flex-col gap-2">
         Username
         <input
@@ -83,7 +86,10 @@ function LoginForm() {
         />
       </label>
       <div className="flex flex-col gap-4 justify-between w-full max-w-md">
-        <button type="submit" className="font-almendra text-md border p-2">
+        <button
+          type="submit"
+          className="font-almendra text-md bg-neonpurple-400 hover:bg-neonpurple-500 px-6 py-1 rounded"
+        >
           Login
         </button>
         <a href="/signup">

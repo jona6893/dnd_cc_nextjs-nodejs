@@ -1,4 +1,3 @@
-import { saveCharacterData } from '@/app/modules/ElectronSaves';
 import React, { useEffect, useState } from 'react'
 import SVG from '../SVG';
 import { epochToUtcDateTime } from '@/app/modules/getCurrentDate';

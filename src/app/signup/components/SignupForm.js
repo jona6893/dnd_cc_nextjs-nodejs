@@ -1,9 +1,10 @@
 "use client";
 import { loginAccount } from "@/app/actions/loginAccount";
 import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
-import React from "react";
+import { useState } from "react";
 
 function SignupForm() {
+  const [feedback, setFeedback] = useState("");
   function checkWhitespace(str) {
     return /\s/.test(str);
   }
@@ -18,49 +19,52 @@ function SignupForm() {
     const passwordRetype = event.target.passwordRetype.value;
 
     if (password !== passwordRetype) {
-      console.log("passwords dont match");
+      //console.log("passwords dont match");
+      setFeedback("Passwords Dont Match");
       return;
     }
     if (username.length < 4) {
-      console.log("username not long enough");
+      //console.log("username not long enough, alest 4 characters");
+      setFeedback("Username is not long enough, at least 4 characters");
       return;
     }
     if (checkWhitespace(username)) {
-      console.log("username has whitespace");
+      //console.log("username has whitespace");
+      setFeedback("Username Has Whitespace");
       return;
     }
     if (containsUppercase(username)) {
-      console.log("username has capital letters");
+      //console.log("username cannot have capital letters");
+      setFeedback("Username cannot have capital letters");
       return;
     }
     const newUser = { username, password, created_by: epochToUtcDateTime() };
     const apiUrl = "http://62.198.182.210:8081/api/signup";
     const apiKey = "myapikey";
 
-   try {
-     const response = await fetch(apiUrl, {
-       method: "POST",
-       headers: {
-         "Content-Type": "application/json",
-         "api-key": apiKey,
-       },
-       body: JSON.stringify(newUser),
-     });
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "api-key": apiKey,
+        },
+        body: JSON.stringify(newUser),
+      });
 
-     if (!response.ok) {
-       throw new Error(`HTTP error! Status: ${response.status}`);
-     }
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
 
-     const data = await response.json();
-     console.log("Data received:", data);
-     loginAccount(data);
-     return data;
-   } catch (error) {
-     console.error("Error fetching data:", error.message);
-     return false;
-   }
+      const data = await response.json();
+      console.log("Data received:", data);
+      loginAccount(data);
+      return data;
+    } catch (error) {
+      console.error("Error fetching data:", error.message);
+      return false;
+    }
   }
-
 
   return (
     <form
@@ -68,6 +72,7 @@ function SignupForm() {
       className="w-3/4 h-fit bg-overlay rounded-md flex gap-4 flex-col items-center justify-center text-white p-2 py-12"
     >
       <h1 className="text-xl ">Sign Up</h1>
+      <p className="text-red-500">{feedback}</p>
       <label htmlFor="" className="w-full max-w-md flex flex-col gap-2">
         Username
         <input
@@ -99,7 +104,10 @@ function SignupForm() {
         />
       </label>
       <div className="flex flex-col gap-4 justify-between w-full max-w-md">
-        <button type="submit" className="font-almendra text-md border p-2">
+        <button
+          type="submit"
+          className="font-almendra text-md bg-neonpurple-400 hover:bg-neonpurple-500 px-6 py-1 rounded"
+        >
           Sign Up
         </button>
         <a href="/login">

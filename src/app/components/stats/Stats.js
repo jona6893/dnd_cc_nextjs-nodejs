@@ -42,7 +42,6 @@ function Stats({ character, updateCharacter }) {
   };
 
   useEffect(() => {
-    console.log("jhboubo");
     if (!character._id) {
       return;
     }

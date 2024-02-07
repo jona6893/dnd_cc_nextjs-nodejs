@@ -4,12 +4,10 @@ import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { nanoid } from "nanoid";
 import { useContext, useState } from "react";
 
-
-
 function CreateCharacter({ userInfo }) {
   const [inputFocus, setInputFocus] = useState("");
   const [showAutocomplete, setShowAutocomplete] = useState(false);
-   const { updateCharacter } = useContext(CharacterContext);
+  const { updateCharacter } = useContext(CharacterContext);
   const races = [
     "Dwarv",
     "Elv",
@@ -182,9 +180,8 @@ function CreateCharacter({ userInfo }) {
 
     console.log(characterData);
     // save to DB
-   const character = await createCharacters(characterData);
-   updateCharacter(character[0]);
-
+    const character = await createCharacters(characterData);
+    updateCharacter(character[0]);
   }
 
   function updateFocus(e) {
@@ -315,15 +312,15 @@ function CreateCharacter({ userInfo }) {
             <Autocomplete list={alignment} />
           )}
         </label>
-        <button type="submit">Create character</button>
+        <button
+          type="submit"
+          className="bg-neonpurple-400 hover:bg-neonpurple-500 px-6 py-1 rounded"
+        >
+          Create character
+        </button>
       </form>
     </div>
   );
 }
 
-export default CreateCharacter
-
-
-
-
-
+export default CreateCharacter;

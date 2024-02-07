@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import SVG from "../SVG";
-import { saveCharacterData } from "@/app/modules/ElectronSaves";
+
 import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { updateCharacterDB } from "@/app/modules/apiCalls";
 

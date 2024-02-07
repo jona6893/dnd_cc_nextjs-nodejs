@@ -1,7 +1,7 @@
 import { loginAccount } from "../actions/loginAccount";
 import { process } from "react-dom/server";
 
-const apiUrl = process.env.NEXT_PUBLIC_DB_HOST;
+const apiUrl = `http://${process.env.NEXT_PUBLIC_DB_HOST}`;
 const apiKey = process.env.NEXT_PUBLIC_DB_API_KEY;
 
 // get all character from DB

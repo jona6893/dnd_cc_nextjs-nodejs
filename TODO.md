@@ -4,7 +4,7 @@ LOGIN
     - check password matches ✅
     - set cookies in brower ✅
     - redirect user to frontpage ✅
-    - move apicall to apiCalls.js
+    - move apicall to apiCalls.js ✅
 
 SIGN UP
     - validate username ✅
@@ -12,7 +12,7 @@ SIGN UP
     - create user in database ✅
     - set cookie in browers ✅
     - redirect user to frontpage ✅
-    - move apicall to apiCalls.js
+    - move apicall to apiCalls.js ✅
 
 ----- UPDATE TO SUPPORT THE DATABASE -----
 

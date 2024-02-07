@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { loginAccount } from "@/app/actions/loginAccount";
+import { loginUser } from "@/app/modules/apiCalls";
 
 function LoginForm() {
   const [feedback, setFeedback] = useState("");
@@ -33,29 +34,7 @@ function LoginForm() {
     const apiUrl = "http://62.198.182.210:8081/api/login";
     const apiKey = "myapikey";
 
-    try {
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "api-key": apiKey,
-        },
-        body: JSON.stringify(credentials),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log("Data received:", data);
-      loginAccount(data);
-      return data;
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      setFeedback("Invaild Username or Password");
-      return false;
-    }
+     setFeedback(loginUser(credentials))
   }
 
   return (
@@ -66,7 +45,7 @@ function LoginForm() {
       <h1 className="text-xl ">Login</h1>
       <p className="text-red-500">{feedback}</p>
       <label htmlFor="" className="w-full max-w-md flex flex-col gap-2">
-        Username
+        <span className="text-gray-300">Username</span>
         <input
           className="max-w-md w-full bg-transparent border-2 p-2 rounded-md"
           type="text"
@@ -76,7 +55,7 @@ function LoginForm() {
         />
       </label>
       <label htmlFor="" className="w-full max-w-md flex flex-col gap-2">
-        Password
+        <span className="text-gray-300">Password</span>
         <input
           className="max-w-md w-full bg-transparent border-2 p-2 rounded-md"
           type="password"

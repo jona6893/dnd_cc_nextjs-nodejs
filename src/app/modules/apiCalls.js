@@ -1,10 +1,12 @@
+import { loginAccount } from "../actions/loginAccount";
 
-const apiUrl = "http://62.198.182.210:8081/api/";
-const apiKey = "myapikey";
+/* const apiUrl = "http://62.198.182.210:8081/api/";
+const apiKey = "myapikey"; */
+const apiUrl = process.env.DB_HOST;
+const apiKey = process.env.DB_API_KEY;
 
 // get all character from DB
 export async function getUserCharacters(userInfo) {
-
   try {
     const response = await fetch(apiUrl + "get-characters", {
       method: "POST",
@@ -61,7 +63,7 @@ export async function deleteCharacter(_id) {
         "Content-Type": "application/json",
         "api-key": apiKey,
       },
-      body: JSON.stringify({_id:_id}),
+      body: JSON.stringify({ _id: _id }),
     });
 
     if (!response.ok) {
@@ -99,5 +101,54 @@ export async function updateCharacterDB(update) {
   } catch (error) {
     console.error("Error fetching data:", error.message);
     return false;
+  }
+}
+
+export async function signUpNewUser(newUser) {
+  try {
+    const response = await fetch(apiUrl + "signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "api-key": apiKey,
+      },
+      body: JSON.stringify(newUser),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("Data received:", data);
+    loginAccount(data);
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", error.message);
+    return false;
+  }
+}
+export async function loginUser(credentials) {
+  try {
+    const response = await fetch(apiUrl + "login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "api-key": apiKey,
+      },
+      body: JSON.stringify(credentials),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("Data received:", data);
+    loginAccount(data);
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return "Invaild Username or Password";
   }
 }

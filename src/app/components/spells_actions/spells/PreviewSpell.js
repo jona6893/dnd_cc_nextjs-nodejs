@@ -64,7 +64,7 @@ function PreviewSpell({ previewSpell }) {
           {Object.entries(previewSpell.damage.damage_at_character_level).map(
             (dmg) => {
               return (
-                <span>
+                <span key={nanoid()}>
                   Level {dmg[0]}: {dmg[1]},{" "}
                 </span>
               );

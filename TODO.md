@@ -4,6 +4,7 @@ LOGIN
     - check password matches ✅
     - set cookies in brower ✅
     - redirect user to frontpage ✅
+    - move apicall to apiCalls.js
 
 SIGN UP
     - validate username ✅
@@ -11,7 +12,7 @@ SIGN UP
     - create user in database ✅
     - set cookie in browers ✅
     - redirect user to frontpage ✅
-
+    - move apicall to apiCalls.js
 
 ----- UPDATE TO SUPPORT THE DATABASE -----
 
@@ -25,12 +26,17 @@ BASIC STATS
     -SavingThrows ✅
     -WalkingSpeed ✅
 
-EQUIPMENT
+EQUIPMENT ✅
 
-HIT POINTS
+HIT POINTS ✅
 
-SKILLS
+SKILLS ✅
 
 SPELLS & ACTIONS
+    -spells ✅
+    -action ✅
+    -descriptions ✅
+    -featureAndTraits ✅
+    -extras
 
-STATS
+STATS ✅

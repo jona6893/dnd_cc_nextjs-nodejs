@@ -1,5 +1,5 @@
-import { saveCharacterData } from "@/app/modules/ElectronSaves";
-
+import { updateCharacterDB } from "@/app/modules/apiCalls";
+import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 
 function DeathSaves({
   AdditionandSubtraction,
@@ -8,6 +8,7 @@ function DeathSaves({
   hitPoints,
   setHitPoints,
   character,
+  updateCharacter,
 }) {
   function updateFailsAndSaves(key, index) {
     let newState = { ...hitPoints };
@@ -16,8 +17,18 @@ function DeathSaves({
 
     console.log(newState);
     setHitPoints(newState);
-    character.hitPoints = newState
-    saveCharacterData(character, character.id);
+    character.hitPoints = newState;
+    let update = {
+      _id: character._id,
+      update: {
+        hitPoints: newState,
+        updated_by: epochToUtcDateTime(),
+      },
+    };
+    // update context i.e local
+    updateCharacter(character);
+    // update database
+    updateCharacterDB(update);
   }
 
   return (
@@ -116,4 +127,4 @@ function DeathSaves({
   );
 }
 
-export default DeathSaves
+export default DeathSaves;

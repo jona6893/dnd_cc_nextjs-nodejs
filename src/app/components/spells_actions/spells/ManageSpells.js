@@ -12,7 +12,7 @@ function ManageSpells({
   updateSpells,
   spells,
   setSpells,
-  consolelog,
+  updateCharacter,
 }) {
   const [previewSpell, setPreviewSpell] = useState([]);
   const [formSpell, setFormSpell] = useState(false);
@@ -70,6 +70,7 @@ function ManageSpells({
               setSpells={setSpells}
               setPreviewSpell={setPreviewSpell}
               character={character}
+              updateCharacter={updateCharacter}
             />
           </div>
           <div className="w-full pb-4">
@@ -81,6 +82,7 @@ function ManageSpells({
               setSpells={setSpells}
               setPreviewSpell={setPreviewSpell}
               character={character}
+              updateCharacter={updateCharacter}
             />
           </div>
         </div>

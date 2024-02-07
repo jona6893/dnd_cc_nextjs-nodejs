@@ -2,8 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import Popup from "../../modals/Popup";
 import ManageSpells from "./ManageSpells";
 import CharacterContext from "@/app/context/CharacterContext";
-import { compareBySpelllevel, saveCharacterData } from "@/app/modules/ElectronSaves";
+import {
+  compareBySpelllevel,
+  saveCharacterData,
+} from "@/app/modules/ElectronSaves";
 import { nanoid } from "nanoid";
+import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
+import { updateCharacterDB } from "@/app/modules/apiCalls";
 
 function Spells({ popup, setPopup }) {
   const { character, updateCharacter } = useContext(CharacterContext);
@@ -35,8 +40,19 @@ function Spells({ popup, setPopup }) {
       //console.log("New state:", newState); // Logging the new state
       return newState;
     });
-        character.spells = spells;
-        saveCharacterData(character, character.id);
+    character.spells = spells;
+
+    let update = {
+      _id: character._id,
+      update: {
+        spells: spells,
+        updated_by: epochToUtcDateTime(),
+      },
+    };
+    // update context i.e local
+    updateCharacter(character);
+    // update database
+    updateCharacterDB(update);
   }
 
   /* Spell background colors */
@@ -70,15 +86,24 @@ function Spells({ popup, setPopup }) {
   function handleSlotClick(index, slotindex) {
     let newState = [...spells];
     // Toggling the 'checked' property of the clicked skill
-     newState[1].prepared[index].spellSlots[slotindex] =
-        !newState[1].prepared[index].spellSlots[slotindex] 
-  
+    newState[1].prepared[index].spellSlots[slotindex] =
+      !newState[1].prepared[index].spellSlots[slotindex];
+
     setSpells(newState);
-    character.spells = spells
-     saveCharacterData(character, character.id);
+    character.spells = spells;
 
+    let update = {
+      _id: character._id,
+      update: {
+        spells: newState,
+        updated_by: epochToUtcDateTime(),
+      },
+    };
+    // update context i.e local
+    updateCharacter(character);
+    // update database
+    updateCharacterDB(update);
   }
-
 
   return (
     <div className="w-full grid gap-2 mt-2">
@@ -132,6 +157,7 @@ function Spells({ popup, setPopup }) {
             popup={popup}
             setPopup={setPopup}
             character={character}
+            updateCharacter={updateCharacter}
             updateSpells={updateSpells}
             spells={spells}
             setSpells={setSpells}
@@ -143,5 +169,3 @@ function Spells({ popup, setPopup }) {
 }
 
 export default Spells;
-
-

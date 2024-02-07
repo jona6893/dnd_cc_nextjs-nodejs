@@ -1,5 +1,7 @@
 import CharacterContext from "@/app/context/CharacterContext";
-import { saveCharacterData } from "@/app/modules/ElectronSaves";
+
+import { updateCharacterDB } from "@/app/modules/apiCalls";
+import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { useContext, useEffect, useState } from "react";
 import {
   BtnBold,
@@ -14,7 +16,7 @@ import {
 } from "react-simple-wysiwyg";
 
 function Descriptions() {
-  const { character } = useContext(CharacterContext);
+  const { character, updateCharacter } = useContext(CharacterContext);
     const [value, setValue] = useState(character?.descriptions ?? {personalityTraits: "", ideals:"", bonds:"", flaws:""});
 
   useEffect(() => {
@@ -37,7 +39,18 @@ function Descriptions() {
       newstate[key] = removeStyleAttribute(e.target.value)
       setValue(newstate);
       character.descriptions = newstate
-       saveCharacterData(character, character.id);
+      
+      let update = {
+        _id: character._id,
+        update: {
+          descriptions: newstate,
+          updated_by: epochToUtcDateTime(),
+        },
+      };
+      // update context i.e local
+      updateCharacter(character);
+      // update database
+      updateCharacterDB(update);
     }
 //remove style tag
 function removeStyleAttribute(htmlString) {

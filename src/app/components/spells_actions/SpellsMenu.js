@@ -6,12 +6,14 @@ import Descriptions from "./descriptions/Descriptions";
 import FeatureAndTraits from "./featureAndTraits/FeatureAndTraits";
 import CharacterContext from "@/app/context/CharacterContext";
 import { saveCharacterData } from "@/app/modules/ElectronSaves";
+import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
+import { updateCharacterDB } from "@/app/modules/apiCalls";
 
 
 function SpellsMenu() {
   const [menuBtn, setMenuBtn] = useState(0);
   const [popup, setPopup] = useState(false);
-  const { character } = useContext(CharacterContext);
+  const { character, updateCharacter } = useContext(CharacterContext);
   const [spellStats, setSpellStats] = useState(character?.spellStats ?? {modifier:0,spellAttack:0,saveDC:0});
   const selBtn = "border-neonpurple-500 border rounded";
 
@@ -29,7 +31,18 @@ function SpellsMenu() {
        setSpellStats(newstat);
 
     character.spellStats = newstat;
-    saveCharacterData(character, character.id);
+
+      let update = {
+        _id: character._id,
+        update: {
+          spellStats: newstat,
+          updated_by: epochToUtcDateTime(),
+        },
+      };
+      // update context i.e local
+      updateCharacter(character);
+      // update database
+      updateCharacterDB(update);
   }
 
   return (

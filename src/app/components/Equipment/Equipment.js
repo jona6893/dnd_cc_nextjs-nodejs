@@ -2,8 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import Popup from "../modals/Popup";
 import { nanoid } from "nanoid";
 import PopupContent from "./PopupContent";
-import { saveCharacterData } from "@/app/modules/ElectronSaves";
 import CharacterContext from "@/app/context/CharacterContext";
+import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
+import { updateCharacterDB } from "@/app/modules/apiCalls";
 
 function Equipment({ character }) {
   const [popup, setPopup] = useState(false);
@@ -87,12 +88,22 @@ function checkEquipped(item){
 
   // save updated equipment
   useEffect(() =>{
-    if (!character.id) {
+    if (!character._id) {
       return;
     }
     character.equipment = equipment
+
+    let update = {
+      _id: character._id,
+      update: {
+        equipment: equipment,
+        updated_by: epochToUtcDateTime(),
+      },
+    };
+    // update context i.e local
     updateCharacter(character);
-    saveCharacterData(character, character.id);
+    // update database
+    updateCharacterDB(update);
   },[equipment])
 
 

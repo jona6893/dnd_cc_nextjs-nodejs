@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import DeathSaves from "./DeathSaves"
-import { saveCharacterData } from "@/app/modules/ElectronSaves";
 import SVG from "../SVG";
+import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
+import { updateCharacterDB } from "@/app/modules/apiCalls";
 
-function HitPoints({character}) {
-const [hitPoints, setHitPoints] = useState(
-  character?.hitPoints ?? {
-    current: 1,
-    max: 0,
-    temp: 0,
-    fails: [false, false, false],
-    saves: [false, false, false],
-  }
-);
-const [counter, setCounter] = useState(0)
+function HitPoints({ character, updateCharacter }) {
+  const [hitPoints, setHitPoints] = useState(
+    character?.hitPoints ?? {
+      current: 1,
+      max: 0,
+      temp: 0,
+      fails: [false, false, false],
+      saves: [false, false, false],
+    }
+  );
+  const [counter, setCounter] = useState(0);
 
   useEffect(() => {
     if (character) {
@@ -29,33 +30,40 @@ const [counter, setCounter] = useState(0)
     }
   }, [character]);
 
-  function AdditionandSubtraction(key){
-     let newState = { ...hitPoints };
-     
-    if(key === 'plus'){
-        newState.current = parseInt(newState.current) + parseInt(counter)
-    } else if(key === 'minus'){
-        newState.current = parseInt(newState.current) - parseInt(counter);
-        if(newState.current < 0 ){
-            newState.current = 0
-        }
-    } 
+  function AdditionandSubtraction(key) {
+    let newState = { ...hitPoints };
+
+    if (key === "plus") {
+      newState.current = parseInt(newState.current) + parseInt(counter);
+    } else if (key === "minus") {
+      newState.current = parseInt(newState.current) - parseInt(counter);
+      if (newState.current < 0) {
+        newState.current = 0;
+      }
+    }
     console.log(newState.current);
     updateHitPoints("current", newState.current);
   }
 
-
   function updateHitPoints(key, value) {
-    
-    let newState = {...hitPoints}
+    let newState = { ...hitPoints };
 
-    newState[key] = value
-    
-    setHitPoints(newState)
-    character.hitPoints = newState
+    newState[key] = value;
 
-    saveCharacterData(character, character.id);
-    console.log(character);
+    setHitPoints(newState);
+    character.hitPoints = newState;
+
+    let update = {
+      _id: character._id,
+      update: {
+        hitPoints: newState,
+        updated_by: epochToUtcDateTime(),
+      },
+    };
+    // update context i.e local
+    updateCharacter(character);
+    // update database
+    updateCharacterDB(update);
   }
 
   return (
@@ -153,6 +161,7 @@ const [counter, setCounter] = useState(0)
           hitPoints={hitPoints}
           AdditionandSubtraction={AdditionandSubtraction}
           character={character}
+          updateCharacter={updateCharacter}
         />
       )}
     </section>

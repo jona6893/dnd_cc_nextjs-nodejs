@@ -1,5 +1,7 @@
 import CharacterContext from "@/app/context/CharacterContext";
 import { saveCharacterData } from "@/app/modules/ElectronSaves";
+import { updateCharacterDB } from "@/app/modules/apiCalls";
+import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { useContext, useEffect, useState } from "react";
 import {
   BtnBold,
@@ -14,7 +16,7 @@ import {
 } from "react-simple-wysiwyg";
 
 function FeatureAndTraits() {
-  const { character } = useContext(CharacterContext);
+  const { character, updateCharacter } = useContext(CharacterContext);
   const [value, setValue] = useState(
     character?.featuresAndTraits ?? {
       features: [],
@@ -40,7 +42,18 @@ function FeatureAndTraits() {
     newstate[key] = removeStyleAttribute(e.target.value)
     setValue(newstate);
     character.featuresAndTraits = newstate;
-    saveCharacterData(character, character.id);
+
+    let update = {
+      _id: character._id,
+      update: {
+        featuresAndTraits: newstate,
+        updated_by: epochToUtcDateTime(),
+      },
+    };
+    // update context i.e local
+    updateCharacter(character);
+    // update database
+    updateCharacterDB(update);
   }
   //remove style tag
   function removeStyleAttribute(htmlString) {
@@ -71,8 +84,19 @@ function FeatureAndTraits() {
     newstate.features = [...newstate.features, feat];
     setValue(newstate);
     character.featuresAndTraits = newstate;
-    saveCharacterData(character, character.id);
-    console.log(newstate);
+    
+    let update = {
+      _id: character._id,
+      update: {
+        featuresAndTraits: newstate,
+        updated_by: epochToUtcDateTime(),
+      },
+    };
+    // update context i.e local
+    updateCharacter(character);
+    // update database
+    updateCharacterDB(update);
+
   }
   function removeFeature(index) {
     let newstate = { ...value };
@@ -80,7 +104,17 @@ function FeatureAndTraits() {
     setValue(newstate);
     console.log(newstate);
     character.featuresAndTraits = newstate;
-    saveCharacterData(character, character.id);
+    let update = {
+      _id: character._id,
+      update: {
+        featuresAndTraits: newstate,
+        updated_by: epochToUtcDateTime(),
+      },
+    };
+    // update context i.e local
+    updateCharacter(character);
+    // update database
+    updateCharacterDB(update);
   }
 
   function tglReadMore(index) {

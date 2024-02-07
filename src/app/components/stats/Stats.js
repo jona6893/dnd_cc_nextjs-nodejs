@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react'
-import SVG from '../SVG';
-import { saveCharacterData } from '@/app/modules/ElectronSaves';
-import CharacterContext from '@/app/context/CharacterContext';
+import { useEffect, useState } from "react";
+import SVG from "../SVG";
+import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
+import { updateCharacterDB } from "@/app/modules/apiCalls";
 
-function Stats({ character }) {
+function Stats({ character, updateCharacter }) {
   const defaultStats = [
     { name: "strength", value: 0, bonus: 0, bonusOverride: false },
     { name: "dexterity", value: 0, bonus: 0, bonusOverride: false },
@@ -12,46 +12,54 @@ function Stats({ character }) {
     { name: "wisdom", value: 0, bonus: 0, bonusOverride: false },
     { name: "charisma", value: 0, bonus: 0, bonusOverride: false },
   ];
-   const [stats, setStats] = useState(character?.stats ?? defaultStats);
-   const { updateCharacter } = useContext(CharacterContext);
-   const [counter, setCounter] = useState(0)
-   useEffect(() => {
-     setStats(character?.stats ?? defaultStats);
-     //console.log(character.savingThrow)
-   }, [character]);
+  const [stats, setStats] = useState(character?.stats ?? defaultStats);
+  const [counter, setCounter] = useState(0);
+  useEffect(() => {
+    setStats(character?.stats ?? defaultStats);
+    //console.log(character.savingThrow)
+  }, [character]);
 
-
-const updateStatValue = (index, newValue, isBonus = false) => {
-  setStats((prevStats) =>
-    prevStats.map((stat, i) => {
-      if (i === index) {
-        if (isBonus) {
-          return { ...stat, bonus: newValue, bonusOverride: true };
-        } else {
-          return {
-            ...stat,
-            value: newValue,
-            bonusOverride: false,
-            bonus: stat.bonusOverride
-              ? stat.bonus
-              : Math.floor((newValue - 10) / 2),
-          };
+  const updateStatValue = (index, newValue, isBonus = false) => {
+    setStats((prevStats) =>
+      prevStats.map((stat, i) => {
+        if (i === index) {
+          if (isBonus) {
+            return { ...stat, bonus: newValue, bonusOverride: true };
+          } else {
+            return {
+              ...stat,
+              value: newValue,
+              bonusOverride: false,
+              bonus: stat.bonusOverride
+                ? stat.bonus
+                : Math.floor((newValue - 10) / 2),
+            };
+          }
         }
-      }
-      return stat;
-    })
-  );
-};
+        return stat;
+      })
+    );
+  };
 
-  
-  useEffect(()=>{
-    if(!character.id){
-      return
+  useEffect(() => {
+    console.log("jhboubo");
+    if (!character._id) {
+      return;
     }
-    character.stats = stats
+    character.stats = stats;
+
+    let update = {
+      _id: character._id,
+      update: {
+        stats: stats,
+        updated_by: epochToUtcDateTime(),
+      },
+    };
+    // update context i.e local
     updateCharacter(character);
-    saveCharacterData(character, character.id);
-  },[stats])
+    // update database
+    updateCharacterDB(update);
+  }, [stats]);
 
   return (
     <section className="grid sm:grid-cols-3 max-sm:grid-cols-3 justify-items-center gap-2 text-white w-full">
@@ -59,7 +67,9 @@ const updateStatValue = (index, newValue, isBonus = false) => {
         return (
           <div key={stat.name} className="card text-white w-24">
             <div className="grid gap-2 justify-items-center">
-              <h4 className="h4-titles font-almendra uppercase text-sm">{stat.name}</h4>
+              <h4 className="h4-titles font-almendra uppercase text-sm">
+                {stat.name}
+              </h4>
               <label className="relative group">
                 <input
                   onInput={(e) => updateStatValue(i, e.target.value)}
@@ -87,9 +97,9 @@ const updateStatValue = (index, newValue, isBonus = false) => {
             </div>
           </div>
         );
-      })} 
+      })}
     </section>
   );
 }
 
-export default Stats
+export default Stats;

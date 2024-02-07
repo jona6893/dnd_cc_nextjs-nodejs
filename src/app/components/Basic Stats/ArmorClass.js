@@ -8,7 +8,7 @@ function ArmorClass({ character, updateCharacter }) {
   const [armor, setArmor] = useState(character?.armorClass ?? 0);
 
   useEffect(() => {
-    console.log(character);
+    //console.log(character);
     if (character) {
       setArmor(character.armorClass ?? 0);
       //calculateAC();

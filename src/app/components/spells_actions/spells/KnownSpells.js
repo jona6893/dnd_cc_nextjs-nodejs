@@ -1,8 +1,10 @@
 import { saveCharacterData } from "@/app/modules/ElectronSaves";
+import { updateCharacterDB } from "@/app/modules/apiCalls";
+import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { nanoid } from "nanoid";
 import { useState } from "react";
 
-function KnownSpells({ spells, setPreviewSpell, setSpells,character }) {
+function KnownSpells({ spells, setPreviewSpell, setSpells,character, updateCharacter }) {
   const damageColors = {
     Slashing: "brute",
     Piercing: "brute",
@@ -73,7 +75,17 @@ function moveBetweenPreparedAndKnown(spellToMove, spellLevel) {
     //console.log(newState)
     setSpells(newState)
     character.spells = spells;
-    saveCharacterData(character, character.id);
+    let update = {
+      _id: character._id,
+      update: {
+        spells: newState,
+        updated_by: epochToUtcDateTime(),
+      },
+    };
+    // update context i.e local
+    updateCharacter(character);
+    // update database
+    updateCharacterDB(update);;
 }
 
 function removeSpell(spellToRemove){
@@ -93,7 +105,18 @@ function removeSpell(spellToRemove){
     }
     setSpells(newState)
     character.spells = spells;
-    saveCharacterData(character, character.id);
+
+     let update = {
+       _id: character._id,
+       update: {
+         spells: newState,
+         updated_by: epochToUtcDateTime(),
+       },
+     };
+     // update context i.e local
+     updateCharacter(character);
+     // update database
+     updateCharacterDB(update);
 }
 
   return (

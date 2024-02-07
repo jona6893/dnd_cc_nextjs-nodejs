@@ -1,8 +1,10 @@
 import { compareBySpelllevel, saveCharacterData } from "@/app/modules/ElectronSaves";
+import { updateCharacterDB } from "@/app/modules/apiCalls";
+import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { nanoid } from "nanoid";
 
 
-function PreparedSpells({ spells, setSpells, setPreviewSpell, character }) {
+function PreparedSpells({ spells, setSpells, setPreviewSpell, character, updateCharacter }) {
   const damageColors = {
     Slashing: "brute",
     Piercing: "brute",
@@ -70,7 +72,18 @@ function PreparedSpells({ spells, setSpells, setPreviewSpell, character }) {
     //console.log(newState);
     setSpells(newState);
     character.spells = spells;
-    saveCharacterData(character, character.id);
+    
+    let update = {
+      _id: character._id,
+      update: {
+        spells: newState,
+        updated_by: epochToUtcDateTime(),
+      },
+    };
+    // update context i.e local
+    updateCharacter(character);
+    // update database
+    updateCharacterDB(update);
   }
 
   function updateSpellSlotsAmount(index, amount) {
@@ -83,7 +96,18 @@ function PreparedSpells({ spells, setSpells, setPreviewSpell, character }) {
 
     setSpells(newState); // Update the state
     character.spells = spells;
-    saveCharacterData(character, character.id);
+
+    let update = {
+      _id: character._id,
+      update: {
+        spells: newState,
+        updated_by: epochToUtcDateTime(),
+      },
+    };
+    // update context i.e local
+    updateCharacter(character);
+    // update database
+    updateCharacterDB(update);
   }
  
 

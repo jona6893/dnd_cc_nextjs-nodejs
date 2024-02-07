@@ -5,11 +5,13 @@ import ManageActions from "./ManageActions";
 import { nanoid } from "nanoid";
 import { saveCharacterData } from "@/app/modules/ElectronSaves";
 import { getAC } from "@/app/modules/CalculateAcItems";
+import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
+import { updateCharacterDB } from "@/app/modules/apiCalls";
 
 function Actions({ popup, setPopup }) {
-  const { character } = useContext(CharacterContext);
+  const { character, updateCharacter } = useContext(CharacterContext);
   const [actions, setActions] = useState(character?.actions ?? []);
-const { updateCharacter } = useContext(CharacterContext);
+
 
   async function getEquippedItems(item) {
     const url = item.url;
@@ -36,7 +38,18 @@ const { updateCharacter } = useContext(CharacterContext);
             setActions(newActions);
             const updatedCharacter = { ...character, actions: newActions };
             updateCharacter(updatedCharacter);
-            saveCharacterData(updatedCharacter, character.id);
+            
+            let update = {
+              _id: character._id,
+              update: {
+                actions: newActions,
+                updated_by: epochToUtcDateTime(),
+              },
+            };
+            // update context i.e local
+            updateCharacter(updatedCharacter);
+            // update database
+            updateCharacterDB(update);
           }
         }
 

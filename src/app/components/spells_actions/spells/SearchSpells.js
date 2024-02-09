@@ -29,7 +29,7 @@ function SearchSpells({ popup, setPreviewSpell, updateSpells }) {
     async function getSpellsAPI() {
       const response = await fetch("https://www.dnd5eapi.co/api/spells/");
       const data = await response.json();
-      console.log(data);
+      //console.log(data);
       setSpellsApi(data);
     }
     getSpellsAPI();
@@ -46,7 +46,7 @@ function SearchSpells({ popup, setPreviewSpell, updateSpells }) {
     const url = item.url;
     const response = await fetch(`https://www.dnd5eapi.co${url}`);
     const data = await response.json();
-    console.log(data);
+    //console.log(data);
     updateSpells(data);
   }
 

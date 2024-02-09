@@ -41,7 +41,7 @@ function HitPoints({ character, updateCharacter }) {
         newState.current = 0;
       }
     }
-    console.log(newState.current);
+    //console.log(newState.current);
     updateHitPoints("current", newState.current);
   }
 

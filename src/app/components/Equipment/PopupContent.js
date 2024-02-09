@@ -61,7 +61,7 @@ function filterSearch(value) {
 }
 
 async function addSearchedEquipment(item) {
-  console.log(item)
+  //console.log(item)
   let description =''
    const url = item.url
    const response = await fetch(`https://www.dnd5eapi.co${url}`);

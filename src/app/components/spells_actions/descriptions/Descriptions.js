@@ -65,7 +65,7 @@ function removeStyleAttribute(htmlString) {
 
 
   
-    console.log(value)
+    //console.log(value)
   return (
     <div className="mt-2 grid gap-2 text-sm">
       <EditorProvider>

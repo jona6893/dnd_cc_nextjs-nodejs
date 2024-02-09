@@ -29,7 +29,7 @@ function Initiative({ character, updateCharacter }) {
     updateCharacter(character);
     // update database
     updateCharacterDB(update);
-    console.log(character);
+    //console.log(character);
   }
 
   return (

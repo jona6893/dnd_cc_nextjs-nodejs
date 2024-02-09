@@ -15,7 +15,7 @@ function DeathSaves({
 
     newState[key][index] = !newState[key][index];
 
-    console.log(newState);
+    //console.log(newState);
     setHitPoints(newState);
     character.hitPoints = newState;
     let update = {

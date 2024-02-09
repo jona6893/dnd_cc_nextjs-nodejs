@@ -18,15 +18,15 @@ function LoginForm() {
     const password = event.target.password.value;
 
     if (username.length < 4) {
-      console.log("username not long enough");
+      //console.log("username not long enough");
       return;
     }
     if (checkWhitespace(username)) {
-      console.log("username has whitespace");
+      //console.log("username has whitespace");
       return;
     }
     if (containsUppercase(username)) {
-      console.log("username has capital letters");
+      //console.log("username has capital letters");
       return;
     }
     const credentials = { username, password };

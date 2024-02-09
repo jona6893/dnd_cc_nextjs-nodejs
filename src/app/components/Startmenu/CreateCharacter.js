@@ -178,7 +178,7 @@ function CreateCharacter({ userInfo }) {
       created_by: epochToUtcDateTime(),
     };
 
-    console.log(characterData);
+    //console.log(characterData);
     // save to DB
     const character = await createCharacters(characterData);
     updateCharacter(character[0]);
@@ -203,7 +203,7 @@ function CreateCharacter({ userInfo }) {
 
     setTimeout(() => {
       if (showAutocomplete) {
-        console.log("blur song2");
+        //console.log("blur song2");
         setShowAutocomplete(false);
         setInputFocus("");
       }

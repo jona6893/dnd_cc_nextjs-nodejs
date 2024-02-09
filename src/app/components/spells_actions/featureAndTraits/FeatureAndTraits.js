@@ -70,7 +70,7 @@ function FeatureAndTraits() {
       const url = "/api/features";
       const response = await fetch(`https://www.dnd5eapi.co${url}`);
       const data = await response.json();
-      console.log(data);
+      //console.log(data);
       setFeatures(data.results);
     }
     getFeatures();
@@ -101,7 +101,7 @@ function FeatureAndTraits() {
     let newstate = { ...value };
     newstate.features.splice(index, 1);
     setValue(newstate);
-    console.log(newstate);
+    //console.log(newstate);
     character.featuresAndTraits = newstate;
     let update = {
       _id: character._id,

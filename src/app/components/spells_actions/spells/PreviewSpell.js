@@ -2,7 +2,7 @@ import { nanoid } from "nanoid";
 
 function PreviewSpell({ previewSpell }) {
 
-    console.log(previewSpell)
+    //console.log(previewSpell)
  
         //console.log(previewSpell);
  

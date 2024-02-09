@@ -29,7 +29,7 @@ function Proficiency({ character, updateCharacter }) {
     updateCharacter(character);
     // update database
     updateCharacterDB(update);
-    console.log(character);
+    //console.log(character);
   }
   return (
     <div className="card text-white flex justify-between items-center gap-2 justify-items-center w-[156px] h-14 border-neonred border-2">

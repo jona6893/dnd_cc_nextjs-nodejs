@@ -1,7 +1,7 @@
 
 
 function ManageActions({ popup, setPopup, actions, setAction, character }) {
-  console.log(actions);
+  //console.log(actions);
   return (
     <div>
       ManageActions

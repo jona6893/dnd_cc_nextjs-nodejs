@@ -19,7 +19,7 @@ function CurrentCharacters({ userInfo }) {
       const fetchData = async () => {
         try {
           if (userInfo?.id) {
-            console.log(userInfo);
+            //console.log(userInfo);
             const characters = await getUserCharacters(userInfo); // Wait for the Promise to resolve
             setAllCharacter(characters);
           }
@@ -42,7 +42,7 @@ function CurrentCharacters({ userInfo }) {
   }
 
  async function handleDeleteCharacter(_id){
-  console.log(_id)
+  //console.log(_id)
   const deleted = await deleteCharacter(_id);
   if(deleted?.message){
     const characters = await getUserCharacters(userInfo);

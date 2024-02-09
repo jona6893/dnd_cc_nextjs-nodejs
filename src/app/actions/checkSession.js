@@ -10,11 +10,11 @@ export const checkSession = () => {
 
   if (token && user) {
     // Cookie 'token' exists, user is likely authenticated
-    console.log(user);
+    //console.log(user);
     return user;
   } else {
     // Cookie 'token' does not exist, user is not authenticated
-    console.log("is not there");
+    //console.log("is not there");
     redirect("/login");
   }
 };

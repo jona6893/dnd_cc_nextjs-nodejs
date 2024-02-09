@@ -21,7 +21,7 @@ export async function getUserCharacters(userInfo) {
     }
 
     const data = await response.json();
-    console.log("Data received:", data);
+    //console.log("Data received:", data);
     return data;
   } catch (error) {
     console.error("Error fetching data:", error.message);
@@ -45,7 +45,7 @@ export async function createCharacters(characterData) {
     }
 
     const data = await response.json();
-    console.log("Data received:", data);
+    //console.log("Data received:", data);
     return data;
   } catch (error) {
     console.error("Error fetching data:", error.message);
@@ -70,7 +70,7 @@ export async function deleteCharacter(_id) {
     }
 
     const data = await response.json();
-    console.log("Data received:", data);
+    //console.log("Data received:", data);
     return data;
   } catch (error) {
     console.error("Error fetching data:", error.message);
@@ -95,7 +95,7 @@ export async function updateCharacterDB(update) {
     }
 
     const data = await response.json();
-    console.log("Data received:", data);
+    //console.log("Data received:", data);
     return data;
   } catch (error) {
     console.error("Error fetching data:", error.message);
@@ -119,7 +119,7 @@ export async function signUpNewUser(newUser) {
     }
 
     const data = await response.json();
-    console.log("Data received:", data);
+    //console.log("Data received:", data);
     loginAccount(data);
     return data;
   } catch (error) {
@@ -143,7 +143,7 @@ export async function loginUser(credentials) {
     }
 
     const data = await response.json();
-    console.log("Data received:", data);
+    //console.log("Data received:", data);
     loginAccount(data);
     return data;
   } catch (error) {

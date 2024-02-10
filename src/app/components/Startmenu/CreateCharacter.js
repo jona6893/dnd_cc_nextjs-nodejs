@@ -236,7 +236,7 @@ function CreateCharacter({ userInfo }) {
         <label className="w-full relative">
           Name
           <input
-            className="bg-transparent border-b border-white w-full"
+            className="bg-transparent border rounded-md p-1 border-white w-full"
             type="text"
             name="name"
             id=""
@@ -246,7 +246,7 @@ function CreateCharacter({ userInfo }) {
         <label className="relative">
           Race
           <input
-            className="bg-transparent border-b border-white w-full"
+            className="bg-transparent border rounded-md p-1 border-white w-full"
             type="text"
             name="race"
             onFocus={updateFocus}
@@ -260,7 +260,7 @@ function CreateCharacter({ userInfo }) {
         <label className="relative">
           Class
           <input
-            className="bg-transparent border-b border-white w-full"
+            className="bg-transparent border rounded-md p-1 border-white w-full"
             type="text"
             name="class"
             onFocus={updateFocus}
@@ -275,7 +275,7 @@ function CreateCharacter({ userInfo }) {
         <label className="relative">
           SubClass
           <input
-            className="bg-transparent border-b border-white w-full"
+            className="bg-transparent border rounded-md p-1 border-white w-full"
             type="text"
             name="subClass"
             onFocus={updateFocus}
@@ -290,7 +290,7 @@ function CreateCharacter({ userInfo }) {
         <label>
           Level
           <input
-            className="bg-transparent border-b border-white w-full"
+            className="bg-transparent border rounded-md p-1 border-white w-full"
             type="text"
             name="level"
             id=""
@@ -300,7 +300,7 @@ function CreateCharacter({ userInfo }) {
         <label className="relative">
           Alignment
           <input
-            className="bg-transparent border-b border-white w-full"
+            className="bg-transparent border rounded-md p-1 border-white w-full"
             type="text"
             name="alignment"
             onFocus={updateFocus}

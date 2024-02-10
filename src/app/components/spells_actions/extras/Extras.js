@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Popup from "../modals/Popup";
+import Popup from "../../modals/Popup";
 
 function Extras() {
-const [classSel, setClassSel] = useState("")
-const [modal, setModal] = useState(false)
+  const [classSel, setClassSel] = useState("");
+  const [modal, setModal] = useState(false);
 
   const dndClasses = [
     {
@@ -76,9 +76,9 @@ const [modal, setModal] = useState(false)
 
   return (
     <section className="h-fit grid gap-2 pt-2">
-      <div className="flex gap-4">
+      <div className="flex items-end gap-4">
         <select
-          className="text-black"
+          className="text-black bg-transparent text-white"
           onChange={(e) => setClassSel(e.target.value)}
         >
           <option>Class</option>
@@ -88,13 +88,40 @@ const [modal, setModal] = useState(false)
             </option>
           ))}
         </select>
-        <input type="text" value={classSel} placeholder="Select a class" className="bg-transparent" />
-        <input type="text" className="cs-input w-16 text-base" placeholder="Amount" />
+        <input
+          type="text"
+          value={classSel}
+          placeholder="Select a class"
+          className="bg-transparent font-almendra border-b border-white"
+        />
+        <label
+          htmlFor=""
+          className="grid justify-items-center text-sm text-gray-200"
+        >
+          Current
+          <input
+            type="text"
+            className="cs-input w-16 text-base"
+            placeholder="Amount"
+          />
+        </label>
+        <label
+          htmlFor=""
+          className="grid justify-items-center text-sm text-gray-200"
+        >
+          Max
+          <input
+            type="text"
+            className="cs-input w-16 text-base"
+            placeholder="Amount"
+          />
+        </label>
+        <button className="text-lg">↻</button>
         <button
           onClick={() => {
             setModal(!modal);
           }}
-          className="ml-auto"
+          className="ml-auto h-full"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -138,10 +165,26 @@ const [modal, setModal] = useState(false)
           <div className="grid grid-cols-2">
             <h2 className="col-span-2 h2-title">{classSel}</h2>
             <div className="grid gap-2 [&>*]:p-1">
-              <input type="text" className="border border-white" placeholder="Name" />
-              <input type="text" className="border border-white" placeholder="Description" />
-              <input type="text" className="border border-white" placeholder="Action" />
-              <input type="text" className="border border-white" placeholder="Distance" />
+              <input
+                type="text"
+                className="border border-white"
+                placeholder="Name"
+              />
+              <input
+                type="text"
+                className="border border-white"
+                placeholder="Description"
+              />
+              <input
+                type="text"
+                className="border border-white"
+                placeholder="Action"
+              />
+              <input
+                type="text"
+                className="border border-white"
+                placeholder="Distance"
+              />
               <button className="bg-neongreen px-2 rounded">ADD</button>
             </div>
           </div>

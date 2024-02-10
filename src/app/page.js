@@ -45,13 +45,13 @@ export default function Home() {
     fetchData();
   }, []);
 
-  let props={
-    character:character,
-    updateCharacter:updateCharacter
-  }
+  let props = {
+    character: character,
+    updateCharacter: updateCharacter,
+  };
 
   return (
-    <main className="flex gap-2 min-h-screen items-start lg:justify-center sm:px-4 max-sm:px-2 py-4 bg-background overflow-auto relative">
+    <main className="flex gap-2 min-h-screen items-start ml:justify-center sm:px-4 max-sm:px-2 py-4 pb-24 bg-background overflow-auto relative">
       {Object.keys(character).length == 0 && <Startscreen />}
       {tglMenus.skills && (
         <div className="grid gap-2">
@@ -75,17 +75,17 @@ export default function Home() {
                 <Proficiency {...props} />
                 <Inspiration {...props} />
               </div>
-              <HitPoints  {...props} />
-              <Stats  {...props} />
-              <SavingThrows  {...props} />
+              <HitPoints {...props} />
+              <Stats {...props} />
+              <SavingThrows {...props} />
             </div>
           </div>
         </div>
       )}
       {tglMenus.actionSpells && (
         <div className={`grid gap-4`}>
-          <SpellsMenu  {...props} />
-          <Equipment  {...props} />
+          <SpellsMenu {...props} />
+          <Equipment {...props} />
         </div>
       )}
       <OnScreenMenu setTglMenus={setTglMenus} tglMenus={tglMenus} />

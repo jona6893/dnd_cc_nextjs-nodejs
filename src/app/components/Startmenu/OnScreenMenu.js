@@ -8,7 +8,7 @@ function OnScreenMenu({ tglMenus, setTglMenus }) {
   }
   console.log(tglMenus);
   return (
-    <div className="fixed bottom-0 left-0 right-0 mx-auto px-2 h-[50px] w-fit bg-black/25 sm:flex max-sm:grid max-sm:grid-cols-2 gap-4 justify-center mr-0 items-center justify-items-center">
+    <div className="fixed bottom-0 left-0 right-0 mx-auto px-2 h-[50px] w-fit bg-black/25 flex gap-4 justify-center mr-0 items-center justify-items-center">
       <button
         onClick={() => tgl("skills")}
         className={`flex justify-center items-center ${tglMenus.skills ? 'bg-neongreen':'bg-neonred'} rounded w-fit h-6 px-2`}

@@ -26,11 +26,12 @@ function Startscreen() {
 
   return (
     <section className="w-screen h-screen inset-0 fixed bg-background/50 flex items-center justify-center text-white z-50">
-      <div className="bg-overlay w-11/12 h-5/6 rounded-md md:grid md:grid-cols-startscreen max-md:flex max-md:flex-col-reverse max-md:justify-end max-md:gap-4 overflow-auto p-4">
+      <div className="bg-overlay sm:w-11/12 max-sm:w-full sm:h-5/6 max-sm:h-full rounded-md md:grid md:grid-cols-startscreen max-md:flex max-md:flex-col-reverse max-md:justify-end max-md:gap-4 overflow-auto p-4">
         <div className="border-r border-white">
           <h2 className="text-lg font-almendra">New Character</h2>
           <h4 className="text-gray-300">
-            Welcome: <span className="text-neonpurple-500">{userInfo?.username}</span>
+            Welcome:{" "}
+            <span className="text-neonpurple-500">{userInfo?.username}</span>
           </h4>
           <CreateCharacter userInfo={userInfo} />
         </div>

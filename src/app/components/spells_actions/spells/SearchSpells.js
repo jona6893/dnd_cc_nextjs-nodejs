@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 
 function SearchSpells({ popup, setPreviewSpell, updateSpells }) {
   const [searching, setSearching] = useState(false);
@@ -50,33 +50,6 @@ function SearchSpells({ popup, setPreviewSpell, updateSpells }) {
     updateSpells(data);
   }
 
-  const SearchResults = () => {
-    return (
-      <div
-        id="filteredSearch"
-        className="absolute z-10 bg-white rounded-md w-full top-full mt-2 left-0 h-40 border-neonorange border-2 text-black overflow-auto"
-      >
-        {filteredSpells?.map((item) => {
-          return (
-            <div key={item.name}>
-              <div
-                onClick={() => getSpell(item)}
-                className="flex gap-1 min-h-8 justify-between items-center hover:bg-gray-300 px-2 py-2"
-              >
-                <span>{item.name}</span>
-                <button
-                  onClick={() => addSpellToKnown(item)}
-                  className="bg-neongreen px-2 rounded"
-                >
-                  ADD
-                </button>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    );
-  };
 
   return (
     <label htmlFor="" className="flex gap-2 w-full relative">
@@ -114,7 +87,7 @@ function SearchSpells({ popup, setPreviewSpell, updateSpells }) {
       {searching && (
         <div
           id="filteredSearch"
-          className="absolute z-10 bg-white rounded-md w-full top-full mt-2 left-0 h-40 border-neonorange border-2 text-black overflow-auto"
+          className="absolute z-10 bg-white rounded-md w-full top-full mt-2 left-0 h-fit max-h-80 border-neonorange border-2 text-black overflow-auto"
         >
           {filteredSpells?.map((item) => {
             return (
@@ -143,4 +116,4 @@ function SearchSpells({ popup, setPreviewSpell, updateSpells }) {
   );
 }
 
-export default SearchSpells
+export default SearchSpells;

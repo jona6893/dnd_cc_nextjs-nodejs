@@ -79,7 +79,7 @@ async function addSearchedEquipment(item) {
 // search field popup all results
   const SearchResults = () => {
     return (
-      <div className="absolute bg-white rounded-md w-full top-full mt-2 left-0 h-80 border-neonorange border-2 overflow-auto">
+      <div className="absolute bg-white rounded-md w-full top-full mt-2 left-0 h-fit max-h-80 border-neonorange border-2 overflow-auto">
         {filteredEquipment?.map((item)=>{
           return (
             <div key={nanoid()}>

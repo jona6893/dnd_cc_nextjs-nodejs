@@ -52,7 +52,7 @@ function Startscreen() {
 
   return (
     <section className="w-screen h-screen inset-0 fixed md:bg-background/50 max-md:bg-overlay flex items-center overflow-auto justify-center text-white z-50">
-      <div className="relative md:w-10/12 md:h-5/6 max-md:w-full max-md:h-full grid md:grid-cols-2 gap-4 bg-overlay p-4">
+      <div className="relative md:w-10/12 md:h-5/6 max-md:w-full max-md:h-full grid md:grid-cols-2 gap-4 bg-overlay rounded-md p-4">
         <div className="max-md:order-1">
           <h2 className="text-lg font-almendra">New Character</h2>
 
@@ -72,11 +72,8 @@ function Startscreen() {
           <div className="md:hidden">
             <WelcomeMSG value={"username"} />
           </div>
-          <CurrentCharacters
-            userInfo={userInfo}
-          />
+          <CurrentCharacters userInfo={userInfo} />
         </div>
-        
       </div>
     </section>
   );

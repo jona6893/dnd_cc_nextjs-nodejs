@@ -49,9 +49,9 @@ function SpellsMenu() {
   }
 
   return (
-    <section className=" sm:w-[600px] min-w-[400px] max-sm:w-full card flex flex-col max-h-[500px]">
+    <section className=" sm:w-[600px] min-w-[380px] max-sm:w-full card flex flex-col max-h-[500px]">
       <div className="grid grid-cols-2 w-full justify-between items-center">
-        <ul className="flex items-center gap-2 h4-title w-full col-span-2 max-sm:justify-evenly">
+        <ul className="flex items-center gap-2 h4-title w-full col-span-2 sm:justify-evenly overflow-auto">
           <li>
             <button
               onClick={() => setMenuBtn(0)}

@@ -24,26 +24,52 @@ function Startscreen() {
     fetchData();
   }, []);
 
-  return (
-    <section className="w-screen h-screen inset-0 fixed bg-background/50 flex items-center justify-center text-white z-50">
-      <div className="bg-overlay sm:w-11/12 max-sm:w-full sm:h-5/6 max-sm:h-full rounded-md md:grid md:grid-cols-startscreen max-md:flex max-md:flex-col-reverse max-md:justify-end max-md:gap-4 overflow-auto p-4">
-        <div className="border-r border-white">
-          <h2 className="text-lg font-almendra">New Character</h2>
+  const WelcomeMSG = ({ value }) => {
+    if (value == "username") {
+      return (
+        <div>
           <h4 className="text-gray-300">
             Welcome:{" "}
             <span className="text-neonpurple-500">{userInfo?.username}</span>
           </h4>
+        </div>
+      );
+    }
+    if (value == "logout") {
+      return (
+        <div className="flex">
+          <button
+            className="text-neonpurple-500 cursor-pointer"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
+        </div>
+      );
+    }
+  };
+
+  return (
+    <section className="w-screen h-screen inset-0 fixed md:bg-background/50 max-md:bg-overlay flex items-center overflow-auto justify-center text-white z-50">
+      <div className="md:w-10/12 md:h-5/6 max-md:w-full max-md:h-full grid md:grid-cols-2 gap-4 bg-overlay p-4">
+        <div className="max-md:order-1">
+          <h2 className="text-lg font-almendra">New Character</h2>
+
+          <div className="max-md:hidden">
+            <WelcomeMSG value={"username"} />
+          </div>
+          <div className="md:hidden">
+            <WelcomeMSG value={"logout"} />
+          </div>
           <CreateCharacter userInfo={userInfo} />
         </div>
-        <div className="col-start-2 flex flex-col gap-2 items-center overflow-auto border-l pl-4 border-white">
-          <div className="flex justify-between w-full">
-            <h2 className="text-lg font-almendra w-full">Characters</h2>
-            <button
-              className="text-neonpurple-500 cursor-pointer"
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
+        <div className="">
+          <h2 className="text-lg font-almendra w-full">Characters</h2>
+          <div className="max-md:hidden">
+            <WelcomeMSG value={"logout"} />
+          </div>
+          <div className="md:hidden">
+            <WelcomeMSG value={"username"} />
           </div>
           <CurrentCharacters userInfo={userInfo} />
         </div>

@@ -212,7 +212,7 @@ function CreateCharacter({ userInfo }) {
 
   const Autocomplete = ({ list }) => {
     return (
-      <div className="w-full z-[1] min-h-[15rem] max-h-96 overflow-auto bg-slate-50 absolute top-full left-0 rounded-md">
+      <div className="w-full z-[1] min-h-[15rem] max-h-96 bg-slate-50 absolute top-full left-0 rounded-md">
         {list.map((e) => (
           <p
             key={nanoid()}

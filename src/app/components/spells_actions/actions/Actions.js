@@ -1,6 +1,6 @@
 import CharacterContext from "@/app/context/CharacterContext";
 import { useContext, useEffect, useState } from "react";
-import Popup from "../../modals/Popup";
+import Popup from "../../ui_components/modals/Popup";
 import ManageActions from "./ManageActions";
 import { nanoid } from "nanoid";
 import { getAC } from "@/app/modules/CalculateAcItems";
@@ -10,7 +10,6 @@ import { updateCharacterDB } from "@/app/modules/apiCalls";
 function Actions({ popup, setPopup }) {
   const { character, updateCharacter } = useContext(CharacterContext);
   const [actions, setActions] = useState(character?.actions ?? []);
-
 
   async function getEquippedItems(item) {
     const url = item.url;
@@ -37,7 +36,7 @@ function Actions({ popup, setPopup }) {
             setActions(newActions);
             const updatedCharacter = { ...character, actions: newActions };
             updateCharacter(updatedCharacter);
-            
+
             let update = {
               _id: character._id,
               update: {
@@ -54,12 +53,8 @@ function Actions({ popup, setPopup }) {
 
         buildActionArray();
       }, 1);
-
     }
-
   }, [character]);
-
-
 
   return (
     <div className="w-full grid gap-2 mt-2">
@@ -88,7 +83,6 @@ function Actions({ popup, setPopup }) {
           const ac = item.armor_class;
           const rangeNormal = item.range?.normal;
           const rangeLong = item.range?.long;
-    
 
           return (
             <div
@@ -109,11 +103,10 @@ function Actions({ popup, setPopup }) {
               <p className="text-end text-sm">
                 {rangeNormal && rangeNormal + "ft"}
                 {rangeLong && ", " + rangeLong + "ft"}
-            
               </p>
             </div>
           );
-})}
+        })}
       </section>
     </div>
   );

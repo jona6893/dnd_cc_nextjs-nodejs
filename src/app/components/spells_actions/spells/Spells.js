@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import Popup from "../../modals/Popup";
+import Popup from "../../ui_components/modals/Popup";
 import ManageSpells from "./ManageSpells";
 import CharacterContext from "@/app/context/CharacterContext";
-import {compareBySpelllevel} from "@/app/modules/ElectronSaves";
+import { compareBySpelllevel } from "@/app/modules/ElectronSaves";
 import { nanoid } from "nanoid";
 import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { updateCharacterDB } from "@/app/modules/apiCalls";

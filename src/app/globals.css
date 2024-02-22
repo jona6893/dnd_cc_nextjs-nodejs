@@ -22,3 +22,10 @@
 .cs-input {
    @apply bg-transparent border-b border-white text-center;
 } 
+
+.green-button{
+   @apply bg-neongreen hover:bg-green-400 px-6 py-1 rounded
+}
+.red-button{
+   @apply bg-neonred hover:bg-red-400 px-6 py-1 rounded
+}

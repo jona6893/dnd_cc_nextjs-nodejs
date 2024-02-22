@@ -15,7 +15,7 @@ import Skills from "./components/skills/Skills";
 import SpellsMenu from "./components/spells_actions/SpellsMenu";
 import HitPoints from "./components/hit_points/HitPoints";
 import ProficiencyAndLanguages from "./components/Basic Stats/ProficiencyAndLanguages";
-import { checkSession } from "./actions/checkSession";
+import { checkSession } from "./sessionActions/checkSession";
 import OnScreenMenu from "./components/Startmenu/OnScreenMenu";
 
 let ipcRenderer = null;

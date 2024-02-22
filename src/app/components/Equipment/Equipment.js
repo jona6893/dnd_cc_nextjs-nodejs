@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import Popup from "../modals/Popup";
+import Popup from "../ui_components/modals/Popup";
 import { nanoid } from "nanoid";
 import PopupContent from "./PopupContent";
 import CharacterContext from "@/app/context/CharacterContext";
@@ -13,8 +13,6 @@ function Equipment({ character }) {
   const [filteredEquipment, setFilteredEquipment] = useState([]);
   const { updateCharacter } = useContext(CharacterContext);
 
-
-
   function tglReadMore(index) {
     if (readMore === index) {
       setReadMore(false);
@@ -23,75 +21,72 @@ function Equipment({ character }) {
     }
   }
 
- useEffect(() => {
-   setEquipment(character?.equipment ?? []);
-   //console.log(character.savingThrow)
- }, [character]);
+  useEffect(() => {
+    setEquipment(character?.equipment ?? []);
+    //console.log(character.savingThrow)
+  }, [character]);
 
-function updateEquipment(name, description,url) {
-       setEquipment((prev) => [
-         ...prev,
-         { id: nanoid(), name, description, amount: 1,url, equipped:false},
-       ]);
+  function updateEquipment(name, description, url) {
+    setEquipment((prev) => [
+      ...prev,
+      { id: nanoid(), name, description, amount: 1, url, equipped: false },
+    ]);
   }
 
-function countItemAmount(item){
-  const type = event.target.dataset.btn;
+  function countItemAmount(item) {
+    const type = event.target.dataset.btn;
 
-  // Create a copy of the current equipment array
-  let newEquipment = [...equipment];
-  // find the item index
-  let itemToCount = newEquipment.findIndex((i) => item.id === i.id);
-  // Update the amount for the item at the specified index
-  if (type === "plus") {
-    newEquipment[itemToCount] = {
-      ...newEquipment[itemToCount],
-      amount: newEquipment[itemToCount].amount + 1,
-    };
-  } else if (type === "minus") {
-    // Ensure amount does not go below 0
-    if (newEquipment[itemToCount].amount > 0) {
+    // Create a copy of the current equipment array
+    let newEquipment = [...equipment];
+    // find the item index
+    let itemToCount = newEquipment.findIndex((i) => item.id === i.id);
+    // Update the amount for the item at the specified index
+    if (type === "plus") {
       newEquipment[itemToCount] = {
         ...newEquipment[itemToCount],
-        amount: newEquipment[itemToCount].amount - 1,
+        amount: newEquipment[itemToCount].amount + 1,
       };
-    } else {
-      // Filter out the item if the amount reaches 0
-      newEquipment = newEquipment.filter((_, i) => i !== itemToCount);
-      //console.log("delete equipment");
+    } else if (type === "minus") {
+      // Ensure amount does not go below 0
+      if (newEquipment[itemToCount].amount > 0) {
+        newEquipment[itemToCount] = {
+          ...newEquipment[itemToCount],
+          amount: newEquipment[itemToCount].amount - 1,
+        };
+      } else {
+        // Filter out the item if the amount reaches 0
+        newEquipment = newEquipment.filter((_, i) => i !== itemToCount);
+        //console.log("delete equipment");
+      }
     }
+
+    // Return the new array
+    setEquipment(newEquipment);
+    //filterSearch(document.querySelector("#localEquipmentSearch").value);
   }
 
-  // Return the new array
-  setEquipment(newEquipment);
-  //filterSearch(document.querySelector("#localEquipmentSearch").value);
-   
+  function filterSearch(value) {
+    const filtered = equipment?.filter((item) =>
+      item.name.toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredEquipment(filtered);
+    // TODO Set filtered result to new state and show results in equiptment overview.
+  }
 
-}
+  function checkEquipped(item) {
+    let newState = [...equipment];
+    let itemToEquip = newState.findIndex((i) => item.id === i.id);
 
-function filterSearch(value) {
-  const filtered = equipment?.filter((item) =>
-    item.name.toLowerCase().includes(value.toLowerCase())
-  );
-  setFilteredEquipment(filtered)
-  // TODO Set filtered result to new state and show results in equiptment overview.
-}
-
-function checkEquipped(item){
-  let newState= [...equipment]
-  let itemToEquip = newState.findIndex((i) => item.id === i.id);
-
-  newState[itemToEquip].equipped = !newState[itemToEquip].equipped;
-  setEquipment(newState);
- 
-}
+    newState[itemToEquip].equipped = !newState[itemToEquip].equipped;
+    setEquipment(newState);
+  }
 
   // save updated equipment
-  useEffect(() =>{
+  useEffect(() => {
     if (!character._id) {
       return;
     }
-    character.equipment = equipment
+    character.equipment = equipment;
 
     let update = {
       _id: character._id,
@@ -104,12 +99,11 @@ function checkEquipped(item){
     updateCharacter(character);
     // update database
     updateCharacterDB(update);
-  },[equipment])
+  }, [equipment]);
 
-
-  useEffect(()=>{
+  useEffect(() => {
     filterSearch(document.querySelector("#localEquipmentSearch").value);
-  },[equipment])
+  }, [equipment]);
 
   return (
     <div className="w-auto sm:max-w-[600px] h-96 card flex flex-col gap-2 border-neonorange border">

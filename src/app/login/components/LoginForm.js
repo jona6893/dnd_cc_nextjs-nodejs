@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { loginAccount } from "@/app/actions/loginAccount";
+import { loginAccount } from "@/app/sessionActions/loginAccount";
 import { loginUser } from "@/app/modules/apiCalls";
 
 function LoginForm() {
@@ -34,7 +34,7 @@ function LoginForm() {
     const apiUrl = "http://62.198.182.210:8081/api/login";
     const apiKey = "myapikey";
 
-     setFeedback(loginUser(credentials))
+    setFeedback(loginUser(credentials));
   }
 
   return (

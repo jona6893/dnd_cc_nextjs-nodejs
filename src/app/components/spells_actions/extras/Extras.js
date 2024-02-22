@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Popup from "../../modals/Popup";
+import Popup from "../../ui_components/modals/Popup";
 
 function Extras() {
   const [classSel, setClassSel] = useState("");

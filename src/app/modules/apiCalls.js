@@ -1,4 +1,4 @@
-import { loginAccount } from "../actions/loginAccount";
+import { loginAccount } from "../sessionActions/loginAccount";
 import { process } from "react-dom/server";
 
 const apiUrl = `https://${process.env.NEXT_PUBLIC_DB_HOST}`;

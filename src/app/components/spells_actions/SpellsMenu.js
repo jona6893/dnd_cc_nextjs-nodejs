@@ -8,7 +8,7 @@ import CharacterContext from "@/app/context/CharacterContext";
 
 import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { updateCharacterDB } from "@/app/modules/apiCalls";
-import SVG from "../SVG";
+import SVG from "../ui_components/SVG";
 
 function SpellsMenu() {
   const [menuBtn, setMenuBtn] = useState(0);

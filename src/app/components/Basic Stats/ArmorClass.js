@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import SVG from "../SVG";
+import SVG from "../ui_components/SVG";
 import { getAC } from "@/app/modules/CalculateAcItems";
 import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { updateCharacterDB } from "@/app/modules/apiCalls";

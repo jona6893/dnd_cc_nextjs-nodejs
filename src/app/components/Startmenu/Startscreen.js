@@ -3,7 +3,7 @@ import CreateCharacter from "./CreateCharacter";
 import CurrentCharacters from "./CurrentCharacters";
 import { useEffect, useState } from "react";
 import { checkSession } from "@/app/sessionActions/checkSession";
-import DeletePrompt from "../ui_components/modals/DeletePrompt";
+
 
 function Startscreen() {
   const [userInfo, setUserInfo] = useState({});

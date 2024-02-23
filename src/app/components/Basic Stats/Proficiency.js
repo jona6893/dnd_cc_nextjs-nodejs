@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import SVG from "../SVG";
+import SVG from "../ui_components/SVG";
 
 import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { updateCharacterDB } from "@/app/modules/apiCalls";
-
 
 function Proficiency({ character, updateCharacter }) {
   const [profic, setProfic] = useState(character?.proficiency ?? 0);
@@ -48,4 +47,4 @@ function Proficiency({ character, updateCharacter }) {
   );
 }
 
-export default Proficiency
+export default Proficiency;

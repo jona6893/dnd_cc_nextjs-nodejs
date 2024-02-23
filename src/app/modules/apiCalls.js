@@ -4,6 +4,8 @@ import { process } from "react-dom/server";
 const apiUrl = `https://${process.env.NEXT_PUBLIC_DB_HOST}`;
 const apiKey = process.env.NEXT_PUBLIC_DB_API_KEY;
 
+//
+//
 // get all character from DB
 export async function getUserCharacters(userInfo) {
   try {
@@ -28,6 +30,8 @@ export async function getUserCharacters(userInfo) {
     return false;
   }
 }
+//
+//
 // Create character submit to DB
 export async function createCharacters(characterData) {
   try {
@@ -52,7 +56,8 @@ export async function createCharacters(characterData) {
     return false;
   }
 }
-
+//
+//
 // Delete A Character From the DB
 export async function deleteCharacter(_id) {
   try {
@@ -77,7 +82,8 @@ export async function deleteCharacter(_id) {
     return false;
   }
 }
-
+//
+//
 // Update Character in the DB
 export async function updateCharacterDB(update) {
   try {
@@ -102,7 +108,9 @@ export async function updateCharacterDB(update) {
     return false;
   }
 }
-
+//
+//
+// Create new User
 export async function signUpNewUser(newUser) {
   try {
     const response = await fetch(apiUrl + "signup", {
@@ -127,6 +135,9 @@ export async function signUpNewUser(newUser) {
     return false;
   }
 }
+//
+//
+// Log user In
 export async function loginUser(credentials) {
   try {
     const response = await fetch(apiUrl + "login", {

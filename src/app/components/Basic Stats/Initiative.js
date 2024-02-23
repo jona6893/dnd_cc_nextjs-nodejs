@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import SVG from "../SVG";
+import SVG from "../ui_components/SVG";
 import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { updateCharacterDB } from "@/app/modules/apiCalls";
-
-
 
 function Initiative({ character, updateCharacter }) {
   const [ini, setIni] = useState(character?.initiative ?? 0);
@@ -49,5 +47,4 @@ function Initiative({ character, updateCharacter }) {
   );
 }
 
-export default Initiative
-
+export default Initiative;

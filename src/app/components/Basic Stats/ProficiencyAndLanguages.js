@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import SVG from '../SVG';
-import { epochToUtcDateTime } from '@/app/modules/getCurrentDate';
-import { updateCharacterDB } from '@/app/modules/apiCalls';
+import React, { useEffect, useState } from "react";
+import SVG from "../ui_components/SVG";
+import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
+import { updateCharacterDB } from "@/app/modules/apiCalls";
 
 function ProficiencyAndLanguages({ character, updateCharacter }) {
   const [proNLang, setProNLang] = useState(
@@ -34,7 +34,7 @@ function ProficiencyAndLanguages({ character, updateCharacter }) {
     let update = {
       _id: character._id,
       update: {
-        ProficiencyAndLanguages:newState,
+        ProficiencyAndLanguages: newState,
         updated_by: epochToUtcDateTime(),
       },
     };
@@ -117,4 +117,4 @@ function ProficiencyAndLanguages({ character, updateCharacter }) {
   );
 }
 
-export default ProficiencyAndLanguages
+export default ProficiencyAndLanguages;

@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import SVG from "../SVG";
+import SVG from "../ui_components/SVG";
 
 import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { updateCharacterDB } from "@/app/modules/apiCalls";
-
 
 function Inspiration({ character, updateCharacter }) {
   const [insp, setInsp] = useState(character?.inspiration ?? 0);
@@ -49,4 +48,4 @@ function Inspiration({ character, updateCharacter }) {
   );
 }
 
-export default Inspiration
+export default Inspiration;

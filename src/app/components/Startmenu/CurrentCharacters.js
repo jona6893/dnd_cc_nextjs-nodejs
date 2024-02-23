@@ -11,10 +11,10 @@ import DeletePrompt from "../ui_components/modals/DeletePrompt";
 
 function CurrentCharacters({ userInfo }) {
   const [allCharacter, setAllCharacter] = useState([]);
-  const [selCharacter, setSelCharacter] = useState([]);
   const { character, updateCharacter } = useContext(CharacterContext);
-  const [ExportCharacter, setExportCharacter] = useState("");
   const [deletePrompt, setDeletePrompt] = useState({ value: false, _id: "" });
+  //const [selCharacter, setSelCharacter] = useState([]);
+  //const [ExportCharacter, setExportCharacter] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,6 +53,9 @@ function CurrentCharacters({ userInfo }) {
 
   return (
     <div className="flex flex-col w-full gap-2">
+      {allCharacter.length <= 0 && (
+        <p className="text-gray-300">Loading Characters...</p>
+      )}
       {allCharacter?.sort(compareByCharacterName).map((cha) => {
         return (
           <div

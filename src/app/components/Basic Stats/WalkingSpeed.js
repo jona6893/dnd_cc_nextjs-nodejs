@@ -1,9 +1,7 @@
-
-import SVG from "../SVG";
+import SVG from "../ui_components/SVG";
 import { useEffect, useState } from "react";
 import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { updateCharacterDB } from "@/app/modules/apiCalls";
-
 
 function WalkingSpeed({ character, updateCharacter }) {
   const [walkingSpeed, setWalkingSpeed] = useState(
@@ -51,5 +49,4 @@ function WalkingSpeed({ character, updateCharacter }) {
   );
 }
 
-export default WalkingSpeed
-
+export default WalkingSpeed;

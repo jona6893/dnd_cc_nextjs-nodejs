@@ -1,10 +1,9 @@
 import { nanoid } from "nanoid";
-import SVG from "../SVG";
+import SVG from "../ui_components/SVG";
 import { useEffect, useState } from "react";
 
 import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { updateCharacterDB } from "@/app/modules/apiCalls";
-
 
 function SavingThrows({ character, updateCharacter }) {
   const defaultSavingThrows = {
@@ -36,7 +35,7 @@ function SavingThrows({ character, updateCharacter }) {
     setSavingThrow(newState);
 
     // character.savingThrows = [...character.savingThrows, { [stat]: value }];
-    character.savingThrow[stat] = value
+    character.savingThrow[stat] = value;
 
     let update = {
       _id: character._id,
@@ -76,4 +75,4 @@ function SavingThrows({ character, updateCharacter }) {
   );
 }
 
-export default SavingThrows
+export default SavingThrows;

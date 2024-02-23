@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import DeathSaves from "./DeathSaves"
-import SVG from "../SVG";
+import DeathSaves from "./DeathSaves";
+import SVG from "../ui_components/SVG";
 import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { updateCharacterDB } from "@/app/modules/apiCalls";
 
@@ -168,4 +168,4 @@ function HitPoints({ character, updateCharacter }) {
   );
 }
 
-export default HitPoints
+export default HitPoints;

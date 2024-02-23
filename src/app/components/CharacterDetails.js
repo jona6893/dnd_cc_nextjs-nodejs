@@ -1,6 +1,6 @@
 import { updateCharacterDB } from "../modules/apiCalls";
 import { epochToUtcDateTime } from "../modules/getCurrentDate";
-import SVG from "./SVG";
+import SVG from "./ui_components/SVG";
 import { useEffect, useState } from "react";
 
 function CharacterDetails({ character, updateCharacter }) {

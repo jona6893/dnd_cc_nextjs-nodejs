@@ -1,9 +1,7 @@
-
 import { useEffect, useState } from "react";
-import SVG from "../SVG";
+import SVG from "../ui_components/SVG";
 import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { updateCharacterDB } from "@/app/modules/apiCalls";
-
 
 function Skills({ character, updateCharacter }) {
   const defaultSkills = [
@@ -122,4 +120,4 @@ function Skills({ character, updateCharacter }) {
   );
 }
 
-export default Skills
+export default Skills;

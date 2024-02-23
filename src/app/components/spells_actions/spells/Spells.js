@@ -12,6 +12,7 @@ function Spells({ popup, setPopup }) {
   const [spells, setSpells] = useState(
     character?.spells ?? [{ known: [] }, { prepared: [] }]
   );
+
   useEffect(() => {
     setSpells(character?.spells ?? [{ known: [] }, { prepared: [] }]);
     //console.log(character.savingThrow)
@@ -102,6 +103,20 @@ function Spells({ popup, setPopup }) {
     updateCharacterDB(update);
   }
 
+  // update spellslots when spell is clicked.
+  function fireSpell(index, id) {
+   
+    const slots = spells[1].prepared[index].spellSlots;
+    let spellSlot;
+    slots.some((slot, i) => {
+      if (slot === false) {
+        spellSlot = i;
+        return true;
+      }
+    });
+    handleSlotClick(index, spellSlot);
+  }
+
   return (
     <div className="w-full grid gap-2 mt-2">
       {spells[1]?.prepared?.sort(compareBySpelllevel).map((pre, index) => {
@@ -130,14 +145,14 @@ function Spells({ popup, setPopup }) {
                 })}
             </div>
 
-            {pre.spells.map((spell) => {
+            {pre.spells.map((spell, i) => {
               const bgColorClass = `${getDamageTypeColor(spell)}`;
               return (
                 <div
                   key={nanoid()}
-                  className={`${"border-" + bgColorClass} ${
-                    "bg-" + bgColorClass + "/10"
-                  } border w-full rounded grid grid-cols-equipmentRowPopup px-2 py-1 cursor-pointer`}
+                  onClick={() => fireSpell(index)}
+                  className={`${"border-" + bgColorClass} ${"bg-" + bgColorClass + "/10"} 
+                  border w-full rounded grid grid-cols-equipmentRowPopup px-2 py-1 cursor-pointer`}
                 >
                   <p className="h4-title font-bold">{spell.name}</p>
                   <span className="text-center">{spell.casting_time}</span>

@@ -197,6 +197,7 @@ function CreateCharacter({ userInfo }) {
   }
 
   function handleAutocompleteClick(value) {
+    console.log(value);
     if (inputFocus.target) {
       inputFocus.target.value = value;
     }
@@ -205,7 +206,7 @@ function CreateCharacter({ userInfo }) {
 
   function handleBlur() {
     // Delay hiding the autocomplete to allow time for onClick to fire inside the component
-    setFiltered("");
+    //setFiltered("");
     setArrowCount(0);
     setTimeout(() => {
       if (showAutocomplete) {
@@ -213,7 +214,7 @@ function CreateCharacter({ userInfo }) {
         setShowAutocomplete(false);
         setInputFocus("");
       }
-    }, 25);
+    }, 350);
   }
 
   function filterSearch(list, value) {
@@ -245,7 +246,11 @@ function CreateCharacter({ userInfo }) {
       //console.log("arrow down key" + arrowCount);
     }
     if (event.key === "Enter") {
-      handleAutocompleteClick(list[arrowCount]);
+      if(filtered.length > 0){
+        handleAutocompleteClick(filtered[arrowCount]);
+      } else{
+        handleAutocompleteClick(list[arrowCount]);
+      }
     }
   }
 
@@ -273,7 +278,7 @@ function CreateCharacter({ userInfo }) {
               <p
                 key={nanoid()}
                 onClick={() => handleAutocompleteClick(e)}
-                className={`text-black w-full border-none bg-transparent hover:bg-gray-200 p-2 ${
+                className={`text-black wfull border-none bg-transparent hover:bg-gray-200 p-2 ${
                   i === arrowCount && "gray-200"
                 }`}
               >

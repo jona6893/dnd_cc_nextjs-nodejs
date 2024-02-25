@@ -29,3 +29,7 @@
 .red-button{
    @apply bg-neonred hover:bg-red-400 px-6 py-1 rounded
 }
+
+.gray-200{
+   background-color: #e5e7eb;
+}

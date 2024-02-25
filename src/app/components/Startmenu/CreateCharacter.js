@@ -341,7 +341,7 @@ function CreateCharacter({ userInfo }) {
             type="text"
             name="subClass"
             onFocus={updateFocus}
-            /*  onBlur={handleBlur} */
+            onBlur={handleBlur}
             onInput={(e) => filterSearch(subclassesSort, e.target.value)}
             id=""
             required

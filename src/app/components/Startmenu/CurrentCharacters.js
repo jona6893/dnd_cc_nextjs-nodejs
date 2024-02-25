@@ -8,6 +8,7 @@ import { nanoid } from "nanoid";
 import { useEffect, useState } from "react";
 import { useContext } from "react";
 import DeletePrompt from "../ui_components/modals/DeletePrompt";
+import { Skeleton } from "@nextui-org/react";
 
 function CurrentCharacters({ userInfo }) {
   const [allCharacter, setAllCharacter] = useState([]);
@@ -52,9 +53,17 @@ function CurrentCharacters({ userInfo }) {
   }
 
   return (
-    <div className="flex flex-col w-full gap-2">
+    <div className="flex flex-col w-full gap-2 py-2">
       {allCharacter.length <= 0 && (
-        <p className="text-gray-300">Loading Characters...</p>
+        <div className="max-w-[300px] w-full flex items-center gap-3">
+          <div>
+            <Skeleton className="dark flex rounded-full w-12 h-12" />
+          </div>
+          <div className="w-full flex flex-col gap-2">
+            <Skeleton className="dark h-3 w-3/5 rounded-lg" />
+            <Skeleton className="dark h-3 w-4/5 rounded-lg" />
+          </div>
+        </div>
       )}
       {allCharacter?.sort(compareByCharacterName).map((cha) => {
         return (

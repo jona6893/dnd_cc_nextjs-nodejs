@@ -243,12 +243,13 @@ function CreateCharacter({ userInfo }) {
             label="Name"
             placeholder="Enter Character Name"
             isRequired
+            className="dark"
             onValueChange={setNameSlct}
           />
         </label>
         <Autocomplete
           label="Choose a Race"
-          className="max-w-xs"
+          className="max-w-xs dark"
           isRequired
           allowsCustomValue={true}
           onSelectionChange={(id) => onSelectionChange("race", id)}
@@ -264,7 +265,7 @@ function CreateCharacter({ userInfo }) {
         <Autocomplete
           isRequired
           label="Choose a Class"
-          className="max-w-xs"
+          className="max-w-xs dark"
           allowsCustomValue={true}
           onSelectionChange={(id) => onSelectionChange("class", id)}
           onInputChange={(value) => onInputChange("class", value)}
@@ -277,7 +278,7 @@ function CreateCharacter({ userInfo }) {
         </Autocomplete>
         <Autocomplete
           label="Choose a SubClass"
-          className="max-w-xs"
+          className="max-w-xs dark"
           allowsCustomValue={true}
           onSelectionChange={(id) => onSelectionChange("subclass", id)}
           onInputChange={(value) => onInputChange("subclass", value)}
@@ -293,13 +294,14 @@ function CreateCharacter({ userInfo }) {
             isRequired
             type="number"
             label="Level"
+            className="dark"
             placeholder="Enter Character Level"
             onValueChange={setLevelSlct}
           />
         </label>
         <Autocomplete
           label="Choose an Alignment"
-          className="max-w-xs"
+          className="max-w-xs dark"
           allowsCustomValue={true}
           onSelectionChange={(id) => onSelectionChange("alignment", id)}
           onInputChange={(value) => onInputChange("alignment", value)}
@@ -312,7 +314,7 @@ function CreateCharacter({ userInfo }) {
         </Autocomplete>
         <button
           type="submit"
-          className="bg-neonpurple-400 hover:bg-neonpurple-500 px-6 py-1 rounded"
+          className="bg-neonpurple-400 hover:bg-neonpurple-500 px-6 py-2 rounded-lg"
         >
           Create character
         </button>

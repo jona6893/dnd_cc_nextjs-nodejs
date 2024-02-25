@@ -3,8 +3,12 @@ import { loginAccount } from "@/app/sessionActions/loginAccount";
 import { signUpNewUser } from "@/app/modules/apiCalls";
 import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { useState } from "react";
+import { Input } from "@nextui-org/react";
 
 function SignupForm() {
+  const [usernameSlct, setUsernameSlct] = useState(null)
+  const [passwordSlct, setPasswordSlct] = useState(null)
+  const [repasswordSlct, setRepasswordSlct] = useState(null)
   const [feedback, setFeedback] = useState("");
   function checkWhitespace(str) {
     return /\s/.test(str);
@@ -15,9 +19,9 @@ function SignupForm() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    const username = event.target.username.value;
-    const password = event.target.password.value;
-    const passwordRetype = event.target.passwordRetype.value;
+    const username = usernameSlct
+    const password = passwordSlct
+    const passwordRetype = repasswordSlct
 
     if (password !== passwordRetype) {
       //console.log("passwords dont match");
@@ -40,6 +44,7 @@ function SignupForm() {
       return;
     }
     const newUser = { username, password, created_by: epochToUtcDateTime() };
+
     signUpNewUser(newUser);
   }
 
@@ -51,33 +56,33 @@ function SignupForm() {
       <h1 className="text-xl ">Sign Up</h1>
       <p className="text-red-500">{feedback}</p>
       <label htmlFor="" className="w-full max-w-md flex flex-col gap-2">
-        <span className="text-gray-300">Username</span>
-        <input
-          className="max-w-md w-full bg-transparent border-2 p-2 rounded-md"
+        <Input
+          isRequired
           type="text"
-          name="username"
-          id="username"
-          required
+          label="Enter A Username"
+          className="dark"
+          placeholder="Enter A Username"
+          onValueChange={setUsernameSlct}
         />
       </label>
       <label htmlFor="" className="w-full max-w-md flex flex-col gap-2">
-        <span className="text-gray-300">Password</span>
-        <input
-          className="max-w-md w-full bg-transparent border-2 p-2 rounded-md"
+        <Input
+          isRequired
           type="password"
-          name="password"
-          id="password"
-          required
+          label="Enter a Password"
+          className="dark"
+          placeholder="Enter a Password"
+          onValueChange={setPasswordSlct}
         />
       </label>
       <label htmlFor="" className="w-full max-w-md flex flex-col gap-2">
-        <span className="text-gray-300">Re-type Password</span>
-        <input
-          className="max-w-md w-full bg-transparent border-2 p-2 rounded-md"
+        <Input
+          isRequired
           type="password"
-          name="passwordRetype"
-          id="passwordRetype"
-          required
+          label="Retype Password"
+          className="dark"
+          placeholder="Retype Password"
+          onValueChange={setRepasswordSlct}
         />
       </label>
       <div className="flex flex-col gap-4 justify-between w-full max-w-md">

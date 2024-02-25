@@ -8,6 +8,7 @@ import CharacterContext from "@/app/context/CharacterContext";
 import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { updateCharacterDB } from "@/app/modules/apiCalls";
 import StatsBar from "./spells/dc_modifier_attack/StatsBar";
+import { Tabs, Tab } from "@nextui-org/react";
 
 function SpellsMenu() {
   const [menuBtn, setMenuBtn] = useState(0);
@@ -56,37 +57,48 @@ function SpellsMenu() {
 
   return (
     <section className=" sm:w-[600px] min-w-[380px] max-sm:w-full card flex flex-col max-h-[500px]">
-      <div className="grid grid-cols-2 w-full justify-between items-center">
-        <ul className="flex items-center gap-2 h4-title w-full col-span-2 sm:justify-evenly overflow-auto">
-          {menuOptions.map((option, i) => (
-            <li key={i*3}>
-              <button
-                onClick={() => setMenuBtn(i)}
-                className={`px-2 py-1 ${
-                  menuBtn === i ? selBtn : "border-transparent"
-                } border `}
-              >
-                {option}
-              </button>
-            </li>
-          ))}
-        </ul>
-        {menuBtn === 1 && (
-          <StatsBar
-            updatSpellStat={updatSpellStat}
-            spellStats={spellStats}
-            setPopup={setPopup}
-            popup={popup}
-          />
-        )}
-      </div>
-      <div className="w-full text-white overflow-y-auto">
-        {menuBtn === 0 && <Actions popup={popup} setPopup={setPopup} />}
-        {menuBtn === 1 && <Spells popup={popup} setPopup={setPopup} />}
-        {menuBtn === 2 && <Extras />}
-        {menuBtn === 3 && <Descriptions />}
-        {menuBtn === 4 && <FeatureAndTraits />}
-      </div>
+      <Tabs
+        aria-label="Options"
+        classNames={{
+          tabList:
+            "dark mx-auto focus:outline-none focus:ring focus:ring-neonpurple-300",
+          cursor: "w-full border-2 border-neonpurple-300 ",
+          /*     tab: "max-w-fit px-0 h-12",
+          tabContent: "group-data-[selected=true]:text-[#06b6d4]", */
+        }}
+      >
+        <Tab key="action" title="ACTIONS">
+          <div className="w-full text-white overflow-y-auto">
+            <Actions popup={popup} setPopup={setPopup} />
+          </div>
+        </Tab>
+        <Tab key="spells" title="SPELLS" className="overflow-y-auto">
+          <div className="w-full text-white overflow-y-auto">
+            <StatsBar
+              updatSpellStat={updatSpellStat}
+              spellStats={spellStats}
+              setPopup={setPopup}
+              popup={popup}
+            />
+            <Spells popup={popup} setPopup={setPopup} />
+          </div>
+        </Tab>
+        <Tab key="extras" title="EXTRAS">
+          <div className="w-full text-white overflow-y-auto">
+            <Extras />
+          </div>
+        </Tab>
+        <Tab key="descriptions" title="DESCRIPTIONS">
+          <div className="w-full text-white overflow-y-auto">
+            <Descriptions />
+          </div>
+        </Tab>
+        <Tab key="features_&_traits" title="FEATURES & TRAITS">
+          <div className="w-full text-white overflow-y-auto">
+            <FeatureAndTraits />
+          </div>
+        </Tab>
+      </Tabs>
     </section>
   );
 }

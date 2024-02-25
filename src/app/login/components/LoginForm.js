@@ -2,8 +2,11 @@
 import { useState } from "react";
 import { loginAccount } from "@/app/sessionActions/loginAccount";
 import { loginUser } from "@/app/modules/apiCalls";
+import { Input } from "@nextui-org/react";
 
 function LoginForm() {
+  const [usernameSlct, setUsernameSlct] = useState(null);
+  const [passwordSlct, setPasswordSlct] = useState(null);
   const [feedback, setFeedback] = useState("");
   function checkWhitespace(str) {
     return /\s/.test(str);
@@ -14,8 +17,8 @@ function LoginForm() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    const username = event.target.username.value;
-    const password = event.target.password.value;
+    const username = usernameSlct;
+    const password = passwordSlct;
 
     if (username.length < 4) {
       //console.log("username not long enough");
@@ -34,6 +37,7 @@ function LoginForm() {
     const apiUrl = "http://62.198.182.210:8081/api/login";
     const apiKey = "myapikey";
 
+    console.log(credentials);
     setFeedback(loginUser(credentials));
   }
 
@@ -45,29 +49,29 @@ function LoginForm() {
       <h1 className="text-xl ">Login</h1>
       <p className="text-red-500">{feedback}</p>
       <label htmlFor="" className="w-full max-w-md flex flex-col gap-2">
-        <span className="text-gray-300">Username</span>
-        <input
-          className="max-w-md w-full bg-transparent border-2 p-2 rounded-md"
+        <Input
+          isRequired
           type="text"
-          name="username"
-          id="username"
-          required
+          label="Enter Username"
+          className="dark"
+          placeholder="Enter Username"
+          onValueChange={setUsernameSlct}
         />
       </label>
       <label htmlFor="" className="w-full max-w-md flex flex-col gap-2">
-        <span className="text-gray-300">Password</span>
-        <input
-          className="max-w-md w-full bg-transparent border-2 p-2 rounded-md"
+        <Input
+          isRequired
           type="password"
-          name="password"
-          id="password"
-          required
+          label="Enter Password"
+          className="dark"
+          placeholder="Enter Password"
+          onValueChange={setPasswordSlct}
         />
       </label>
       <div className="flex flex-col gap-4 justify-between w-full max-w-md">
         <button
           type="submit"
-          className="font-almendra text-md bg-neonpurple-400 hover:bg-neonpurple-500 px-6 py-1 rounded"
+          className="font-almendra text-md bg-neonpurple-400 hover:bg-neonpurple-500 px-6 py-2 rounded-lg"
         >
           Login
         </button>

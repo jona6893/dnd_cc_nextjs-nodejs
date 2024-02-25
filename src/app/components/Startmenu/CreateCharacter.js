@@ -213,13 +213,14 @@ function CreateCharacter({ userInfo }) {
         setShowAutocomplete(false);
         setInputFocus("");
       }
-    }, 0);
+    }, 25);
   }
 
   function filterSearch(list, value) {
     const filtered = list?.filter((item) =>
       item.toLowerCase().includes(value.toLowerCase())
     );
+    setArrowCount(0);
     setFiltered(filtered);
   }
 
@@ -249,7 +250,7 @@ function CreateCharacter({ userInfo }) {
   }
 
   useEffect(() => {
-    if(document.querySelector(".gray-200")){
+    if (document.querySelector(".gray-200")) {
       document.querySelector(".gray-200").scrollIntoView(true);
     }
   }, [arrowCount]);

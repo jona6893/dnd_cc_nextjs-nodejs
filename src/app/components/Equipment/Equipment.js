@@ -5,6 +5,7 @@ import PopupContent from "./PopupContent";
 import CharacterContext from "@/app/context/CharacterContext";
 import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { updateCharacterDB } from "@/app/modules/apiCalls";
+import { Card, CardBody } from "@nextui-org/react";
 
 function Equipment({ character }) {
   const [popup, setPopup] = useState(false);
@@ -13,6 +14,7 @@ function Equipment({ character }) {
   const [filteredEquipment, setFilteredEquipment] = useState([]);
   const { updateCharacter } = useContext(CharacterContext);
 
+  
   function tglReadMore(index) {
     if (readMore === index) {
       setReadMore(false);
@@ -106,177 +108,187 @@ function Equipment({ character }) {
   }, [equipment]);
 
   return (
-    <div className="w-auto sm:max-w-[600px] h-96 card flex flex-col gap-2 border-neonorange border">
-      {popup && (
-        <Popup state={popup} setState={setPopup}>
-          <PopupContent
-            popup={popup}
-            setPopup={setPopup}
-            updateEquipment={updateEquipment}
-            equipment={equipment}
-            setEquipment={setEquipment}
-            readMore={readMore}
-            tglReadMore={tglReadMore}
-            countItemAmount={countItemAmount}
-          />
-        </Popup>
-      )}
-      <div className="flex justify-between border-b border-white p-2">
-        <h3 className="h3-title">Equipment</h3>
-        <label className="flex items-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6 text-white"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-            />
-          </svg>
-          <input
-            id="localEquipmentSearch"
-            type="text"
-            className="bg-transparent text-white px-2 w-full"
-            placeholder="Search"
-            onInput={(e) => filterSearch(e.target.value)}
-          />
-        </label>
-        <button onClick={() => setPopup(!popup)}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6 text-white"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6 13.5V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 9.75V10.5"
-            />
-          </svg>
-        </button>
-      </div>
-      <div className="flex flex-col gap-2 overflow-auto">
-        {filteredEquipment.length > 0
-          ? filteredEquipment.map((item, index) => (
-              <div
-                key={item.id}
-                className="grid text-base grid-cols-equipmentRow items-center  justify-between cursor-pointer bg-neonorange/10 border-neonorange border relative rounded p-1"
+    <Card className="dark w-auto sm:max-w-[600px] h-96 border-neonorange border">
+      <CardBody>
+        <div className="flex flex-col gap-2 ">
+          {popup && (
+            <Popup state={popup} setState={setPopup}>
+              <PopupContent
+                popup={popup}
+                setPopup={setPopup}
+                updateEquipment={updateEquipment}
+                equipment={equipment}
+                setEquipment={setEquipment}
+                readMore={readMore}
+                tglReadMore={tglReadMore}
+                countItemAmount={countItemAmount}
+              />
+            </Popup>
+          )}
+          <div className="flex justify-between border-b border-white p-2">
+            <h3 className="h3-title">Equipment</h3>
+            <label className="flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6 text-white"
               >
-                <h5
-                  onClick={() => tglReadMore(index)}
-                  className="text-white font-semibold"
-                >
-                  {item.name}
-                </h5>
-                <p onClick={() => tglReadMore(index)} className="text-white">
-                  Description
-                </p>
-                <div
-                  onClick={() => checkEquipped(item)}
-                  className={`${
-                    item?.equipped === true
-                      ? "bg-neonpurple-500"
-                      : "bg-transparent"
-                  } w-5 h-5 cursor-pointer rounded-full border-neonpurple-500 border`}
-                ></div>
-                <div
-                  className={`${
-                    item.amount === 0 ? "flex" : "grid"
-                  } grid-cols-3 ml-auto justify-items-center items-center gap-2 w-fit`}
-                >
-                  <button
-                    onClick={() => countItemAmount(item)}
-                    data-btn="plus"
-                    className="bg-neongreen w-5 h-5 rounded flex justify-center items-center"
-                  >
-                    +
-                  </button>
-                  <span className="text-white">{item.amount}</span>
-                  <button
-                    onClick={() => countItemAmount(item)}
-                    data-btn="minus"
-                    className={`bg-neonred ${
-                      item.amount === 0 ? "w-auto px-2" : "w-5"
-                    } h-5 rounded flex justify-center items-center`}
-                  >
-                    {item.amount === 0 ? "remove" : "-"}
-                  </button>
-                </div>
-                <div
-                  onClick={() => tglReadMore(index)}
-                  className={`${
-                    readMore !== index && "hidden"
-                  } col-span-3 pt-1`}
-                >
-                  <p className="text-gray-200">{item.description}</p>
-                </div>
-              </div>
-            ))
-          : equipment.map((item, index) => (
-              <div
-                key={item.id}
-                className="grid text-base grid-cols-equipmentRow  justify-between cursor-pointer bg-neonorange/10 border-neonorange border relative rounded p-1"
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                />
+              </svg>
+              <input
+                id="localEquipmentSearch"
+                type="text"
+                className="bg-transparent text-white px-2 w-full"
+                placeholder="Search"
+                onInput={(e) => filterSearch(e.target.value)}
+              />
+            </label>
+            <button onClick={() => setPopup(!popup)}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6 text-white"
               >
-                <h5
-                  onClick={() => tglReadMore(index)}
-                  className="text-white font-semibold"
-                >
-                  {item.name}
-                </h5>
-                <p onClick={() => tglReadMore(index)} className="text-white">
-                  Description
-                </p>
-                <div
-                  onClick={() => checkEquipped(item)}
-                  className={`${
-                    item?.equipped === true
-                      ? "bg-neonpurple-500"
-                      : "bg-transparent"
-                  } w-5 h-5 cursor-pointer rounded-full border-neonpurple-500 border`}
-                ></div>
-                <div
-                  className={`${
-                    item.amount === 0 ? "flex" : "grid"
-                  } grid-cols-3 ml-auto justify-items-center items-center gap-2 w-fit`}
-                >
-                  <button
-                    onClick={() => countItemAmount(item)}
-                    data-btn="plus"
-                    className="bg-neongreen w-5 h-5 rounded flex justify-center items-center"
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 13.5V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 9.75V10.5"
+                />
+              </svg>
+            </button>
+          </div>
+          <div className="flex flex-col gap-2 overflow-auto">
+            {filteredEquipment.length > 0
+              ? filteredEquipment.map((item, index) => (
+                  <div
+                    key={item.id}
+                    className="grid text-base grid-cols-equipmentRow items-center  justify-between cursor-pointer bg-neonorange/10 border-neonorange border relative rounded p-1"
                   >
-                    +
-                  </button>
-                  <span className="text-white">{item.amount}</span>
-                  <button
-                    onClick={() => countItemAmount(item)}
-                    data-btn="minus"
-                    className={`bg-neonred ${
-                      item.amount === 0 ? "w-auto px-2" : "w-5"
-                    } h-5 rounded flex justify-center items-center`}
+                    <h5
+                      onClick={() => tglReadMore(index)}
+                      className="text-white font-semibold"
+                    >
+                      {item.name}
+                    </h5>
+                    <p
+                      onClick={() => tglReadMore(index)}
+                      className="text-white"
+                    >
+                      Description
+                    </p>
+                    <div
+                      onClick={() => checkEquipped(item)}
+                      className={`${
+                        item?.equipped === true
+                          ? "bg-neonpurple-500"
+                          : "bg-transparent"
+                      } w-5 h-5 cursor-pointer rounded-full border-neonpurple-500 border`}
+                    ></div>
+                    <div
+                      className={`${
+                        item.amount === 0 ? "flex" : "grid"
+                      } grid-cols-3 ml-auto justify-items-center items-center gap-2 w-fit`}
+                    >
+                      <button
+                        onClick={() => countItemAmount(item)}
+                        data-btn="plus"
+                        className="bg-neongreen w-5 h-5 rounded flex justify-center items-center"
+                      >
+                        +
+                      </button>
+                      <span className="text-white">{item.amount}</span>
+                      <button
+                        onClick={() => countItemAmount(item)}
+                        data-btn="minus"
+                        className={`bg-neonred ${
+                          item.amount === 0 ? "w-auto px-2" : "w-5"
+                        } h-5 rounded flex justify-center items-center`}
+                      >
+                        {item.amount === 0 ? "remove" : "-"}
+                      </button>
+                    </div>
+                    <div
+                      onClick={() => tglReadMore(index)}
+                      className={`${
+                        readMore !== index && "hidden"
+                      } col-span-3 pt-1`}
+                    >
+                      <p className="text-gray-200">{item.description}</p>
+                    </div>
+                  </div>
+                ))
+              : equipment.map((item, index) => (
+                  <div
+                    key={item.id}
+                    className="grid text-base grid-cols-equipmentRow  justify-between cursor-pointer bg-neonorange/10 border-neonorange border relative rounded p-1"
                   >
-                    {item.amount === 0 ? "remove" : "-"}
-                  </button>
-                </div>
-                <div
-                  onClick={() => tglReadMore(index)}
-                  className={`${
-                    readMore !== index && "hidden"
-                  } col-span-3 pt-1`}
-                >
-                  <p className="text-gray-200">{item.description}</p>
-                </div>
-              </div>
-            ))}
-      </div>
-    </div>
+                    <h5
+                      onClick={() => tglReadMore(index)}
+                      className="text-white font-semibold"
+                    >
+                      {item.name}
+                    </h5>
+                    <p
+                      onClick={() => tglReadMore(index)}
+                      className="text-white"
+                    >
+                      Description
+                    </p>
+                    <div
+                      onClick={() => checkEquipped(item)}
+                      className={`${
+                        item?.equipped === true
+                          ? "bg-neonpurple-500"
+                          : "bg-transparent"
+                      } w-5 h-5 cursor-pointer rounded-full border-neonpurple-500 border`}
+                    ></div>
+                    <div
+                      className={`${
+                        item.amount === 0 ? "flex" : "grid"
+                      } grid-cols-3 ml-auto justify-items-center items-center gap-2 w-fit`}
+                    >
+                      <button
+                        onClick={() => countItemAmount(item)}
+                        data-btn="plus"
+                        className="bg-neongreen w-5 h-5 rounded flex justify-center items-center"
+                      >
+                        +
+                      </button>
+                      <span className="text-white">{item.amount}</span>
+                      <button
+                        onClick={() => countItemAmount(item)}
+                        data-btn="minus"
+                        className={`bg-neonred ${
+                          item.amount === 0 ? "w-auto px-2" : "w-5"
+                        } h-5 rounded flex justify-center items-center`}
+                      >
+                        {item.amount === 0 ? "remove" : "-"}
+                      </button>
+                    </div>
+                    <div
+                      onClick={() => tglReadMore(index)}
+                      className={`${
+                        readMore !== index && "hidden"
+                      } col-span-3 pt-1`}
+                    >
+                      <p className="text-gray-200">{item.description}</p>
+                    </div>
+                  </div>
+                ))}
+          </div>
+        </div>
+      </CardBody>
+    </Card>
   );
 }
 

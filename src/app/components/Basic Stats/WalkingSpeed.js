@@ -2,6 +2,7 @@ import SVG from "../ui_components/SVG";
 import { useEffect, useState } from "react";
 import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { updateCharacterDB } from "@/app/modules/apiCalls";
+import { Card, CardBody } from "@nextui-org/react";
 
 function WalkingSpeed({ character, updateCharacter }) {
   const [walkingSpeed, setWalkingSpeed] = useState(
@@ -32,20 +33,24 @@ function WalkingSpeed({ character, updateCharacter }) {
   }
 
   return (
-    <div className="card text-white grid gap-2 justify-items-center w-24 h-28 border-neonred border-2">
-      <h4 className="h4-title">Walking</h4>
-      <label className="relative group">
-        <input
-          onInput={updateWalkingSpeed}
-          type="text"
-          value={walkingSpeed}
-          className="basic-input"
-          placeholder="0"
-        />
-        <SVG />
-      </label>
-      <h4 className="h4-title">Speed</h4>
-    </div>
+    <Card className="dark w-24 h-28 border-neonred border">
+      <CardBody className="grid gap-2 justify-items-center">
+       
+          <h4 className="h4-title">Walking</h4>
+          <label className="relative group">
+            <input
+              onInput={updateWalkingSpeed}
+              type="text"
+              value={walkingSpeed}
+              className="basic-input"
+              placeholder="0"
+            />
+            <SVG />
+          </label>
+          <h4 className="h4-title">Speed</h4>
+   
+      </CardBody>
+    </Card>
   );
 }
 

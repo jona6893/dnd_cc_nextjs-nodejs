@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import SVG from "../ui_components/SVG";
 import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { updateCharacterDB } from "@/app/modules/apiCalls";
+import { Card, CardBody } from "@nextui-org/react";
 
 function Stats({ character, updateCharacter }) {
   const defaultStats = [
@@ -64,37 +65,40 @@ function Stats({ character, updateCharacter }) {
     <section className="grid sm:grid-cols-3 max-sm:grid-cols-3 justify-items-center gap-2 text-white w-full">
       {defaultStats.map((stat, i) => {
         return (
-          <div key={stat.name} className="card text-white w-24">
-            <div className="grid gap-2 justify-items-center">
-              <h4 className="h4-titles font-almendra uppercase text-sm">
-                {stat.name}
-              </h4>
-              <label className="relative group">
-                <input
-                  onInput={(e) => updateStatValue(i, e.target.value)}
-                  type="text"
-                  className="basic-input"
-                  value={stats[i].value}
-                  placeholder="0"
-                />
-                <SVG />
-              </label>
-              <label className="relative group">
-                <input
-                  onInput={(e) => updateStatValue(i, e.target.value, true)}
-                  type="text"
-                  className="bg-transparent border-2 border-neonpurple-500 w-8 text-center rounded text-md"
-                  placeholder="0"
-                  value={
-                    stats[i].bonusOverride
-                      ? stats[i].bonus
-                      : Math.floor((stats[i].value - 10) / 2)
-                  }
-                />
-                <SVG />
-              </label>
-            </div>
-          </div>
+          <Card key={stat.name} className="w-24 border border-gray-50 dark ">
+            <CardBody className="p-2">
+                <div className="grid gap-2 justify-items-center">
+                  <h4 className="h4-titles font-almendra uppercase text-sm">
+                    {stat.name}
+                  </h4>
+                  <label className="relative group">
+                    <input
+                      onInput={(e) => updateStatValue(i, e.target.value)}
+                      type="text"
+                      className="basic-input"
+                      value={stats[i].value}
+                      placeholder="0"
+                    />
+                    <SVG />
+                  </label>
+                  <label className="relative group">
+                    <input
+                      onInput={(e) => updateStatValue(i, e.target.value, true)}
+                      type="text"
+                      className="bg-transparent border-2 border-neonpurple-500 w-8 text-center rounded text-md"
+                      placeholder="0"
+                      value={
+                        stats[i].bonusOverride
+                          ? stats[i].bonus
+                          : Math.floor((stats[i].value - 10) / 2)
+                      }
+                    />
+                    <SVG />
+                  </label>
+                </div>
+           
+            </CardBody>
+          </Card>
         );
       })}
     </section>

@@ -4,7 +4,6 @@ import CurrentCharacters from "./CurrentCharacters";
 import { useEffect, useState } from "react";
 import { checkSession } from "@/app/sessionActions/checkSession";
 
-
 function Startscreen() {
   const [userInfo, setUserInfo] = useState({});
 
@@ -24,6 +23,8 @@ function Startscreen() {
 
     fetchData();
   }, []);
+
+  console.log(userInfo);
 
   const WelcomeMSG = ({ value }) => {
     if (value == "username") {

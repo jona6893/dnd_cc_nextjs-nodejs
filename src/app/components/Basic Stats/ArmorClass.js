@@ -3,6 +3,7 @@ import SVG from "../ui_components/SVG";
 import { getAC } from "@/app/modules/CalculateAcItems";
 import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { updateCharacterDB } from "@/app/modules/apiCalls";
+import { Card, CardBody } from "@nextui-org/react";
 
 function ArmorClass({ character, updateCharacter }) {
   const [armor, setArmor] = useState(character?.armorClass ?? 0);
@@ -65,20 +66,23 @@ function ArmorClass({ character, updateCharacter }) {
   }
 
   return (
-    <div className="card text-white grid gap-2 justify-items-center w-24 h-28 border-neonred border-2">
-      <h4 className="h4-title">Armor</h4>
-      <label className="relative group">
-        <input
-          onInput={updateArmor}
-          type="text"
-          value={armor}
-          className="basic-input"
-          placeholder="0"
-        />
-        <SVG />
-      </label>
-      <h4 className="h4-title">Class</h4>
-    </div>
+    <Card className="dark w-24 h-28 border-neonred border">
+      <CardBody className="grid gap-2 justify-items-center">
+          <h4 className="h4-title">Armor</h4>
+          <label className="relative group">
+            <input
+              onInput={updateArmor}
+              type="text"
+              value={armor}
+              className="basic-input"
+              placeholder="0"
+            />
+            <SVG />
+          </label>
+          <h4 className="h4-title">Class</h4>
+       
+      </CardBody>
+    </Card>
   );
 }
 

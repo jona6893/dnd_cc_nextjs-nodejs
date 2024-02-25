@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import SVG from "../ui_components/SVG";
 import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { updateCharacterDB } from "@/app/modules/apiCalls";
+import { Card, CardBody } from "@nextui-org/react";
 
 function Skills({ character, updateCharacter }) {
   const defaultSkills = [
@@ -85,38 +86,42 @@ function Skills({ character, updateCharacter }) {
   }, [skills]);
 
   return (
-    <section className="card border-neonpurple-500 p-4 rounded-md border w-fit min-w-[16rem] flex flex-col gap-2">
-      {skills.map((skill, index) => {
-        return (
-          <div key={skill.skill} className="text-white">
-            <label
-              htmlFor=""
-              className="flex gap-2 items-center group relative"
-            >
-              <div
-                onClick={() => handleSkillClick(index)}
-                className={`${
-                  skill.checked === true
-                    ? "bg-neonpurple-500"
-                    : "bg-transparent"
-                } w-5 h-5 cursor-pointer rounded-full border-neonpurple-500 border`}
-              ></div>
-              <input
-                onInput={(e) => updatSkills(index, e.target.value)}
-                className="basic-inputt w-8 bg-transparent text-center border-b border-white text-base uppercase"
-                type="text"
-                name=""
-                placeholder="0"
-                value={skill.value === 0 ? "" : skill.value}
-                id=""
-              />
-              <span className="h4-title">{skill.skill}</span>
-              <SVG />
-            </label>
-          </div>
-        );
-      })}
-    </section>
+    <Card className="dark border-neonpurple-500 border w-fit min-w-[16rem]">
+      <CardBody>
+        <section className="flex flex-col gap-2">
+          {skills.map((skill, index) => {
+            return (
+              <div key={skill.skill} className="text-white">
+                <label
+                  htmlFor=""
+                  className="flex gap-2 items-center group relative"
+                >
+                  <div
+                    onClick={() => handleSkillClick(index)}
+                    className={`${
+                      skill.checked === true
+                        ? "bg-neonpurple-500"
+                        : "bg-transparent"
+                    } w-5 h-5 cursor-pointer rounded-full border-neonpurple-500 border`}
+                  ></div>
+                  <input
+                    onInput={(e) => updatSkills(index, e.target.value)}
+                    className="basic-inputt w-8 bg-transparent text-center border-b border-white text-base uppercase"
+                    type="text"
+                    name=""
+                    placeholder="0"
+                    value={skill.value === 0 ? "" : skill.value}
+                    id=""
+                  />
+                  <span className="h4-title">{skill.skill}</span>
+                  <SVG />
+                </label>
+              </div>
+            );
+          })}
+        </section>
+      </CardBody>
+    </Card>
   );
 }
 

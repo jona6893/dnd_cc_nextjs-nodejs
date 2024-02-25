@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import SVG from "../ui_components/SVG";
-
+import { Card, CardBody } from "@nextui-org/react";
 import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { updateCharacterDB } from "@/app/modules/apiCalls";
 
@@ -31,19 +31,23 @@ function Proficiency({ character, updateCharacter }) {
     //console.log(character);
   }
   return (
-    <div className="card text-white flex justify-between items-center gap-2 justify-items-center w-[156px] h-14 border-neonred border-2">
-      <h4 className="h4-title leading-tight">Proficiency Bonus</h4>
-      <label className="relative group">
-        <input
-          onInput={updateProficiency}
-          type="text"
-          className="basic-input"
-          value={profic === 0 ? "" : profic}
-          placeholder="0"
-        />
-        <SVG />
-      </label>
-    </div>
+    <Card className="dark w-[156px] h-14 border-neonred border">
+      <CardBody className="p-2">
+        <div className=" flex justify-between items-center gap-2 justify-items-center ">
+          <h4 className="h4-title leading-tight">Proficiency Bonus</h4>
+          <label className="relative group">
+            <input
+              onInput={updateProficiency}
+              type="text"
+              className="basic-input"
+              value={profic === 0 ? "" : profic}
+              placeholder="0"
+            />
+            <SVG />
+          </label>
+        </div>
+      </CardBody>
+    </Card>
   );
 }
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import SVG from "../ui_components/SVG";
 import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { updateCharacterDB } from "@/app/modules/apiCalls";
+import { Card, CardBody } from "@nextui-org/react";
 
 function ProficiencyAndLanguages({ character, updateCharacter }) {
   const [proNLang, setProNLang] = useState(
@@ -45,75 +46,85 @@ function ProficiencyAndLanguages({ character, updateCharacter }) {
   }
 
   return (
-    <section className="h-full w-full card grid gap-2">
-      <label
-        className="grid border-b border-white relative group  text-white"
-        htmlFor=""
-      >
-        <span className="uppercase font-almendra text-base text-gray-200">
-          ARMOR
-        </span>
-        <textarea
-          rows="1"
-          className="bg-transparent text-white text-sm"
-          type="text"
-          onInput={(e) => updateProficiencyLanguages("armor", e.target.value)}
-          value={proNLang.armor === 0 ? "" : proNLang.armor}
-        />
-        <SVG />
-      </label>
-      <label
-        className="grid border-b border-white relative group text-white"
-        htmlFor=""
-      >
-        <span className="uppercase font-almendra text-base text-gray-200">
-          WEAPONS
-        </span>
-        <textarea
-          rows="1"
-          className="bg-transparent text-white text-sm"
-          type="text"
-          onInput={(e) => updateProficiencyLanguages("weapons", e.target.value)}
-          value={proNLang.weapons === 0 ? "" : proNLang.weapons}
-        />
-        <SVG />
-      </label>
-      <label
-        className="grid border-b border-white relative group text-white"
-        htmlFor=""
-      >
-        <span className="uppercase font-almendra text-base text-gray-200">
-          TOOLS
-        </span>
-        <textarea
-          rows="1"
-          className="bg-transparent text-white text-sm"
-          type="text"
-          onInput={(e) => updateProficiencyLanguages("tools", e.target.value)}
-          value={proNLang.tools === 0 ? "" : proNLang.tools}
-        />
-        <SVG />
-      </label>
-      <label
-        className="grid border-b border-white relative group text-white"
-        htmlFor=""
-      >
-        <span className="uppercase font-almendra text-base text-gray-200">
-          LANGUAGES
-        </span>
-        <textarea
-          rows="1"
-          className="bg-transparent text-white text-sm"
-          type="text"
-          onInput={(e) =>
-            updateProficiencyLanguages("languages", e.target.value)
-          }
-          value={proNLang.languages === 0 ? "" : proNLang.languages}
-        />
-        <SVG />
-      </label>
-      <h4 className="h4-title text-center">Proficiency & Languages</h4>
-    </section>
+    <Card className="dark h-full w-full border border-gray-50">
+      <CardBody>
+        <section className="grid gap-2 ">
+          <label
+            className="grid border-b border-white relative group  text-white"
+            htmlFor=""
+          >
+            <span className="uppercase font-almendra text-base text-gray-200">
+              ARMOR
+            </span>
+            <textarea
+              rows="1"
+              className="bg-transparent text-white text-sm"
+              type="text"
+              onInput={(e) =>
+                updateProficiencyLanguages("armor", e.target.value)
+              }
+              value={proNLang.armor === 0 ? "" : proNLang.armor}
+            />
+            <SVG />
+          </label>
+          <label
+            className="grid border-b border-white relative group text-white"
+            htmlFor=""
+          >
+            <span className="uppercase font-almendra text-base text-gray-200">
+              WEAPONS
+            </span>
+            <textarea
+              rows="1"
+              className="bg-transparent text-white text-sm"
+              type="text"
+              onInput={(e) =>
+                updateProficiencyLanguages("weapons", e.target.value)
+              }
+              value={proNLang.weapons === 0 ? "" : proNLang.weapons}
+            />
+            <SVG />
+          </label>
+          <label
+            className="grid border-b border-white relative group text-white"
+            htmlFor=""
+          >
+            <span className="uppercase font-almendra text-base text-gray-200">
+              TOOLS
+            </span>
+            <textarea
+              rows="1"
+              className="bg-transparent text-white text-sm"
+              type="text"
+              onInput={(e) =>
+                updateProficiencyLanguages("tools", e.target.value)
+              }
+              value={proNLang.tools === 0 ? "" : proNLang.tools}
+            />
+            <SVG />
+          </label>
+          <label
+            className="grid border-b border-white relative group text-white"
+            htmlFor=""
+          >
+            <span className="uppercase font-almendra text-base text-gray-200">
+              LANGUAGES
+            </span>
+            <textarea
+              rows="1"
+              className="bg-transparent text-white text-sm"
+              type="text"
+              onInput={(e) =>
+                updateProficiencyLanguages("languages", e.target.value)
+              }
+              value={proNLang.languages === 0 ? "" : proNLang.languages}
+            />
+            <SVG />
+          </label>
+          <h4 className="h4-title text-center">Proficiency & Languages</h4>
+        </section>
+      </CardBody>
+    </Card>
   );
 }
 

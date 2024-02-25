@@ -17,6 +17,7 @@ import HitPoints from "./components/hit_points/HitPoints";
 import ProficiencyAndLanguages from "./components/Basic Stats/ProficiencyAndLanguages";
 import { checkSession } from "./sessionActions/checkSession";
 import OnScreenMenu from "./components/Startmenu/OnScreenMenu";
+import { NextUIProvider } from "@nextui-org/react";
 
 let ipcRenderer = null;
 if (typeof window !== "undefined" && window.require) {
@@ -51,6 +52,7 @@ export default function Home() {
   };
 
   return (
+    <NextUIProvider>
     <main className="flex gap-2 min-h-screen items-start ml:justify-center sm:px-4 max-sm:px-2 py-4 pb-24 bg-background overflow-auto relative">
       {Object.keys(character).length == 0 && <Startscreen />}
       {tglMenus.skills && (
@@ -89,6 +91,6 @@ export default function Home() {
         </div>
       )}
       <OnScreenMenu setTglMenus={setTglMenus} tglMenus={tglMenus} />
-    </main>
+    </main></NextUIProvider>
   );
 }

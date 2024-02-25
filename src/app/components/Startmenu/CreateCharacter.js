@@ -1,171 +1,181 @@
 import CharacterContext from "@/app/context/CharacterContext";
 import { createCharacters } from "@/app/modules/apiCalls";
+import { Input } from "@nextui-org/react";
 import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { nanoid } from "nanoid";
 import { useContext, useEffect, useState } from "react";
-
+import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
 function CreateCharacter({ userInfo }) {
-  const [inputFocus, setInputFocus] = useState("");
-  const [filtered, setFiltered] = useState("");
-  const [arrowCount, setArrowCount] = useState(0);
-  const [showAutocomplete, setShowAutocomplete] = useState(false);
+  const [nameSlct, setNameSlct] = useState(null);
+  const [raceSlct, setRaceSlct] = useState(null);
+  const [classSlct, setClassSlct] = useState(null);
+  const [subclassSlct, setSubclassSlct] = useState(null);
+  const [levelSlct, setLevelSlct] = useState(null);
+  const [alignmentSlct, setAlignmentSlct] = useState(null);
   const { updateCharacter } = useContext(CharacterContext);
   const races = [
-    "Dwarv",
-    "Elv",
-    "Halfling",
-    "Human",
-    "Dragonborn",
-    "Gnome",
-    "Half-elv",
-    "Half-orc",
-    "Tiefling",
+    { value: "Dwarv" },
+    { value: "Elv" },
+    { value: "Halfling" },
+    { value: "Human" },
+    { value: "Dragonborn" },
+    { value: "Gnome" },
+    { value: "Half-elv" },
+    { value: "Half-orc" },
+    { value: "Tiefling" },
   ];
   const classes = [
-    "Artificer",
-    "Barbarian",
-    "Bard",
-    "Cleric",
-    "Druid",
-    "Fighter",
-    "Monk",
-    "Paladin",
-    "Ranger",
-    "Rogue",
-    "Sorcerer",
-    "Warlock",
-    "Wizard",
+    { value: "Artificer" },
+    { value: "Barbarian" },
+    { value: "Bard" },
+    { value: "Cleric" },
+    { value: "Druid" },
+    { value: "Fighter" },
+    { value: "Monk" },
+    { value: "Paladin" },
+    { value: "Ranger" },
+    { value: "Rogue" },
+    { value: "Sorcerer" },
+    { value: "Warlock" },
+    { value: "Wizard" },
   ];
-  const alignment = ["Lawful Good", "Good", "Neutral", "Evil", "Chaotic Evil"];
+  const alignment = [
+    { value: "Lawful Good" },
+    { value: "Good" },
+    { value: "Neutral" },
+    { value: "Evil" },
+    { value: "Chaotic Evil" },
+  ];
   const subclasses = [
-    "Path of the Berserker (Barbarian)",
-    "Path of the Totem Warrior (Barbarian)",
-    "College of Lore (Bard)",
-    "College of Valor (Bard)",
-    "Knowledge Domain (Cleric)",
-    "Life Domain (Cleric)",
-    "Light Domain (Cleric)",
-    "Nature Domain (Cleric)",
-    "Tempest Domain (Cleric)",
-    "Trickery Domain (Cleric)",
-    "War Domain (Cleric)",
-    "Circle of the Land (Druid)",
-    "Circle of the Moon (Druid)",
-    "Champion (Fighter)",
-    "Battle Master (Fighter)",
-    "Eldritch Knight (Fighter)",
-    "Way of the Open Hand (Monk)",
-    "Way of Shadow (Monk)",
-    "Way of the Four Elements (Monk)",
-    "Oath of Devotion (Paladin)",
-    "Oath of the Ancients (Paladin)",
-    "Oath of Vengeance (Paladin)",
-    "Hunter (Ranger)",
-    "Beast Master (Ranger)",
-    "Thief (Rogue)",
-    "Assassin (Rogue)",
-    "Arcane Trickster (Rogue)",
-    "Draconic Bloodline (Sorcerer)",
-    "Wild Magic (Sorcerer)",
-    "The Archfey (Warlock)",
-    "The Fiend (Warlock)",
-    "The Great Old One (Warlock)",
-    "School of Abjuration (Wizard)",
-    "School of Conjuration (Wizard)",
-    "School of Divination (Wizard)",
-    "School of Enchantment (Wizard)",
-    "School of Evocation (Wizard)",
-    "School of Illusion (Wizard)",
-    "School of Necromancy (Wizard)",
-    "School of Transmutation (Wizard)",
-    "Death Domain (Cleric)",
-    "Oathbreaker (Paladin)",
-    "Path of the Battlerager (Barbarian)",
-    "Arcana Domain (Cleric)",
-    "Purple Dragon Knight (Fighter)",
-    "Way of the Long Death (Monk)",
-    "Way of the Sun Soul (Monk)",
-    "Oath of the Crown (Paladin)",
-    "Mastermind (Rogue)",
-    "Swashbuckler (Rogue)",
-    "Storm Sorcery (Sorcerer)",
-    "The Undying (Warlock)",
-    "Bladesinging (Wizard)",
-    "Pyromancer (Sorcerer)",
-    "Solidarity Domain (Cleric)",
-    "Strength Domain (Cleric)",
-    "Ambition Domain (Cleric)",
-    "Zeal Domain (Cleric)",
-    "Path of the Ancestral Guardian (Barbarian)",
-    "Path of the Storm Herald (Barbarian)",
-    "Path of the Zealot (Barbarian)",
-    "College of Glamour (Bard)",
-    "College of Swords (Bard)",
-    "College of Whispers (Bard)",
-    "Forge Domain (Cleric)",
-    "Grave Domain (Cleric)",
-    "Circle of Dreams (Druid)",
-    "Circle of the Shepherd (Druid)",
-    "Arcane Archer (Fighter)",
-    "Cavalier (Fighter)",
-    "Samurai (Fighter)",
-    "Way of the Drunken Master (Monk)",
-    "Way of the Kensei (Monk)",
-    "Oath of Conquest (Paladin)",
-    "Oath of Redemption (Paladin)",
-    "Gloom Stalker (Ranger)",
-    "Horizon Walker (Ranger)",
-    "Monster Slayer (Ranger)",
-    "Inquisitive (Rogue)",
-    "Scout (Rogue)",
-    "Divine Soul (Sorcerer)",
-    "Shadow Magic (Sorcerer)",
-    "The Celestial (Warlock)",
-    "The Hexblade (Warlock)",
-    "War Magic (Wizard)",
-    "Order Domain (Cleric)",
-    "Circle of Spores (Druid)",
-    "Alchemist (Artificer)",
-    "Artillerist (Artificer)",
-    "Battle Smith (Artificer)",
-    "Echo Knight (Fighter)",
-    "Chronurgy Magic (Wizard)",
-    "Graviturgy Magic (Wizard)",
-    "College of Eloquence (Bard)",
-    "Oath of Glory (Paladin)",
-    "Armorer (Artificer)",
-    "Path of the Beast (Barbarian)",
-    "Path of Wild Magic (Barbarian)",
-    "College of Creation (Bard)",
-    "Peace Domain (Cleric)",
-    "Twilight Domain (Cleric)",
-    "Circle of Stars (Druid)",
-    "Circle of Wildfire (Druid)",
-    "Psi Warrior (Fighter)",
-    "Rune Knight (Fighter)",
-    "Way of Mercy (Monk)",
-    "Way of the Astral Self (Monk)",
-    "Oath of the Watchers (Paladin)",
-    "Fey Wanderer (Ranger)",
-    "Swarmkeeper (Ranger)",
-    "Phantom (Rogue)",
-    "Soulknife (Rogue)",
-    "Aberrant Mind (Sorcerer)",
-    "Clockwork Soul (Sorcerer)",
-    "The Fathomless (Warlock)",
-    "The Genie (Warlock)",
-    "Order of Scribes (Wizard)",
-    "Lunar Sorcery (Sorcerer)",
+    { value: "Path of the Berserker (Barbarian)" },
+    { value: "Path of the Totem Warrior (Barbarian)" },
+    { value: "College of Lore (Bard)" },
+    { value: "College of Valor (Bard)" },
+    { value: "Knowledge Domain (Cleric)" },
+    { value: "Life Domain (Cleric)" },
+    { value: "Light Domain (Cleric)" },
+    { value: "Nature Domain (Cleric)" },
+    { value: "Tempest Domain (Cleric)" },
+    { value: "Trickery Domain (Cleric)" },
+    { value: "War Domain (Cleric)" },
+    { value: "Circle of the Land (Druid)" },
+    { value: "Circle of the Moon (Druid)" },
+    { value: "Champion (Fighter)" },
+    { value: "Battle Master (Fighter)" },
+    { value: "Eldritch Knight (Fighter)" },
+    { value: "Way of the Open Hand (Monk)" },
+    { value: "Way of Shadow (Monk)" },
+    { value: "Way of the Four Elements (Monk)" },
+    { value: "Oath of Devotion (Paladin)" },
+    { value: "Oath of the Ancients (Paladin)" },
+    { value: "Oath of Vengeance (Paladin)" },
+    { value: "Hunter (Ranger)" },
+    { value: "Beast Master (Ranger)" },
+    { value: "Thief (Rogue)" },
+    { value: "Assassin (Rogue)" },
+    { value: "Arcane Trickster (Rogue)" },
+    { value: "Draconic Bloodline (Sorcerer)" },
+    { value: "Wild Magic (Sorcerer)" },
+    { value: "The Archfey (Warlock)" },
+    { value: "The Fiend (Warlock)" },
+    { value: "The Great Old One (Warlock)" },
+    { value: "School of Abjuration (Wizard)" },
+    { value: "School of Conjuration (Wizard)" },
+    { value: "School of Divination (Wizard)" },
+    { value: "School of Enchantment (Wizard)" },
+    { value: "School of Evocation (Wizard)" },
+    { value: "School of Illusion (Wizard)" },
+    { value: "School of Necromancy (Wizard)" },
+    { value: "School of Transmutation (Wizard)" },
+    { value: "Death Domain (Cleric)" },
+    { value: "Oathbreaker (Paladin)" },
+    { value: "Path of the Battlerager (Barbarian)" },
+    { value: "Arcana Domain (Cleric)" },
+    { value: "Purple Dragon Knight (Fighter)" },
+    { value: "Way of the Long Death (Monk)" },
+    { value: "Way of the Sun Soul (Monk)" },
+    { value: "Oath of the Crown (Paladin)" },
+    { value: "Mastermind (Rogue)" },
+    { value: "Swashbuckler (Rogue)" },
+    { value: "Storm Sorcery (Sorcerer)" },
+    { value: "The Undying (Warlock)" },
+    { value: "Bladesinging (Wizard)" },
+    { value: "Pyromancer (Sorcerer)" },
+    { value: "Solidarity Domain (Cleric)" },
+    { value: "Strength Domain (Cleric)" },
+    { value: "Ambition Domain (Cleric)" },
+    { value: "Zeal Domain (Cleric)" },
+    { value: "Path of the Ancestral Guardian (Barbarian)" },
+    { value: "Path of the Storm Herald (Barbarian)" },
+    { value: "Path of the Zealot (Barbarian)" },
+    { value: "College of Glamour (Bard)" },
+    { value: "College of Swords (Bard)" },
+    { value: "College of Whispers (Bard)" },
+    { value: "Forge Domain (Cleric)" },
+    { value: "Grave Domain (Cleric)" },
+    { value: "Circle of Dreams (Druid)" },
+    { value: "Circle of the Shepherd (Druid)" },
+    { value: "Arcane Archer (Fighter)" },
+    { value: "Cavalier (Fighter)" },
+    { value: "Samurai (Fighter)" },
+    { value: "Way of the Drunken Master (Monk)" },
+    { value: "Way of the Kensei (Monk)" },
+    { value: "Oath of Conquest (Paladin)" },
+    { value: "Oath of Redemption (Paladin)" },
+    { value: "Gloom Stalker (Ranger)" },
+    { value: "Horizon Walker (Ranger)" },
+    { value: "Monster Slayer (Ranger)" },
+    { value: "Inquisitive (Rogue)" },
+    { value: "Scout (Rogue)" },
+    { value: "Divine Soul (Sorcerer)" },
+    { value: "Shadow Magic (Sorcerer)" },
+    { value: "The Celestial (Warlock)" },
+    { value: "The Hexblade (Warlock)" },
+    { value: "War Magic (Wizard)" },
+    { value: "Order Domain (Cleric)" },
+    { value: "Circle of Spores (Druid)" },
+    { value: "Alchemist (Artificer)" },
+    { value: "Artillerist (Artificer)" },
+    { value: "Battle Smith (Artificer)" },
+    { value: "Echo Knight (Fighter)" },
+    { value: "Chronurgy Magic (Wizard)" },
+    { value: "Graviturgy Magic (Wizard)" },
+    { value: "College of Eloquence (Bard)" },
+    { value: "Oath of Glory (Paladin)" },
+    { value: "Armorer (Artificer)" },
+    { value: "Path of the Beast (Barbarian)" },
+    { value: "Path of Wild Magic (Barbarian)" },
+    { value: "College of Creation (Bard)" },
+    { value: "Peace Domain (Cleric)" },
+    { value: "Twilight Domain (Cleric)" },
+    { value: "Circle of Stars (Druid)" },
+    { value: "Circle of Wildfire (Druid)" },
+    { value: "Psi Warrior (Fighter)" },
+    { value: "Rune Knight (Fighter)" },
+    { value: "Way of Mercy (Monk)" },
+    { value: "Way of the Astral Self (Monk)" },
+    { value: "Oath of the Watchers (Paladin)" },
+    { value: "Fey Wanderer (Ranger)" },
+    { value: "Swarmkeeper (Ranger)" },
+    { value: "Phantom (Rogue)" },
+    { value: "Soulknife (Rogue)" },
+    { value: "Aberrant Mind (Sorcerer)" },
+    { value: "Clockwork Soul (Sorcerer)" },
+    { value: "The Fathomless (Warlock)" },
+    { value: "The Genie (Warlock)" },
+    { value: "Order of Scribes (Wizard)" },
+    { value: "Lunar Sorcery (Sorcerer)" },
   ];
   const subclassesSort = subclasses.sort();
+
   async function saveCharacter() {
     event.preventDefault();
-    let name = event.target.name.value;
-    let race = event.target.race.value;
-    let klass = event.target.class.value;
-    let subClass = event.target.subClass.value;
-    let level = event.target.level.value;
-    let alignment = event.target.alignment.value;
+    let name = nameSlct;
+    let race = raceSlct;
+    let klass = classSlct;
+    let subClass = subclassSlct;
+    let level = levelSlct;
+    let alignment = alignmentSlct;
 
     const _id = nanoid();
     let characterData = {
@@ -179,114 +189,40 @@ function CreateCharacter({ userInfo }) {
       alignment,
       created_by: epochToUtcDateTime(),
     };
-
     //console.log(characterData);
     // save to DB
     const character = await createCharacters(characterData);
     updateCharacter(character[0]);
   }
 
-  function updateFocus(e) {
-    setFiltered("");
-    //setArrowCount(0);
-    setTimeout(() => {
-      setInputFocus(e);
-      setShowAutocomplete(true);
-      console.log(inputFocus);
-    }, 0);
-  }
-
-  function handleAutocompleteClick(value) {
-    console.log(value);
-    if (inputFocus.target) {
-      inputFocus.target.value = value;
+  const onSelectionChange = (value, id) => {
+    if (value === "race") {
+      setRaceSlct(id);
     }
-    setShowAutocomplete(false);
-  }
-
-  function handleBlur() {
-    // Delay hiding the autocomplete to allow time for onClick to fire inside the component
-    //setFiltered("");
-    setArrowCount(0);
-    setTimeout(() => {
-      if (showAutocomplete) {
-        //console.log("blur song2");
-        setShowAutocomplete(false);
-        setInputFocus("");
-      }
-    }, 350);
-  }
-
-  function filterSearch(list, value) {
-    const filtered = list?.filter((item) =>
-      item.toLowerCase().includes(value.toLowerCase())
-    );
-    setArrowCount(0);
-    setFiltered(filtered);
-  }
-
-  function keypress(event, list) {
-    if (event.key === "ArrowUp") {
-      let newState = arrowCount;
-      newState = newState - 1;
-      if (newState < 0) {
-        newState = 0;
-      }
-      setArrowCount(newState);
-      //console.log("arrow up key") + arrowCount;
+    if (value === "class") {
+      setClassSlct(id);
     }
-    if (event.key === "ArrowDown") {
-      let newState = arrowCount;
-      if (newState >= list.length - 1) {
-        return;
-      } else {
-        newState = newState + 1;
-      }
-      setArrowCount(newState);
-      //console.log("arrow down key" + arrowCount);
+    if (value === "subclass") {
+      setSubclassSlct(id);
     }
-    if (event.key === "Enter") {
-      if(filtered.length > 0){
-        handleAutocompleteClick(filtered[arrowCount]);
-      } else{
-        handleAutocompleteClick(list[arrowCount]);
-      }
+    if (value === "alignment") {
+      setAlignmentSlct(id);
     }
-  }
+  };
 
-  useEffect(() => {
-    if (document.querySelector(".gray-200")) {
-      document.querySelector(".gray-200").scrollIntoView(true);
+  const onInputChange = (id, value) => {
+    if (id === "race") {
+      setRaceSlct(value);
     }
-  }, [arrowCount]);
-  const Autocomplete = ({ list }) => {
-    return (
-      <div className="w-full z-[1] h-fit max-h-96 bg-slate-50 absolute top-full left-0 rounded-md overflow-auto">
-        {filtered.length > 0
-          ? filtered.map((e, i) => (
-              <p
-                key={nanoid()}
-                onClick={() => handleAutocompleteClick(e)}
-                className={`text-black w-full border-none bg-transparent hover:bg-gray-200 p-2 ${
-                  i === arrowCount && "gray-200"
-                }`}
-              >
-                {e}
-              </p>
-            ))
-          : list.map((e, i) => (
-              <p
-                key={nanoid()}
-                onClick={() => handleAutocompleteClick(e)}
-                className={`text-black wfull border-none bg-transparent hover:bg-gray-200 p-2 ${
-                  i === arrowCount && "gray-200"
-                }`}
-              >
-                {e}
-              </p>
-            ))}
-      </div>
-    );
+    if (id === "class") {
+      setClassSlct(value);
+    }
+    if (id === "subclass") {
+      setSubclassSlct(value);
+    }
+    if (id === "alignment") {
+      setAlignmentSlct(value);
+    }
   };
 
   return (
@@ -302,96 +238,78 @@ function CreateCharacter({ userInfo }) {
         onSubmit={saveCharacter}
       >
         <label className="w-full relative">
-          Name
-          <input
-            className="bg-transparent border rounded-md p-1 border-white w-full"
+          <Input
             type="text"
-            name="name"
-            id=""
-            required
+            label="Name"
+            placeholder="Enter Character Name"
+            isRequired
+            onValueChange={setNameSlct}
           />
         </label>
-        <label className="relative">
-          Race
-          <input
-            className="bg-transparent border rounded-md p-1 border-white w-full"
-            type="text"
-            name="race"
-            onFocus={updateFocus}
-            onBlur={handleBlur}
-            onInput={(e) => filterSearch(races, e.target.value)}
-            id="race"
-            required
-            autoComplete="off"
-            onKeyDown={(e) => keypress(e, races)}
-          />
-          {inputFocus?.target?.name === "race" && <Autocomplete list={races} />}
-        </label>
+        <Autocomplete
+          label="Choose a Race"
+          className="max-w-xs"
+          isRequired
+          allowsCustomValue={true}
+          onSelectionChange={(id) => onSelectionChange("race", id)}
+          onInputChange={(value) => onInputChange("race", value)}
+        >
+          {races.map((race) => (
+            <AutocompleteItem key={race.value} value={race.value}>
+              {race.value}
+            </AutocompleteItem>
+          ))}
+        </Autocomplete>
 
-        <label className="relative">
-          Class
-          <input
-            className="bg-transparent border rounded-md p-1 border-white w-full"
-            type="text"
-            name="class"
-            onFocus={updateFocus}
-            onBlur={handleBlur}
-            onInput={(e) => filterSearch(classes, e.target.value)}
-            id=""
-            required
-            autoComplete="off"
-            onKeyDown={(e) => keypress(e, classes)}
-          />
-          {inputFocus?.target?.name === "class" && (
-            <Autocomplete list={classes} />
-          )}
-        </label>
-        <label className="relative">
-          SubClass
-          <input
-            className="bg-transparent border rounded-md p-1 border-white w-full"
-            type="text"
-            name="subClass"
-            onFocus={updateFocus}
-            onBlur={handleBlur}
-            onInput={(e) => filterSearch(subclassesSort, e.target.value)}
-            id=""
-            required
-            autoComplete="off"
-            onKeyDown={(e) => keypress(e, subclassesSort)}
-          />
-          {inputFocus?.target?.name === "subClass" && (
-            <Autocomplete list={subclassesSort} />
-          )}
-        </label>
+        <Autocomplete
+          isRequired
+          label="Choose a Class"
+          className="max-w-xs"
+          allowsCustomValue={true}
+          onSelectionChange={(id) => onSelectionChange("class", id)}
+          onInputChange={(value) => onInputChange("class", value)}
+        >
+          {classes.map((clas) => (
+            <AutocompleteItem key={clas.value} value={clas.value}>
+              {clas.value}
+            </AutocompleteItem>
+          ))}
+        </Autocomplete>
+        <Autocomplete
+          label="Choose a SubClass"
+          className="max-w-xs"
+          allowsCustomValue={true}
+          onSelectionChange={(id) => onSelectionChange("subclass", id)}
+          onInputChange={(value) => onInputChange("subclass", value)}
+        >
+          {subclassesSort.map((subclass) => (
+            <AutocompleteItem key={subclass.value} value={subclass.value}>
+              {subclass.value}
+            </AutocompleteItem>
+          ))}
+        </Autocomplete>
         <label>
-          Level
-          <input
-            className="bg-transparent border rounded-md p-1 border-white w-full"
-            type="text"
-            name="level"
-            id=""
-            required
+          <Input
+            isRequired
+            type="number"
+            label="Level"
+            placeholder="Enter Character Level"
+            onValueChange={setLevelSlct}
           />
         </label>
-        <label className="relative">
-          Alignment
-          <input
-            className="bg-transparent border rounded-md p-1 border-white w-full"
-            type="text"
-            name="alignment"
-            onFocus={updateFocus}
-            onBlur={handleBlur}
-            onInput={(e) => filterSearch(alignment, e.target.value)}
-            id=""
-            required
-            autoComplete="off"
-            onKeyDown={(e) => keypress(e, alignment)}
-          />
-          {inputFocus?.target?.name === "alignment" && (
-            <Autocomplete list={alignment} />
-          )}
-        </label>
+        <Autocomplete
+          label="Choose an Alignment"
+          className="max-w-xs"
+          allowsCustomValue={true}
+          onSelectionChange={(id) => onSelectionChange("alignment", id)}
+          onInputChange={(value) => onInputChange("alignment", value)}
+        >
+          {alignment.map((align) => (
+            <AutocompleteItem key={align.value} value={align.value}>
+              {align.value}
+            </AutocompleteItem>
+          ))}
+        </Autocomplete>
         <button
           type="submit"
           className="bg-neonpurple-400 hover:bg-neonpurple-500 px-6 py-1 rounded"

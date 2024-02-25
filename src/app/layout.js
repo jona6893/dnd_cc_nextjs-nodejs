@@ -1,9 +1,7 @@
+
 import { Poppins, Almendra } from "next/font/google";
 import "./globals.css";
 import { CharacterProvider } from "./context/CharacterProvider";
-import { PrimeReactProvider } from "primereact/api";
-import "primereact/resources/themes/lara-light-cyan/theme.css";
-
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -24,14 +22,15 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <PrimeReactProvider>
-      <CharacterProvider>
-        <body
-          className={`${poppins.variable} ${almenra.variable} font-poppins`}
-        >
-          {children}
-        </body>
-      </CharacterProvider></PrimeReactProvider>
+     
+        <CharacterProvider>
+          <body
+            className={`${poppins.variable} ${almenra.variable} font-poppins`}
+          >
+            {children}
+          </body>
+        </CharacterProvider>
+      
     </html>
   );
 }

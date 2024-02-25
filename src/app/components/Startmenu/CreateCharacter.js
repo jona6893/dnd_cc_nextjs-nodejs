@@ -314,9 +314,9 @@ function CreateCharacter({ userInfo }) {
         </Autocomplete>
         <button
           type="submit"
-          className="bg-neonpurple-400 hover:bg-neonpurple-500 px-6 py-2 rounded-lg"
+          className="bg-neonpurple-400 hover:bg-neonpurple-500 px-6 py-3 rounded-xl"
         >
-          Create character
+          Create Character
         </button>
       </form>
     </div>

@@ -1,22 +1,16 @@
 import { useEffect } from "react";
 
-
-function Popup({children, state, setState}) {
-
-
-
-
+function Popup({ children, state, setState }) {
   const handleKeyDown = (event) => {
     if (event.key === "Escape") {
       document.removeEventListener("keydown", handleKeyDown);
-      setState(!state)
+      setState(!state);
     }
   };
 
-  if(state === true){
+  if (state === true) {
     document.addEventListener("keydown", handleKeyDown);
   }
-  
 
   return (
     <div
@@ -25,7 +19,7 @@ function Popup({children, state, setState}) {
     >
       <div
         id="popupContent"
-        className="sm:w-11/12 max-sm:w-full sm:h-5/6 max-sm:h-full bg-overlay rounded-md p-4 max-sm:p-2 relative overflow-auto"
+        className="sm:w-11/12 max-sm:w-full sm:h-5/6 max-sm:h-full bg-overlay rounded-xl p-4 max-sm:p-2 relative overflow-auto"
       >
         {children}
       </div>
@@ -33,4 +27,4 @@ function Popup({children, state, setState}) {
   );
 }
 
-export default Popup
+export default Popup;

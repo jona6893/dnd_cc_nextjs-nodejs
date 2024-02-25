@@ -14,7 +14,6 @@ function Equipment({ character }) {
   const [filteredEquipment, setFilteredEquipment] = useState([]);
   const { updateCharacter } = useContext(CharacterContext);
 
-  
   function tglReadMore(index) {
     if (readMore === index) {
       setReadMore(false);
@@ -145,19 +144,22 @@ function Equipment({ character }) {
               <input
                 id="localEquipmentSearch"
                 type="text"
-                className="bg-transparent text-white px-2 w-full"
+                className="bg-transparent text-white px-2 p-1 w-full"
                 placeholder="Search"
                 onInput={(e) => filterSearch(e.target.value)}
               />
             </label>
-            <button onClick={() => setPopup(!popup)}>
+            <button
+              className="bg-[#3f3f46] w-8 h-8 rounded-lg"
+              onClick={() => setPopup(!popup)}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-6 h-6 text-white"
+                className="w-6 h-6 text-white m-auto"
               >
                 <path
                   strokeLinecap="round"

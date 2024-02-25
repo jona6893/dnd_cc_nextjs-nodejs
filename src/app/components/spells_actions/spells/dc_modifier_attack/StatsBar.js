@@ -1,5 +1,5 @@
-import SVG from '@/app/components/ui_components/SVG';
-import React from 'react'
+import SVG from "@/app/components/ui_components/SVG";
+import React from "react";
 
 function StatsBar({ updatSpellStat, spellStats, setPopup, popup }) {
   return (
@@ -15,7 +15,7 @@ function StatsBar({ updatSpellStat, spellStats, setPopup, popup }) {
           className="bg-transparent border-b border-white w-8 text-center"
         />
         <SVG />
-        MODIFIER
+        <span className="text-gray-300">MODIFIER</span>
       </label>
       <label
         htmlFor=""
@@ -28,7 +28,7 @@ function StatsBar({ updatSpellStat, spellStats, setPopup, popup }) {
           className="bg-transparent border-b border-white w-8 text-center"
         />
         <SVG />
-        SPELL ATTACK
+        <span className="text-gray-300">SPELL ATTACK</span>
       </label>
       <label
         htmlFor=""
@@ -41,13 +41,13 @@ function StatsBar({ updatSpellStat, spellStats, setPopup, popup }) {
           value={spellStats.saveDC ? spellStats.saveDC : 0}
         />
         <SVG />
-        SAVE DC
+        <span className="text-gray-300">SAVE DC</span>
       </label>
       <button
+        className="bg-[#3f3f46] w-8 h-8 rounded-lg"
         onClick={() => {
           setPopup(!popup);
         }}
-        className=""
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +55,7 @@ function StatsBar({ updatSpellStat, spellStats, setPopup, popup }) {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-6 h-6 text-white"
+          className="w-6 h-6 text-white m-auto"
         >
           <path
             strokeLinecap="round"
@@ -68,4 +68,4 @@ function StatsBar({ updatSpellStat, spellStats, setPopup, popup }) {
   );
 }
 
-export default StatsBar
+export default StatsBar;

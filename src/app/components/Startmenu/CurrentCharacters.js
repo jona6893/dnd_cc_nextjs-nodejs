@@ -8,7 +8,7 @@ import { nanoid } from "nanoid";
 import { useEffect, useState } from "react";
 import { useContext } from "react";
 import DeletePrompt from "../ui_components/modals/DeletePrompt";
-import { Skeleton } from "@nextui-org/react";
+import { Card, Skeleton } from "@nextui-org/react";
 
 function CurrentCharacters({ userInfo }) {
   const [allCharacter, setAllCharacter] = useState([]);
@@ -67,48 +67,53 @@ function CurrentCharacters({ userInfo }) {
       )}
       {allCharacter?.sort(compareByCharacterName).map((cha) => {
         return (
-          <div
+          <Card
             key={nanoid()}
-            className="flex group gap-2 text-white bg-neongreen/10 border-neongreen border p-1 rounded w-full relative"
+            className="dark bg-neongreen/10 border-neongreen border w-full"
           >
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAnZtMGC_ZtzdY-K2fMuRHKqcn0cynDuLgt7HtyeTIz5gL6rh8EWo1_T-iYt6cCEVlUGQ&usqp=CAU"
-              alt=""
-              className="w-16 h-16 aspect-square object-cover object-center"
-            />
-            <div className="grid grid-rows-2 gap-x-2 text-sm">
-              <h3 className="text-base col-span-2">{cha.name}</h3>
-              <p className="">Class: {cha.class}</p>
-              <p className="">lvl: {cha.level}</p>
-              <p className="">Race: {cha.race}</p>
-            </div>
-            <div className="md:hidden max-md:flex group-hover:flex md:gap-2 max-md:gap-1 absolute top-0 left-0 p-1 w-full h-full items-center justify-center  max-md:flex-col max-md:items-end md:bg-overlay/40">
-              <button
-                onClick={() => handleSubmit(cha._id)}
-                className="bg-neongreen hover:bg-green-400 px-6 py-1 rounded min-w-28"
-              >
-                Play
-              </button>
-              <button
-                onClick={() => {
-                  let newState = { ...deletePrompt };
-                  newState.value = !deletePrompt.value;
-                  newState._id = cha._id;
-                  setDeletePrompt(newState);
-                }}
-                className="bg-neonred hover:bg-red-400 px-6 py-1 rounded min-w-28"
-              >
-                Delete
-              </button>
-            </div>
-            {deletePrompt.value && (
-              <DeletePrompt
-                modal={deletePrompt}
-                setModal={setDeletePrompt}
-                deleteFunction={handleDeleteCharacter}
+            <div
+              key={nanoid()}
+              className="flex group gap-2 w-full relative p-2"
+            >
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAnZtMGC_ZtzdY-K2fMuRHKqcn0cynDuLgt7HtyeTIz5gL6rh8EWo1_T-iYt6cCEVlUGQ&usqp=CAU"
+                alt=""
+                className="w-16 h-16 aspect-square object-cover object-center rounded-xl"
               />
-            )}
-          </div>
+              <div className="grid grid-rows-2 gap-x-2 text-sm">
+                <h3 className="text-base col-span-2">{cha.name}</h3>
+                <p className="">Class: {cha.class}</p>
+                <p className="">lvl: {cha.level}</p>
+                <p className="">Race: {cha.race}</p>
+              </div>
+              <div className="md:hidden max-md:flex group-hover:flex md:gap-2 max-md:gap-1 absolute top-0 left-0 p-1 w-full h-full items-center justify-center  max-md:flex-col max-md:items-end md:bg-overlay/40">
+                <button
+                  onClick={() => handleSubmit(cha._id)}
+                  className="bg-neongreen hover:bg-green-400 px-6 py-1 rounded-md min-w-28"
+                >
+                  Play
+                </button>
+                <button
+                  onClick={() => {
+                    let newState = { ...deletePrompt };
+                    newState.value = !deletePrompt.value;
+                    newState._id = cha._id;
+                    setDeletePrompt(newState);
+                  }}
+                  className="bg-neonred hover:bg-red-400 px-6 py-1 rounded-md min-w-28"
+                >
+                  Delete
+                </button>
+              </div>
+              {deletePrompt.value && (
+                <DeletePrompt
+                  modal={deletePrompt}
+                  setModal={setDeletePrompt}
+                  deleteFunction={handleDeleteCharacter}
+                />
+              )}
+            </div>
+          </Card>
         );
       })}
     </div>

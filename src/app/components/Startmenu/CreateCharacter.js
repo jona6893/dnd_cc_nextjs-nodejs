@@ -6,6 +6,8 @@ import { useContext, useState } from "react";
 
 function CreateCharacter({ userInfo }) {
   const [inputFocus, setInputFocus] = useState("");
+  const [filtered, setFiltered] = useState("");
+  const [arrowCount, setArrowCount] = useState(0);
   const [showAutocomplete, setShowAutocomplete] = useState(false);
   const { updateCharacter } = useContext(CharacterContext);
   const races = [
@@ -185,10 +187,12 @@ function CreateCharacter({ userInfo }) {
   }
 
   function updateFocus(e) {
+    setFiltered("");
     setTimeout(() => {
       setInputFocus(e);
       setShowAutocomplete(true);
-    }, 51);
+      console.log(inputFocus);
+    }, 0);
   }
 
   function handleAutocompleteClick(value) {
@@ -200,28 +204,73 @@ function CreateCharacter({ userInfo }) {
 
   function handleBlur() {
     // Delay hiding the autocomplete to allow time for onClick to fire inside the component
-
+    setFiltered("");
     setTimeout(() => {
       if (showAutocomplete) {
         //console.log("blur song2");
         setShowAutocomplete(false);
         setInputFocus("");
       }
-    }, 299);
+    }, 0);
+  }
+
+  function filterSearch(list, value) {
+    const filtered = list?.filter((item) =>
+      item.toLowerCase().includes(value.toLowerCase())
+    );
+    setFiltered(filtered);
+  }
+
+  function keypress(event, list) {
+    if (event.key === "ArrowUp") {
+      console.log(arrowCount);
+      let newState = arrowCount;
+      newState = newState - 1;
+      if (newState < 0) {
+        newState = 0;
+      }
+      setArrowCount(newState);
+      //console.log("arrow up key") + arrowCount;
+    }
+    if (event.key === "ArrowDown") {
+      let newState = arrowCount;
+      newState = newState + 1;
+      console.log(newState);
+      setArrowCount(newState);
+      //console.log("arrow down key" + arrowCount);
+    }
+    if (event.key === "Enter") {
+      handleAutocompleteClick(list[arrowCount]);
+    }
   }
 
   const Autocomplete = ({ list }) => {
+    console.log(arrowCount);
     return (
       <div className="w-full z-[1] h-fit max-h-96 bg-slate-50 absolute top-full left-0 rounded-md overflow-auto">
-        {list.map((e) => (
-          <p
-            key={nanoid()}
-            onClick={() => handleAutocompleteClick(e)}
-            className="text-black w-full border-none bg-transparent hover:bg-gray-200 p-2"
-          >
-            {e}
-          </p>
-        ))}
+        {filtered.length > 0
+          ? filtered.map((e, i) => (
+              <p
+                key={nanoid()}
+                onClick={() => handleAutocompleteClick(e)}
+                className={`text-black w-full border-none bg-transparent hover:bg-gray-200 p-2 ${
+                  i === arrowCount && "bg-gray-200"
+                }`}
+              >
+                {e}
+              </p>
+            ))
+          : list.map((e, i) => (
+              <p
+                key={nanoid()}
+                onClick={() => handleAutocompleteClick(e)}
+                className={`text-black w-full border-none bg-transparent hover:bg-gray-200 p-2 ${
+                  i === arrowCount && "bg-gray-200"
+                }`}
+              >
+                {e}
+              </p>
+            ))}
       </div>
     );
   };
@@ -231,6 +280,7 @@ function CreateCharacter({ userInfo }) {
       <form
         className="flex flex-col justify-center ite gap-y-4 gap-4 w-80"
         action=""
+        onKeyDown={(e) => {if(e.key==="Enter"){e.preventDefault()}}}
         onSubmit={saveCharacter}
       >
         <label className="w-full relative">
@@ -251,8 +301,10 @@ function CreateCharacter({ userInfo }) {
             name="race"
             onFocus={updateFocus}
             onBlur={handleBlur}
+            onInput={(e) => filterSearch(races, e.target.value)}
             id="race"
             required
+            autoComplete="off"
           />
           {inputFocus?.target?.name === "race" && <Autocomplete list={races} />}
         </label>
@@ -265,8 +317,10 @@ function CreateCharacter({ userInfo }) {
             name="class"
             onFocus={updateFocus}
             onBlur={handleBlur}
+            onInput={(e) => filterSearch(classes, e.target.value)}
             id=""
             required
+            autoComplete="off"
           />
           {inputFocus?.target?.name === "class" && (
             <Autocomplete list={classes} />
@@ -279,9 +333,12 @@ function CreateCharacter({ userInfo }) {
             type="text"
             name="subClass"
             onFocus={updateFocus}
-            onBlur={handleBlur}
+            /*  onBlur={handleBlur} */
+            onInput={(e) => filterSearch(subclassesSort, e.target.value)}
             id=""
             required
+            autoComplete="off"
+            onKeyDown={(e) => keypress(e, subclassesSort)}
           />
           {inputFocus?.target?.name === "subClass" && (
             <Autocomplete list={subclassesSort} />
@@ -305,8 +362,10 @@ function CreateCharacter({ userInfo }) {
             name="alignment"
             onFocus={updateFocus}
             onBlur={handleBlur}
+            onInput={(e) => filterSearch(alignment, e.target.value)}
             id=""
             required
+            autoComplete="off"
           />
           {inputFocus?.target?.name === "alignment" && (
             <Autocomplete list={alignment} />

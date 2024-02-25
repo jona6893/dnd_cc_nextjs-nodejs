@@ -123,7 +123,7 @@ function Equipment({ character }) {
       )}
       <div className="flex justify-between border-b border-white p-2">
         <h3 className="h3-title">Equipment</h3>
-        <label className="flex">
+        <label className="flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

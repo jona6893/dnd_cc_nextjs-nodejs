@@ -188,6 +188,7 @@ function CreateCharacter({ userInfo }) {
 
   function updateFocus(e) {
     setFiltered("");
+    setArrowCount(0);
     setTimeout(() => {
       setInputFocus(e);
       setShowAutocomplete(true);
@@ -205,6 +206,7 @@ function CreateCharacter({ userInfo }) {
   function handleBlur() {
     // Delay hiding the autocomplete to allow time for onClick to fire inside the component
     setFiltered("");
+    setArrowCount(0);
     setTimeout(() => {
       if (showAutocomplete) {
         //console.log("blur song2");
@@ -280,7 +282,11 @@ function CreateCharacter({ userInfo }) {
       <form
         className="flex flex-col justify-center ite gap-y-4 gap-4 w-80"
         action=""
-        onKeyDown={(e) => {if(e.key==="Enter"){e.preventDefault()}}}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+          }
+        }}
         onSubmit={saveCharacter}
       >
         <label className="w-full relative">
@@ -305,6 +311,7 @@ function CreateCharacter({ userInfo }) {
             id="race"
             required
             autoComplete="off"
+            onKeyDown={(e) => keypress(e, races)}
           />
           {inputFocus?.target?.name === "race" && <Autocomplete list={races} />}
         </label>
@@ -321,6 +328,7 @@ function CreateCharacter({ userInfo }) {
             id=""
             required
             autoComplete="off"
+            onKeyDown={(e) => keypress(e, classes)}
           />
           {inputFocus?.target?.name === "class" && (
             <Autocomplete list={classes} />
@@ -366,6 +374,7 @@ function CreateCharacter({ userInfo }) {
             id=""
             required
             autoComplete="off"
+            onKeyDown={(e) => keypress(e, alignment)}
           />
           {inputFocus?.target?.name === "alignment" && (
             <Autocomplete list={alignment} />

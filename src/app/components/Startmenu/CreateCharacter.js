@@ -2,7 +2,7 @@ import CharacterContext from "@/app/context/CharacterContext";
 import { createCharacters } from "@/app/modules/apiCalls";
 import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { nanoid } from "nanoid";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 function CreateCharacter({ userInfo }) {
   const [inputFocus, setInputFocus] = useState("");
@@ -225,7 +225,6 @@ function CreateCharacter({ userInfo }) {
 
   function keypress(event, list) {
     if (event.key === "ArrowUp") {
-      console.log(arrowCount);
       let newState = arrowCount;
       newState = newState - 1;
       if (newState < 0) {
@@ -236,8 +235,11 @@ function CreateCharacter({ userInfo }) {
     }
     if (event.key === "ArrowDown") {
       let newState = arrowCount;
-      newState = newState + 1;
-      console.log(newState);
+      if (newState >= list.length - 1) {
+        return;
+      } else {
+        newState = newState + 1;
+      }
       setArrowCount(newState);
       //console.log("arrow down key" + arrowCount);
     }
@@ -246,8 +248,10 @@ function CreateCharacter({ userInfo }) {
     }
   }
 
+  useEffect(() => {
+    document.querySelector(".gray-200").scrollIntoView(true);
+  }, [arrowCount]);
   const Autocomplete = ({ list }) => {
-    console.log(arrowCount);
     return (
       <div className="w-full z-[1] h-fit max-h-96 bg-slate-50 absolute top-full left-0 rounded-md overflow-auto">
         {filtered.length > 0
@@ -323,7 +327,7 @@ function CreateCharacter({ userInfo }) {
             type="text"
             name="class"
             onFocus={updateFocus}
-             onBlur={handleBlur}
+            onBlur={handleBlur}
             onInput={(e) => filterSearch(classes, e.target.value)}
             id=""
             required

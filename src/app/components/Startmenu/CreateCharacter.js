@@ -188,7 +188,7 @@ function CreateCharacter({ userInfo }) {
 
   function updateFocus(e) {
     setFiltered("");
-    setArrowCount(0);
+    //setArrowCount(0);
     setTimeout(() => {
       setInputFocus(e);
       setShowAutocomplete(true);
@@ -255,8 +255,8 @@ function CreateCharacter({ userInfo }) {
               <p
                 key={nanoid()}
                 onClick={() => handleAutocompleteClick(e)}
-                className={`text-black w-full border-none bg-transparent hover:bg-gray-200 p-2 ${
-                  i === arrowCount && "bg-gray-200"
+                className={`text-black w-full border-none bg-transparent hover:bg-neutral-300 p-2 ${
+                  i === arrowCount && "bg-neutral-300"
                 }`}
               >
                 {e}
@@ -266,8 +266,8 @@ function CreateCharacter({ userInfo }) {
               <p
                 key={nanoid()}
                 onClick={() => handleAutocompleteClick(e)}
-                className={`text-black w-full border-none bg-transparent hover:bg-gray-200 p-2 ${
-                  i === arrowCount && "bg-gray-200"
+                className={`text-black w-full border-none bg-transparent hover:bg-neutral-300 p-2 ${
+                  i === arrowCount && "bg-neutral-300"
                 }`}
               >
                 {e}
@@ -323,7 +323,7 @@ function CreateCharacter({ userInfo }) {
             type="text"
             name="class"
             onFocus={updateFocus}
-            onBlur={handleBlur}
+            /*  onBlur={handleBlur} */
             onInput={(e) => filterSearch(classes, e.target.value)}
             id=""
             required

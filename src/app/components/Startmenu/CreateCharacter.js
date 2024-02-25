@@ -249,7 +249,9 @@ function CreateCharacter({ userInfo }) {
   }
 
   useEffect(() => {
-    document.querySelector(".gray-200").scrollIntoView(true);
+    if(document.querySelector(".gray-200")){
+      document.querySelector(".gray-200").scrollIntoView(true);
+    }
   }, [arrowCount]);
   const Autocomplete = ({ list }) => {
     return (

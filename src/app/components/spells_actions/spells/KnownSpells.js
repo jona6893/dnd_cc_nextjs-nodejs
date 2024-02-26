@@ -31,7 +31,7 @@ function KnownSpells({ spells, setPreviewSpell, setSpells,character, updateChara
     return damageColors[damageType] || "brute"; // Default to "brute" if not found
   }
 
-
+console.log(spells);
 
 function moveBetweenPreparedAndKnown(spellToMove, spellLevel) {
 
@@ -121,7 +121,7 @@ function removeSpell(spellToRemove){
 
   return (
     <div className="flex flex-wrap gap-2 mt-2">
-      {spells[0].known.map((spell) => {
+      {spells[0].known?.map((spell) => {
         const bgColorClass = `${getDamageTypeColor(spell)}`;
 
         return (

@@ -76,7 +76,7 @@ function SpellsMenu() {
                 <Actions popup={popup} setPopup={setPopup} />
               </div>
             </Tab>
-            <Tab key="spells" title="SPELLS" className="overflow-y-auto">
+            <Tab key="spells" title="SPELLS" >
               <div className="w-full text-white overflow-y-auto">
                 <StatsBar
                   updatSpellStat={updatSpellStat}

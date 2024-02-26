@@ -100,7 +100,14 @@ function ManageSpells({
                 setSpells={setSpells}
               />
             </div>
-            <FormSpell setFormSpell={setFormSpell} formSpell={formSpell} />
+            <FormSpell
+              setFormSpell={setFormSpell}
+              formSpell={formSpell}
+              spells={spells}
+              setSpells={setSpells}
+              character={character}
+              updateCharacter={updateCharacter}
+            />
           </div>
 
           <div className="w-full pb-4">

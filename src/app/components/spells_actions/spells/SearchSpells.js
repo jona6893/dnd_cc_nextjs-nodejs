@@ -50,7 +50,6 @@ function SearchSpells({ popup, setPreviewSpell, updateSpells }) {
     updateSpells(data);
   }
 
-
   return (
     <label htmlFor="" className="flex gap-2 w-full relative">
       <svg
@@ -83,7 +82,6 @@ function SearchSpells({ popup, setPreviewSpell, updateSpells }) {
         }}
         onInput={toggleSearch}
       />
-      {/* {searching && <SearchResults />} */}
       {searching && (
         <div
           id="filteredSearch"
@@ -99,7 +97,6 @@ function SearchSpells({ popup, setPreviewSpell, updateSpells }) {
                   <span>{item.name}</span>
                   <button
                     onClick={(e) => {
-                      //e.stopPropagation();
                       addSpellToKnown(item);
                     }}
                     className="bg-neongreen px-2 rounded"

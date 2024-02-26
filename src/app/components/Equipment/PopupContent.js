@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
 import { useEffect, useState } from "react";
-
+import { Input,Textarea } from "@nextui-org/react";
 
 function PopupContent({
   popup,
@@ -74,7 +74,7 @@ async function addSearchedEquipment(item) {
    updateEquipment(data.name, description,data.url);
 }
 
-//console.log(filteredEquipment)
+console.log(equipment)
 
 // search field popup all results
   const SearchResults = () => {

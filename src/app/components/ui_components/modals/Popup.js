@@ -19,7 +19,7 @@ function Popup({ children, state, setState }) {
     >
       <div
         id="popupContent"
-        className="sm:w-11/12 max-sm:w-full sm:h-5/6 max-sm:h-full bg-overlay rounded-xl p-4 max-sm:p-2 relative overflow-auto"
+        className="sm:w-11/12 max-sm:w-full sm:h-5/6 max-sm:h-full bg-overlay border border-gray-50 rounded-xl p-4 max-sm:p-2 relative overflow-auto"
       >
         {children}
       </div>

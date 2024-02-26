@@ -12,10 +12,14 @@ function Actions({ popup, setPopup }) {
   const [actions, setActions] = useState(character?.actions ?? []);
 
   async function getEquippedItems(item) {
-    const url = item.url;
-    const response = await fetch(`https://www.dnd5eapi.co${url}`);
-    const data = await response.json();
-    return data;
+    if (item.url) {
+      const url = item.url;
+      const response = await fetch(`https://www.dnd5eapi.co${url}`);
+      const data = await response.json();
+      return data;
+    } else{
+      return item
+    }
   }
 
   useEffect(() => {
@@ -56,6 +60,7 @@ function Actions({ popup, setPopup }) {
     }
   }, [character]);
 
+  console.log(actions);
   return (
     <div className="w-full grid gap-2 mt-2">
       {popup && (
@@ -77,12 +82,14 @@ function Actions({ popup, setPopup }) {
           <li className="text-end">Range</li>
         </ul>
         {actions?.map((item) => {
-          const damageDice = item.damage?.damage_dice;
-          const damageType = item.damage?.damage_type?.name;
-          const TwohandedDamage = item.two_handed_damage?.damage_dice;
-          const ac = item.armor_class;
-          const rangeNormal = item.range?.normal;
-          const rangeLong = item.range?.long;
+        
+            const damageDice = item.damage?.damage_dice;
+            const damageType = item.damage?.damage_type?.name;
+            const TwohandedDamage = item.two_handed_damage?.damage_dice;
+            const ac = item?.armor_class;
+            const rangeNormal = item.range?.normal;
+            const rangeLong = item.range?.long;
+          
 
           return (
             <div

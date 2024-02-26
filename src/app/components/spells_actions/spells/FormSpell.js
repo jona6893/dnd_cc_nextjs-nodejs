@@ -115,7 +115,7 @@ function FormSpell({
                 {field === "Name" && (
                   <Input
                     key={nanoid}
-                    type="text"
+                    type="number"
                     isRequired
                     label={field}
                     onValueChange={(e) => updateFormField(e, field)}

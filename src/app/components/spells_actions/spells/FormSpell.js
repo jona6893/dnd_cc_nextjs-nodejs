@@ -165,7 +165,7 @@ function FormSpell({
               type="submit"
               className="col-span-2 bg-neonpurple-400 hover:bg-neonpurple-500 px-6 py-3 rounded-xl"
             >
-              add spell
+              Add Spell
             </button>
           </div>
         </form>

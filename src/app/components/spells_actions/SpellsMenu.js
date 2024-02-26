@@ -22,9 +22,9 @@ function SpellsMenu() {
   const menuOptions = [
     "ACTIONS",
     "SPELLS",
-    "EXTRA",
+    "FEATURES",
     "DESCRIPTIONS",
-    "FEATURES & TRAITS",
+    "FEATS & TRAITS",
   ];
 
   useEffect(() => {
@@ -76,7 +76,7 @@ function SpellsMenu() {
                 <Actions popup={popup} setPopup={setPopup} />
               </div>
             </Tab>
-            <Tab key="spells" title="SPELLS" >
+            <Tab key="spells" title="SPELLS">
               <div className="w-full text-white overflow-y-auto">
                 <StatsBar
                   updatSpellStat={updatSpellStat}
@@ -87,7 +87,7 @@ function SpellsMenu() {
                 <Spells popup={popup} setPopup={setPopup} />
               </div>
             </Tab>
-            <Tab key="extras" title="EXTRAS">
+            <Tab key="features" title="FEATURES">
               <div className="w-full text-white overflow-y-auto">
                 <Extras />
               </div>
@@ -97,7 +97,7 @@ function SpellsMenu() {
                 <Descriptions />
               </div>
             </Tab>
-            <Tab key="features_&_traits" title="FEATURES & TRAITS">
+            <Tab key="feats_&_traits" title="FEATS & TRAITS">
               <div className="w-full text-white overflow-y-auto">
                 <FeatureAndTraits />
               </div>

@@ -85,7 +85,7 @@ function SearchSpells({ popup, setPreviewSpell, updateSpells }) {
       {searching && (
         <div
           id="filteredSearch"
-          className="absolute z-10 bg-white rounded-md w-full top-full mt-2 left-0 h-fit max-h-80 border-neonorange border-2 text-black overflow-auto"
+          className="absolute z-[50] bg-white rounded-md w-full top-full mt-2 left-0 h-fit max-h-80 border-neonorange border-2 text-black overflow-auto"
         >
           {filteredSpells?.map((item) => {
             return (

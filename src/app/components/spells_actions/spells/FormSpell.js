@@ -17,10 +17,10 @@ function FormSpell({
   const fields = [
     "Name",
     "Range",
-    "Level",
     "Casting time",
     "Duration",
     "At Higher level",
+    "Level",
   ];
 
   function handleSubmit(event) {
@@ -140,25 +140,26 @@ function FormSpell({
               </div>
             );
           })}
-          <div className="grid grid-cols-[0.5fr,1fr] gap-2 col-span-2">
-            <Select
-              isRequired
-              label="Concentration"
-              className="max-w-xs"
-              /* selectedKeys={[selector]} */
-              onChange={(e) => setSelector(e.target.value)}
-            >
-              <SelectItem key={"true"} value={"true"}>
-                True
-              </SelectItem>
-              <SelectItem key={"false"} value={"false"}>
-                False
-              </SelectItem>
-            </Select>
+          <Select
+            isRequired
+            label="Concentration"
+            className="max-w-xs"
+            /* selectedKeys={[selector]} */
+            onChange={(e) => setSelector(e.target.value)}
+          >
+            <SelectItem key={"true"} value={"true"}>
+              True
+            </SelectItem>
+            <SelectItem key={"false"} value={"false"}>
+              False
+            </SelectItem>
+          </Select>
+          <div className="grid gap-2 col-span-2">
             <Textarea
               label="Description"
               placeholder="Enter your description"
-              className="max-w-xs"
+              className="col-span-2"
+              fullWidth
               onValueChange={(e) => updateFormField(e, "Description")}
             />
             <button

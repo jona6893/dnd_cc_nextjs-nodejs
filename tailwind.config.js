@@ -61,7 +61,8 @@ module.exports = {
         neonred: "#E66A6A",
         neonblue: "#04D9FF",
         background: "#241626",
-        overlay: "#333333",
+        overlay: "#18181b",
+        overlay2: "#333333",
         /* Spell colors */
         acid: "#ECF335",
         cold: "#2AC4FF",

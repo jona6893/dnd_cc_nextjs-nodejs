@@ -8,7 +8,7 @@ function SVG() {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="w-7 h-7 absolute bg-slate-800 border-2 border-slate-800 rounded-md top-0 left-full hidden group-hover:block"
+      className="w-7 h-7 absolute bg-slate-800 border-2 border-slate-800 rounded-md top-0 left-full hidden group-hover:block z-50"
     >
       <path
         strokeLinecap="round"

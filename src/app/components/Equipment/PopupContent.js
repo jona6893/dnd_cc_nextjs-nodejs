@@ -166,7 +166,7 @@ function PopupContent({
               type="submit"
               className="bg-neonpurple-400 hover:bg-neonpurple-500 px-6 py-3 rounded-xl w-full"
             >
-              ADD
+              ADD ITEM
             </button>
           </form>
         </div>

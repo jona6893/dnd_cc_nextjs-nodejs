@@ -15,11 +15,11 @@ function Popup({ children, state, setState }) {
   return (
     <div
       id="popupContainer"
-      className="bg-black/50 w-screen h-screen inset-0 flex justify-center items-center fixed z-50"
+      className="bg-black/50 w-screen h-screen backdrop-blur-sm inset-0 flex justify-center items-center fixed z-50"
     >
       <div
         id="popupContent"
-        className="sm:w-11/12 max-sm:w-full sm:h-5/6 max-sm:h-full bg-overlay border border-gray-50 rounded-xl p-4 max-sm:p-2 relative overflow-auto"
+        className="sm:w-11/12 max-w-7xl max-sm:w-full sm:h-5/6 max-sm:h-full bg-overlay border border-gray-50 rounded-xl p-4 max-sm:p-2 relative overflow-auto"
       >
         {children}
       </div>

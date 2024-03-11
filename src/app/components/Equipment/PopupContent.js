@@ -179,7 +179,7 @@ function PopupContent({
             {equipment.map((item, index) => (
               <div
                 key={nanoid()}
-                className="grid text-base grid-cols-equipmentRowPopup  justify-between cursor-pointer bg-neonorange/10 border-neonorange border relative rounded p-1"
+                className="grid text-base grid-cols-equipmentRowPopup  justify-between cursor-pointer bg-neonorange/10 border-neonorange border relative rounded-lg p-1"
               >
                 <h5
                   onClick={() => tglReadMore(index)}

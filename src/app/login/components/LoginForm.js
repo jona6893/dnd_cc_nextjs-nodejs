@@ -44,7 +44,7 @@ function LoginForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-3/4 h-fit bg-overlay rounded-md flex gap-4 flex-col items-center justify-center text-white p-2 py-12"
+      className="w-3/4 h-fit bg-overlay border border-gray-50 rounded-xl flex gap-4 flex-col items-center justify-center text-white p-2 py-12"
     >
       <h1 className="text-xl ">Login</h1>
       <p className="text-red-500">{feedback}</p>
@@ -71,7 +71,7 @@ function LoginForm() {
       <div className="flex flex-col gap-4 justify-between w-full max-w-md">
         <button
           type="submit"
-          className="font-almendra text-md bg-neonpurple-400 hover:bg-neonpurple-500 px-6 py-2 rounded-lg"
+          className="font-almendra text-md bg-neonpurple-400 hover:bg-neonpurple-500 px-6 py-3 rounded-xl"
         >
           Login
         </button>

@@ -1,10 +1,15 @@
-
 import { updateCharacterDB } from "@/app/modules/apiCalls";
 import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { nanoid } from "nanoid";
 import { useState } from "react";
 
-function KnownSpells({ spells, setPreviewSpell, setSpells,character, updateCharacter }) {
+function KnownSpells({
+  spells,
+  setPreviewSpell,
+  setSpells,
+  character,
+  updateCharacter,
+}) {
   const damageColors = {
     Slashing: "brute",
     Piercing: "brute",
@@ -31,10 +36,9 @@ function KnownSpells({ spells, setPreviewSpell, setSpells,character, updateChara
     return damageColors[damageType] || "brute"; // Default to "brute" if not found
   }
 
-console.log(spells);
+  console.log(spells);
 
-function moveBetweenPreparedAndKnown(spellToMove, spellLevel) {
-
+  function moveBetweenPreparedAndKnown(spellToMove, spellLevel) {
     let newState = [...spells];
 
     // Check if the spell is in known
@@ -73,7 +77,7 @@ function moveBetweenPreparedAndKnown(spellToMove, spellLevel) {
       newState[0].known.push(spellToMove);
     }
     //console.log(newState)
-    setSpells(newState)
+    setSpells(newState);
     character.spells = spells;
     let update = {
       _id: character._id,
@@ -85,11 +89,11 @@ function moveBetweenPreparedAndKnown(spellToMove, spellLevel) {
     // update context i.e local
     updateCharacter(character);
     // update database
-    updateCharacterDB(update);;
-}
+    updateCharacterDB(update);
+  }
 
-function removeSpell(spellToRemove){
-   let newState = [...spells];
+  function removeSpell(spellToRemove) {
+    let newState = [...spells];
 
     // Check if the spell is in known
     let isSpellInKnown = newState[0]?.known?.some(
@@ -103,21 +107,21 @@ function removeSpell(spellToRemove){
         (spell) => spell.name !== spellToRemove.name
       );
     }
-    setSpells(newState)
+    setSpells(newState);
     character.spells = spells;
 
-     let update = {
-       _id: character._id,
-       update: {
-         spells: newState,
-         updated_by: epochToUtcDateTime(),
-       },
-     };
-     // update context i.e local
-     updateCharacter(character);
-     // update database
-     updateCharacterDB(update);
-}
+    let update = {
+      _id: character._id,
+      update: {
+        spells: newState,
+        updated_by: epochToUtcDateTime(),
+      },
+    };
+    // update context i.e local
+    updateCharacter(character);
+    // update database
+    updateCharacterDB(update);
+  }
 
   return (
     <div className="flex flex-wrap gap-2 mt-2">
@@ -129,7 +133,7 @@ function removeSpell(spellToRemove){
             key={nanoid()}
             className={`group cursor-pointer ${"border-" + bgColorClass} ${
               "bg-" + bgColorClass + "/10"
-            } border rounded w-fit p-1 flex gap-2 items-center relative`}
+            } border rounded-lg w-fit p-1 flex gap-2 items-center relative`}
           >
             <p
               className="h4-title font-semibold"
@@ -160,7 +164,12 @@ function removeSpell(spellToRemove){
               <option value="8">8</option>
               <option value="9">9</option>
             </select>
-            <button onClick={()=>removeSpell(spell)} className=" bg-neonred text-black w-6 h-6 rounded group-hover:block">-</button>
+            <button
+              onClick={() => removeSpell(spell)}
+              className=" bg-neonred text-black w-6 h-6 rounded group-hover:block"
+            >
+              -
+            </button>
           </div>
         );
       })}
@@ -168,7 +177,4 @@ function removeSpell(spellToRemove){
   );
 }
 
-export default KnownSpells
-
-
-
+export default KnownSpells;

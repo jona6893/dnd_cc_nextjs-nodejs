@@ -174,7 +174,7 @@ function Equipment({ character }) {
               ? filteredEquipment.map((item, index) => (
                   <div
                     key={item.id}
-                    className="grid text-base grid-cols-equipmentRow items-center  justify-between cursor-pointer bg-neonorange/10 border-neonorange border relative rounded p-1"
+                    className="grid text-base grid-cols-equipmentRow items-center  justify-between cursor-pointer bg-neonorange/10 border-neonorange border relative rounded-lg p-1"
                   >
                     <h5
                       onClick={() => tglReadMore(index)}
@@ -232,7 +232,7 @@ function Equipment({ character }) {
               : equipment.map((item, index) => (
                   <div
                     key={item.id}
-                    className="grid text-base grid-cols-equipmentRow  justify-between cursor-pointer bg-neonorange/10 border-neonorange border relative rounded p-1"
+                    className="grid text-base grid-cols-equipmentRow  justify-between cursor-pointer bg-neonorange/10 border-neonorange border relative rounded-lg p-1"
                   >
                     <h5
                       onClick={() => tglReadMore(index)}

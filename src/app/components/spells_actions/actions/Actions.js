@@ -94,7 +94,7 @@ function Actions({ popup, setPopup }) {
           return (
             <div
               key={item.index}
-              className="border-brute bg-brute/10 border w-full rounded grid grid-cols-actionsRow gap-2 px-2 py-1 cursor-pointer"
+              className="border-brute bg-brute/10 border w-full rounded-lg grid grid-cols-actionsRow gap-2 px-2 py-1 cursor-pointer"
             >
               <h4 className="h4-title font-bold">{item.name}</h4>
               <p className="text-sm">

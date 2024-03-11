@@ -3,8 +3,13 @@ import { updateCharacterDB } from "@/app/modules/apiCalls";
 import { epochToUtcDateTime } from "@/app/modules/getCurrentDate";
 import { nanoid } from "nanoid";
 
-
-function PreparedSpells({ spells, setSpells, setPreviewSpell, character, updateCharacter }) {
+function PreparedSpells({
+  spells,
+  setSpells,
+  setPreviewSpell,
+  character,
+  updateCharacter,
+}) {
   const damageColors = {
     Slashing: "brute",
     Piercing: "brute",
@@ -72,7 +77,7 @@ function PreparedSpells({ spells, setSpells, setPreviewSpell, character, updateC
     //console.log(newState);
     setSpells(newState);
     character.spells = spells;
-    
+
     let update = {
       _id: character._id,
       update: {
@@ -109,17 +114,16 @@ function PreparedSpells({ spells, setSpells, setPreviewSpell, character, updateC
     // update database
     updateCharacterDB(update);
   }
- 
 
   return (
     <div className="flex flex-col gap-2 mt-2">
       {spells[1]?.prepared?.sort(compareBySpelllevel).map((spell, index) => {
-      
         return (
           <div
             key={nanoid()}
             className={`flex gap-2 flex-wrap ${
-              index !== spells[1]?.prepared.length-1 && "border-b border-white/50"
+              index !== spells[1]?.prepared.length - 1 &&
+              "border-b border-white/50"
             } p-1`}
           >
             {spell.spells.length >= 1 && (
@@ -165,7 +169,7 @@ function PreparedSpells({ spells, setSpells, setPreviewSpell, character, updateC
                     "border-" + bgColorClass
                   } ${
                     "bg-" + bgColorClass + "/10"
-                  } border rounded w-fit p-1 flex gap-2 items-center relative`}
+                  } border rounded-lg w-fit p-1 flex gap-2 items-center relative`}
                 >
                   <p
                     className="h4-title font-semibold"
@@ -193,4 +197,4 @@ function PreparedSpells({ spells, setSpells, setPreviewSpell, character, updateC
   );
 }
 
-export default PreparedSpells
+export default PreparedSpells;

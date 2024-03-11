@@ -105,7 +105,6 @@ function Spells({ popup, setPopup }) {
 
   // update spellslots when spell is clicked.
   function fireSpell(index, id) {
-   
     const slots = spells[1].prepared[index].spellSlots;
     let spellSlot;
     slots.some((slot, i) => {
@@ -151,8 +150,10 @@ function Spells({ popup, setPopup }) {
                 <div
                   key={nanoid()}
                   onClick={() => fireSpell(index)}
-                  className={`${"border-" + bgColorClass} ${"bg-" + bgColorClass + "/10"} 
-                  border w-full rounded grid grid-cols-equipmentRowPopup px-2 py-1 cursor-pointer`}
+                  className={`${"border-" + bgColorClass} ${
+                    "bg-" + bgColorClass + "/10"
+                  } 
+                  border w-full rounded-lg grid grid-cols-equipmentRowPopup px-2 py-1 cursor-pointer`}
                 >
                   <p className="h4-title font-bold">{spell.name}</p>
                   <span className="text-center">{spell.casting_time}</span>

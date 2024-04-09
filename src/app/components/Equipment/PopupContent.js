@@ -75,12 +75,12 @@ function PopupContent({
   // search field popup all results
   const SearchResults = () => {
     return (
-      <div className="absolute bg-white rounded-md w-full top-full mt-2 left-0 h-fit max-h-80 border-neonorange border-2 overflow-auto">
+      <div className="absolute z-[100] bg-white rounded-md w-full top-full mt-2 left-0 h-fit max-h-80 border-neonorange border-2 overflow-auto">
         {filteredEquipment?.map((item) => {
           return (
             <div key={nanoid()}>
               <div className="flex gap-1 min-h-8 justify-between items-center hover:bg-gray-300 px-2 py-2">
-                <span>{item.name}</span>
+                <span className="text-black">{item.name}</span>
                 <button
                   onClick={() => addSearchedEquipment(item)}
                   className="bg-neongreen px-2 rounded"

@@ -85,11 +85,12 @@ function Actions({ popup, setPopup }) {
         
             const damageDice = item.damage?.damage_dice;
             const damageType = item.damage?.damage_type?.name;
+            //const customDamage = item?.customDamage;
             const TwohandedDamage = item.two_handed_damage?.damage_dice;
             const ac = item?.armor_class;
             const rangeNormal = item.range?.normal;
             const rangeLong = item.range?.long;
-          
+         
 
           return (
             <div
@@ -97,6 +98,7 @@ function Actions({ popup, setPopup }) {
               className="border-brute bg-brute/10 border w-full rounded-lg grid grid-cols-actionsRow gap-2 px-2 py-1 cursor-pointer"
             >
               <h4 className="h4-title font-bold">{item.name}</h4>
+              {item.customDamage && <p className="text-sm">{item.customDamage}</p>}
               <p className="text-sm">
                 {damageDice}
                 {TwohandedDamage && ", 2-hand " + TwohandedDamage}

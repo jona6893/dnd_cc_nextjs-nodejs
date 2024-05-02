@@ -16,6 +16,7 @@ function PopupContent({
   const [equipmentApi, setEquipmentApi] = useState([]);
   const [filteredEquipment, setFilteredEquipment] = useState([]);
   const [itemName, setItemName] = useState("");
+  const [itemDamage, setItemDamage] = useState("");
   const [itemDecs, setItemDecs] = useState("");
   // toggle search field
   function toggleSearch() {
@@ -34,7 +35,7 @@ function PopupContent({
   // add new equipment
   function handleForm() {
     event.preventDefault();
-    updateEquipment(itemName, itemDecs);
+    updateEquipment(itemName, itemDecs, null,itemDamage);
   }
 
   // rebuild to only request from backend on search input
@@ -155,6 +156,11 @@ function PopupContent({
           </div>
           <form action="" className="grid gap-4 pt-4" onSubmit={handleForm}>
             <Input type="text" label="Item Name" onValueChange={setItemName} />
+            <Input
+              type="text"
+              label="Item Damage - 1D8+6"
+              onValueChange={setItemDamage}
+            />
             <Textarea
               label="Item Description"
               placeholder="Item Description"

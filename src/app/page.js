@@ -51,6 +51,7 @@ export default function Home() {
     updateCharacter: updateCharacter,
   };
 
+  console.log(character);
   return (
     <NextUIProvider>
       <main className="flex gap-2 min-h-screen items-start ml:justify-center sm:px-4 max-sm:px-2 py-4 pb-24  overflow-auto relative">

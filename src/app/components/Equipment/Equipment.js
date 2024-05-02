@@ -27,10 +27,18 @@ function Equipment({ character }) {
     //console.log(character.savingThrow)
   }, [character]);
 
-  function updateEquipment(name, description, url) {
+  function updateEquipment(name, description, url, damage) {
     setEquipment((prev) => [
       ...prev,
-      { id: nanoid(), name, description, amount: 1, url, equipped: false },
+      {
+        id: nanoid(),
+        name,
+        description,
+        amount: 1,
+        url,
+        equipped: false,
+        customDamage: damage,
+      },
     ]);
   }
 
